@@ -12,15 +12,6 @@
     {% endif %}
     <h1 class = 'display-1'>Hello</h1>
 
-        <div class="row justify-content-md-center">
-            <form class="col-lg-5" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="mb-3">
-                    <label for="flie_upload" class="form-label">File Upload</label>
-                    <input type="file" class="form-control" name="file" id="file_upload">
-                </div>
-                <button type="submit" class="btn btn-primary" >Submit</button>
-            </form>
-        </div>
+
     </div>
 {% endblock %}

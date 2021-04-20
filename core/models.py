@@ -1,5 +1,23 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.base_user import AbstractBaseUser
+from .managers import UserManager
+
+
+class Users(AbstractBaseUser):
+    username = models.CharField(max_length=1024)
+    password = models.CharField(max_length=100)
+    is_admin = models.BooleanField(default=False)
+
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['is_admin']
+    objects = UserManager()
+
+    class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
+
+    def get_username(self):
+        return self.username
 
 
 class Contests(models.Model):

@@ -4,7 +4,7 @@ from django.contrib import messages
 from .utils import *
 
 
-def homepage(request):
+def make_submission(request):
     if request.method == "POST":
 
         if GetSolutionForm(request.POST, request.FILES).is_valid():
@@ -14,3 +14,7 @@ def homepage(request):
 
     else:
         return render(request, 'homepage.html')
+
+
+def homepage(request):
+    return render(request, 'homepage.html')
