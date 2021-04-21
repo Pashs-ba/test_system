@@ -14,8 +14,8 @@ class Users(AbstractBaseUser, PermissionsMixin):
     """
     username = models.CharField('Username', unique=True, max_length=1024)
 
-    is_active = models.BooleanField('Активный', default=True)
-    is_staff = models.BooleanField('Администратор', default=False)
+    is_active = models.BooleanField('Active', default=True)
+    is_staff = models.BooleanField('Admin', default=False)
 
     objects = UserManager()
 
@@ -23,8 +23,8 @@ class Users(AbstractBaseUser, PermissionsMixin):
 
 
     class Meta:
-        verbose_name = 'Пользователь'
-        verbose_name_plural = 'Пользователи'
+        verbose_name = 'User'
+        verbose_name_plural = 'Users'
 
     def get_full_name(self):
         return self.username
