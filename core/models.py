@@ -1,23 +1,41 @@
 from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.models import PermissionsMixin
 from .managers import UserManager
 
 
-class Users(AbstractBaseUser):
-    username = models.CharField(max_length=1024)
-    password = models.CharField(max_length=100)
-    is_admin = models.BooleanField(default=False)
+class Users(AbstractBaseUser, PermissionsMixin):
+    """
+    Base model for any user: admin, student or teacher.
+    Attributes:
+        email - email of the user
+        account_type - set at registration. Can be equal to
+        0 (Superuser), 1 (Admin), 2 (Teacher) and 3 (Student)
+    """
+    username = models.CharField('Username', unique=True, max_length=1024)
+
+    is_active = models.BooleanField('Активный', default=True)
+    is_staff = models.BooleanField('Администратор', default=False)
+
+    objects = UserManager()
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['is_admin']
-    objects = UserManager()
+
 
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
 
+    def get_full_name(self):
+        return self.username
+
+    def get_short_name(self):
+        return self.username
+
     def get_username(self):
         return self.username
+
+
 
 
 class Contests(models.Model):
@@ -37,7 +55,7 @@ class Contests(models.Model):
 class Competitions(models.Model):
     name = models.CharField(max_length=1024)
     description = models.TextField(null=True)
-    participants = models.ManyToManyField(User)
+    participants = models.ManyToManyField(Users)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     contests = models.ManyToManyField(Contests)
@@ -51,7 +69,7 @@ class Competitions(models.Model):
 
 
 class Solutions(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
     contest = models.ForeignKey(Contests, on_delete=models.CASCADE)
     time = models.IntegerField(null=True)
     memory = models.IntegerField(null=True)

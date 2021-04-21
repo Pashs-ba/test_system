@@ -101,7 +101,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+AUTH_USER_MODEL = 'core.Users'
+ACCOUNT_AUTHENTICATION_METHOD = 'username'
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
