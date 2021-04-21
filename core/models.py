@@ -1,15 +1,16 @@
 from django.db import models
-from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.models import AbstractBaseUser
 from .managers import UserManager
 
 
 class Users(AbstractBaseUser):
-    username = models.CharField(max_length=1024)
-    password = models.CharField(max_length=100)
+    username = models.CharField(max_length=1024, unique=True)
+    email = None
     is_admin = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['is_admin']
+    REQUIRED_FIELDS = []
     objects = UserManager()
 
     class Meta:
@@ -37,7 +38,7 @@ class Contests(models.Model):
 class Competitions(models.Model):
     name = models.CharField(max_length=1024)
     description = models.TextField(null=True)
-    participants = models.ManyToManyField(User)
+    participants = models.ManyToManyField(Users)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     contests = models.ManyToManyField(Contests)
@@ -51,7 +52,7 @@ class Competitions(models.Model):
 
 
 class Solutions(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
     contest = models.ForeignKey(Contests, on_delete=models.CASCADE)
     time = models.IntegerField(null=True)
     memory = models.IntegerField(null=True)
