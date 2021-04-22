@@ -5,8 +5,15 @@
     <div class="container my-4">
 
     <h1 class = 'display-1 text-center'>Управление пользователями</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-info my-4">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
     <div class="text-center">
-        <a class="btn btn-primary my-4  btn-lg btn-block" href=""> Создать новых пользователей</a>
+        <a class="btn btn-primary my-4  btn-lg btn-block" href="{% url 'generate-users' %}"> Создать новых пользователей</a>
 
     </div>
     <table class="table table-striped">

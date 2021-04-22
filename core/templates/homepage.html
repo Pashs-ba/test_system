@@ -5,11 +5,7 @@
     <div class="container my-4">
     {% if messages %}
         {% for message in messages %}
-            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
-                <div class="alert alert-error" role="alert">
-            {% else %}
-                <div class="alert alert-success" role="alert">
-            {% endif %}
+            <div class="alert alert-info">
                 {{ message }}
             </div>
         {% endfor %}
