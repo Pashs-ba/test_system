@@ -11,3 +11,4 @@ class UsersAdmin(admin.ModelAdmin):
 admin.site.register(models.Competitions)
 admin.site.register(models.Solutions)
 admin.site.register(models.Contests)
+admin.site.register(models.Passwords)

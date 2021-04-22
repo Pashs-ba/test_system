@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core'
+    'core',
+    'management'
 ]
 
 MIDDLEWARE = [
@@ -123,3 +124,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_DIRS = ['core/static',
                ]
+
+USERNAME_LENGTH = 2
+PASSWORD_LENGTH = 5

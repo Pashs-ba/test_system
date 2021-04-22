@@ -5,13 +5,6 @@ from .managers import UserManager
 
 
 class Users(AbstractBaseUser, PermissionsMixin):
-    """
-    Base model for any user: admin, student or teacher.
-    Attributes:
-        email - email of the user
-        account_type - set at registration. Can be equal to
-        0 (Superuser), 1 (Admin), 2 (Teacher) and 3 (Student)
-    """
     username = models.CharField('Username', unique=True, max_length=1024)
 
     is_active = models.BooleanField('Active', default=True)
@@ -36,6 +29,9 @@ class Users(AbstractBaseUser, PermissionsMixin):
         return self.username
 
 
+class Passwords(models.Model):
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    password = models.CharField(max_length=1024, verbose_name='Password')
 
 
 class Contests(models.Model):
