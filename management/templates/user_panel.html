@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}User Generating{% endblock %}
+{% block main %}
+    <div class="container my-4">
+
+    <h1 class = 'display-1 text-center'>Управление пользователями</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-info my-4">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="text-center">
+        <a class="btn btn-primary my-4  btn-lg btn-block" href="{% url 'generate-users' %}"> Создать новых пользователей</a>
+
+    </div>
+    <table class="table table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">Логин</th>
+          <th scope="col">Пароль</th>
+          <th scope="col">Соревнования</th>
+          <th scope="col">Удалить</th>
+        </tr>
+      </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+
+                    <td>{{ user.user.username }}</td>
+                    <td>{{ user.password }}</td>
+                    <td> - </td>
+                    <td> <a href="{%  url 'delete-user' user.user.pk %}" class="btn btn-sm btn-danger">
+                        <img src="{% static "img/trash-fill.svg" %}" alt="Sosat plus Lejat"></a> </td>
+                </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+
+{% endblock %}

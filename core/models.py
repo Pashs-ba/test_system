@@ -1,24 +1,37 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.models import PermissionsMixin
 from .managers import UserManager
 
 
-class Users(AbstractBaseUser):
-    username = models.CharField(max_length=1024, unique=True)
-    email = None
-    is_admin = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
+class Users(AbstractBaseUser, PermissionsMixin):
+    username = models.CharField('Username', unique=True, max_length=1024)
 
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = []
+    is_active = models.BooleanField('Active', default=True)
+    is_staff = models.BooleanField('Admin', default=False)
+
     objects = UserManager()
 
+    USERNAME_FIELD = 'username'
+
+
     class Meta:
-        verbose_name = 'Пользователь'
-        verbose_name_plural = 'Пользователи'
+        verbose_name = 'User'
+        verbose_name_plural = 'Users'
+
+    def get_full_name(self):
+        return self.username
+
+    def get_short_name(self):
+        return self.username
 
     def get_username(self):
         return self.username
+
+
+class Passwords(models.Model):
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    password = models.CharField(max_length=1024, verbose_name='Password')
 
 
 class Contests(models.Model):

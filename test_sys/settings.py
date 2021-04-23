@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core'
+    'core',
+    'management'
 ]
 
 MIDDLEWARE = [
@@ -102,8 +103,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTH_USER_MODEL = 'core.Users'
-# ACCOUNT_AUTHENTICATION_METHOD = 'username'
-
+ACCOUNT_AUTHENTICATION_METHOD = 'username'
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -124,3 +124,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_DIRS = ['core/static',
                ]
+
+USERNAME_LENGTH = 2
+PASSWORD_LENGTH = 5
