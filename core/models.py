@@ -49,12 +49,13 @@ class Contests(models.Model):
 
 
 class Competitions(models.Model):
-    name = models.CharField(max_length=1024)
+    name = models.CharField(max_length=1024, unique=True)
     description = models.TextField(null=True)
-    participants = models.ManyToManyField(Users)
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
-    contests = models.ManyToManyField(Contests)
+    participants = models.ManyToManyField(Users, null=True)
+    is_unlimited = models.BooleanField(default=False)
+    start_time = models.DateTimeField(null=True)
+    end_time = models.DateTimeField(null=True)
+    contests = models.ManyToManyField(Contests, null=True)
 
     class Meta:
         verbose_name = 'Competition'

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Users generating{% endblock %}
+{% block main %}
+    <div class="container">
+        <div class="card my-5">
+        <div class="card-body">
+
+            <form method="POST">
+                {% csrf_token %}
+                 <div class="mb-3">
+                     <label for="name" class="form-label">Название</label>
+                     <input type="text" class="form-control" id="name" name="name">
+                 </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Описание</label>
+                    <textarea name="description" class="form-control" id="description"></textarea>
+                 </div>
+                <div class="mb-3">
+                     <input type="checkbox" class="form-check-input" id="is_unlimited" name="is_unlimited">
+                     <label class="form-check-label" for="is_unlimited">Нет ограничений по времени</label>
+                 </div>
+                <div class="mb-3">
+                    <label for="start_time" class="form-label">Дата начала</label>
+                    <input type="datetime-local" class="form-control" id="start_time" name="start_time">
+                 </div>
+                <div class="mb-3">
+                    <label for="end_time" class="form-label">Дата конца</label>
+                    <input type="datetime-local" class="form-control" id="end_time" name="end_time">
+                 </div>
+                <div class="mb-3">
+                    <label for="users" class="form-label">Участники</label>
+                    <select class="form-control" id="users" name="users" multiple>
+                        {% for user in users %}
+                            <option value="{{ user.pk }}">{{ user.username }}</option>
+                        {% endfor %}
+                    </select>
+                 </div>
+                <div class="mb-3">
+                    <label for="contests" class="form-label">Задачи</label>
+                    <select class="form-control" id="contests" name="contests" multiple>
+                        {% for user in contests %}
+                            <option value="{{ user.pk }}">{{ user.name}}</option>
+                        {% endfor %}
+                    </select>
+                 </div>
+                <button type="submit" class="btn btn-primary">Подтвердить</button>
+                <a href="{% url 'competition_management' %}" class="btn btn-secondary">Отмена</a>
+            </form>
+        </div>
+    </div>
+    </div>
+{% endblock %}

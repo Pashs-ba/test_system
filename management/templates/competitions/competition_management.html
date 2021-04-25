@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}User Generating{% endblock %}
+{% block main %}
+    <div class="container my-4">
+
+    <h1 class = 'display-1 text-center'>Управление соревнованиями</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-info my-4">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="text-center">
+        <a class="btn btn-primary my-4  btn-lg btn-block" href="{% url 'competition_creating' %}"> Создать новое соревнование</a>
+
+    </div>
+
+    <table class="table table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">Название</th>
+          <th scope="col">Дата начала</th>
+          <th scope="col">Дата конца</th>
+          <th scope="col">Изменить</th>
+          <th scope="col">Удалить</th>
+        </tr>
+      </thead>
+        <tbody>
+
+            {% for competition in competitions %}
+                <tr>
+
+                    <td>{{ competition.name }}</td>
+                    {% if competition.start_time is None %}
+                        <td colspan="2" class="text-center">Бессрочно</td>
+                    {% else %}
+                        <td>{{ competition.start_time }}</td>
+                        <td>{{ competition.end_time }}</td>
+                    {% endif %}
+                    <td> <a href="#" class="btn btn-sm btn-danger">
+                        <img src="{% static "img/trash-fill.svg" %}" alt="Sosat plus Lejat"></a> </td>
+                    <td> <a href="#" class="btn btn-sm btn-danger">
+                        <img src="{% static "img/trash-fill.svg" %}" alt="Sosat plus Lejat"></a> </td>
+                </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+
+{% endblock %}
