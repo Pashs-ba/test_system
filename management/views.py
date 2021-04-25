@@ -98,4 +98,4 @@ def delete_competition(request, pk):
         messages.success(request, 'Successful delete competition')
         return redirect('competition_management')
     else:
-        return render(request, 'competition_deleting.html')
+        return render(request, 'competitions/competition_deleting.html')

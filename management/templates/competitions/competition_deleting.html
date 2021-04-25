@@ -2,16 +2,16 @@
 {% load static %}
 {% block title %}Conform delete{% endblock %}
 {% block main %}
-
+    
         <div class="card my-5">
         <div class="card-body">
-            <p>Вы уверены, что хотите удалить пользователя?</p>
+            <p>Вы уверены, что хотите удалить соревнование?</p>
             <form method="POST">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-danger">Подтвердить</button>
-                <a href="{% url 'user-management' %}" class="btn btn-success">Отмена</a>
+                <a href="{% url 'competition_management' %}" class="btn btn-success">Отмена</a>
             </form>
         </div>
     </div>
-
+    
 {% endblock %}

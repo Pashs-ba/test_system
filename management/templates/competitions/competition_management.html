@@ -2,16 +2,8 @@
 {% load static %}
 {% block title %}User Generating{% endblock %}
 {% block main %}
-    <div class="container my-4">
 
     <h1 class = 'display-1 text-center'>Управление соревнованиями</h1>
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-info my-4">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endif %}
     <div class="text-center">
         <a class="btn btn-primary my-4  btn-lg btn-block" href="{% url 'competition_creating' %}"> Создать новое соревнование</a>
 
@@ -39,16 +31,15 @@
                         <td>{{ competition.start_time }}</td>
                         <td>{{ competition.end_time }}</td>
                     {% endif %}
-                    <td> <a href="#" class="btn btn-sm btn-danger">
+                    <td> <a href="" class="btn btn-sm btn-danger">
                         <img src="{% static "img/trash-fill.svg" %}" alt="Sosat plus Lejat"></a> </td>
-                    <td> <a href="#" class="btn btn-sm btn-danger">
-                        <img src="{% static "img/trash-fill.svg" %}" alt="Sosat plus Lejat"></a> </td>
+                    <td> <a href="{% url 'delete_competition' competition.pk %}" class="btn btn-sm btn-danger">
+                       <i class="bi bi-trash-fill"></i></a> </td>
                 </tr>
 
             {% endfor %}
         </tbody>
     </table>
-    </div>
 
 
 {% endblock %}

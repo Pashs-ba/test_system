@@ -2,14 +2,8 @@
 {% load static %}
 {% block title %}Homepage{% endblock %}
 {% block main %}
-    <div class="container my-4">
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-info">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
+
+
         <h1 class = 'display-1 text-center'>Вход</h1>
         <div class="card login card-50 my-3">
             <div class="card-body">
@@ -37,5 +31,4 @@
                 </form>
             </div>
         </div>
-    </div>
 {% endblock %}
