@@ -11,6 +11,7 @@ from .forms import CreateCompetition
 def user_panel(request):
     context = {}
     context.update({'users': Passwords.objects.all()})
+
     return render(request, 'users/user_panel.html', context)
 
 
@@ -98,4 +99,16 @@ def update_competition(request, pk):
 
 @admin_only
 def contest_management(request):
-    return render(request, 'contests/contest_management.html', {'contests': Contests.objects.all()})
+    return render(request, 'contests/contests_management.html', {'contests': Contests.objects.all()})
+
+
+@transaction.atomic
+@admin_only
+def contest_delete(request, pk):
+    if request.method == "POST":
+
+        Contests.objects.get(pk=pk).delete()
+        messages.success(request, 'Successful delete contest')
+        return redirect('contest_management')
+    else:
+        return render(request, 'contests/contest_deleting.html')

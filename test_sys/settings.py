@@ -130,3 +130,4 @@ STATIC_DIRS = ['core/static',
 
 USERNAME_LENGTH = 2
 PASSWORD_LENGTH = 5
+DATETIME_FORMAT = "%d.%m.%Y %H:%M"

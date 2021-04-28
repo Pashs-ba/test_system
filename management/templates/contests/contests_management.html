@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}User Generating{% endblock %}
+{% block title %}Contest management{% endblock %}
 {% block main %}
 
     <h1 class = 'display-1 text-center'>Управление задачами</h1>
@@ -13,27 +13,26 @@
       <thead class="table-dark">
         <tr>
           <th scope="col">Название</th>
-          <th scope="col">Дата начала</th>
-          <th scope="col">Дата конца</th>
+          <th scope="col">Ограничнеие по памяти</th>
+          <th scope="col">Ограничение по времени</th>
+          <th scope="col">Соревнования</th>
+
           <th scope="col">Изменить</th>
           <th scope="col">Удалить</th>
         </tr>
       </thead>
         <tbody>
 
-            {% for competition in competitions %}
+            {% for contest in contests %}
                 <tr>
 
-                    <td>{{ competition.name }}</td>
-                    {% if competition.start_time is None %}
-                        <td colspan="2" class="text-center">Бессрочно</td>
-                    {% else %}
-                        <td>{{ competition.start_time }}</td>
-                        <td>{{ competition.end_time }}</td>
-                    {% endif %}
-                    <td> <a href="{% url 'update_competition' competition.pk%}" class="btn btn-sm btn-primary">
+                    <td>{{ contest.name }}</td>
+                    <td>{% widthratio contest.memory_limit 1048576 1%} MB</td>
+                    <td>{{ contest.time_limit }} с</td>
+                    <td> {% if  contest.competitions_set.all  %}{% for i in contest.competitions_set.all%}{{ i }} {% endfor %}{% else %} - {% endif %}</td>
+                    <td> <a href="{% url 'update_competition' contest.pk%}" class="btn btn-sm btn-primary">
                         <i class="bi bi-pencil-square"></i></a> </td>
-                    <td> <a href="{% url 'delete_competition' competition.pk %}" class="btn btn-sm btn-danger">
+                    <td> <a href="{% url 'delete_contest' contest.pk %}" class="btn btn-sm btn-danger">
                        <i class="bi bi-trash-fill"></i></a> </td>
                 </tr>
 

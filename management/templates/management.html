@@ -21,9 +21,20 @@
                   </a>
                   <div class="card-body">
                     <h5 class="card-title">Управление соревнованиями</h5>
-                    <p class="card-text">Создание и управление аккаунтами пользователей</p>
+                    <p class="card-text">Создание и управление соревнованиями</p>
                   </div>
                 </div>
             </div>
-        </div>
+             <div class="col-md-4 col-sm-6 col-lg-3 my-3 text-center">
+                    <div class="card h-100" >
+                      <a href="{% url 'contest_management' %}">
+                        <img class="card-img-top p-4" src="{% static "img/trophy.svg" %}" alt="Card image cap">
+                      </a>
+                      <div class="card-body">
+                        <h5 class="card-title">Управление задачами</h5>
+                        <p class="card-text">Ну... Я думаю вы поняли</p>
+                      </div>
+                    </div>
+                </div>
+            </div>
 {% endblock %}
