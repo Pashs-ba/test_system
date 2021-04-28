@@ -4,7 +4,7 @@ from .utils import create_user
 from core.models import *
 from django.db import transaction
 from django.contrib import messages
-from .forms import CreateCompetition
+from .forms import CompetitionForm, ContestForm
 
 
 @admin_only
@@ -62,13 +62,13 @@ def competition_management(request):
 @admin_only
 def create_competition(request):
     if request.method == "POST":
-        form = CreateCompetition(request.POST)
+        form = CompetitionForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'success')
             return redirect('competition_management')
     else:
-        return render(request, 'competitions/competition_creating.html', {'form': CreateCompetition()})
+        return render(request, 'competitions/competition_creating.html', {'form': CompetitionForm()})
 
 
 @transaction.atomic
@@ -87,14 +87,14 @@ def delete_competition(request, pk):
 @admin_only
 def update_competition(request, pk):
     if request.method == 'POST':
-        form = CreateCompetition(request.POST, instance=Competitions.objects.get(pk=pk))
+        form = CompetitionForm(request.POST, instance=Competitions.objects.get(pk=pk))
         if form.is_valid():
             form.save()
             messages.success(request, 'successful update competition')
             return redirect('competition_management')
     else:
 
-        return render(request, 'competitions/competition_updating.html', {'form': CreateCompetition(instance=Competitions.objects.get(pk=pk))})
+        return render(request, 'competitions/competition_updating.html', {'form': CompetitionForm(instance=Competitions.objects.get(pk=pk))})
 
 
 @admin_only
@@ -112,3 +112,16 @@ def contest_delete(request, pk):
         return redirect('contest_management')
     else:
         return render(request, 'contests/contest_deleting.html')
+
+
+@admin_only
+@transaction.atomic
+def create_contest(request):
+    if request.method == "POST":
+        form = ContestForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'success')
+            return redirect('contest_management')
+    else:
+        return render(request, 'contests/contest_creating.html', {'form': ContestForm()})

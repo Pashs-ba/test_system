@@ -35,10 +35,10 @@ class Passwords(models.Model):
 
 
 class Contests(models.Model):
-    name = models.CharField(max_length=1024)
-    description = models.TextField(null=True)
-    time_limit = models.IntegerField(default=1)
-    memory_limit = models.IntegerField(default=1024*1024*256)
+    name = models.CharField(max_length=1024, verbose_name="Название")
+    description = models.TextField(null=True, verbose_name='Описание')
+    time_limit = models.IntegerField(default=1, verbose_name='Ограничение по времени, секунды')
+    memory_limit = models.IntegerField(default=256, verbose_name='Ограничение по памяти, MB')
 
     class Meta:
         verbose_name = 'Contest'
