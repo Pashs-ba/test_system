@@ -4,6 +4,7 @@ from .utils import create_user
 from core.models import *
 from django.db import transaction
 from django.contrib import messages
+from .forms import CreateCompetition
 
 
 @admin_only
@@ -60,42 +61,41 @@ def competition_management(request):
 @admin_only
 def create_competition(request):
     if request.method == "POST":
-        print(request.POST)
-        name = request.POST['name']
-        description = request.POST['description']
-        if not request.POST.get('is_unlimited'):
-            start_time = request.POST['start_time']
-            end_time = request.POST['end_time']
-
-            competition = Competitions(name=name,
-                                       description=description,
-                                       start_time=start_time,
-                                       end_time=end_time)
-        else:
-            competition = Competitions(name=name,
-                                       description=description,
-                                       is_unlimited=True)
-        competition.save()
-        for i in request.POST['users']:
-            competition.participants.add(Users.objects.get(pk=i))
-        for i in request.POST['contests']:
-            competition.contests.add(Contests.objects.get(pk=i))
-        competition.save()
-        messages.success(request, 'success')
-        return redirect('competition_management')
+        form = CreateCompetition(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'success')
+            return redirect('competition_management')
     else:
-        context = {}
-        context.update({'users': Users.objects.all(),
-                        'contests': Contests.objects.all()})
-        return render(request, 'competitions/competition_creating.html', context)
+        return render(request, 'competitions/competition_creating.html', {'form': CreateCompetition()})
 
 
 @transaction.atomic
 @admin_only
 def delete_competition(request, pk):
     if request.method == "POST":
+
         Competitions.objects.get(pk=pk).delete()
         messages.success(request, 'Successful delete competition')
         return redirect('competition_management')
     else:
         return render(request, 'competitions/competition_deleting.html')
+
+
+@transaction.atomic
+@admin_only
+def update_competition(request, pk):
+    if request.method == 'POST':
+        form = CreateCompetition(request.POST, instance=Competitions.objects.get(pk=pk))
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'successful update competition')
+            return redirect('competition_management')
+    else:
+
+        return render(request, 'competitions/competition_updating.html', {'form': CreateCompetition(instance=Competitions.objects.get(pk=pk))})
+
+
+@admin_only
+def contest_management(request):
+    return render(request, 'contests/contest_management.html', {'contests': Contests.objects.all()})
