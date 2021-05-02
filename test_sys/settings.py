@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'management',
-    'crispy_forms'
+    'crispy_forms',
+    'api'
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 

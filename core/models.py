@@ -78,3 +78,9 @@ class Solutions(models.Model):
 
     def __str__(self):
         return f'{self.user} {self.contest} {self.result}'
+
+
+class TestExamples(models.Model):
+    contest = models.ForeignKey(Contests, on_delete=models.CASCADE)
+    input = models.TextField()
+    output = models.TextField()

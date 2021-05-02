@@ -5,8 +5,8 @@ import string
 import random
 
 
-def upload_file(file: InMemoryUploadedFile):
-    with open('users/{}'.format(file.name), 'wb') as f:
+def upload_file(file: InMemoryUploadedFile, folder: str):
+    with open(f'{folder}', 'wb') as f:
         for i in file.chunks():
             f.write(i)
 
