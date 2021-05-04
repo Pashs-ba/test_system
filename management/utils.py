@@ -2,6 +2,8 @@ from core.models import Users, Passwords
 from django.conf import settings
 import string
 import random
+import zipfile
+import os
 
 
 def create_user():
@@ -19,3 +21,13 @@ def create_user():
             a = Passwords(user=user, password=password)
             a.save()
             return a
+
+
+def add_tests(name, path):
+    """
+    :param name: name of archive
+    :param path: path to directory with test and archive
+    :return:
+    """
+    with zipfile.ZipFile(os.path.join(path, name)) as f:
+        f.extractall(os.path.join(settings.BASE_DIR, f'path'))

@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect
 from core.decorators import admin_only
-from .utils import create_user
+from .utils import create_user, add_tests
 from core.models import *
 from django.db import transaction
 from django.contrib import messages
 from .forms import CompetitionForm, ContestForm
+from core.utils import upload_file
+from django.conf import settings
+import os.path
 
 
 @admin_only
@@ -114,14 +117,24 @@ def contest_delete(request, pk):
         return render(request, 'contests/contest_deleting.html')
 
 
-@admin_only
 @transaction.atomic
+@admin_only
 def create_contest(request):
     if request.method == "POST":
-        form = ContestForm(request.POST)
+        form = ContestForm(request.POST, request.FILES)
+        # print(form)
+        print(form.errors)
         if form.is_valid():
             form.save()
+            pk = Contests.objects.get(name=request.POST['name']).pk
+            os.mkdir(os.path.join(settings.BASE_DIR, f'{pk}\\'))
+            upload_file(request.FILES.get('tests'), os.path.join(settings.BASE_DIR, f'{pk}\\tests'))
+            upload_file(request.FILES.get('ideal_ans'), os.path.join(settings.BASE_DIR, f'{pk}'))
+            add_tests(request.FILES.get('tests').name, os.path.join(settings.BASE_DIR, f'{pk}\\tests'))
+
             messages.success(request, 'success')
             return redirect('contest_management')
+        else:
+            print('sdaaf')
     else:
         return render(request, 'contests/contest_creating.html', {'form': ContestForm()})

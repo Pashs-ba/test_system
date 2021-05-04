@@ -15,5 +15,7 @@ class ContestForm(ModelForm):
     class Meta:
         model = Contests
         fields = '__all__'
-    tests = FileField(label='Тесты, .zip архив', widget=FileInput(attrs={'accept': '.zip'}))
-    ideal_ans = FileField(label='Идеальное решение')
+
+    tests = FileField(widget=FileInput(attrs={'accept': '.zip'}), label='Набор тестов в .zip архиве')
+    ideal_ans = FileField(widget=FileInput(attrs={'accept': '.cpp,.py,.pas,.c'}), label='Идеальное решение')
+
