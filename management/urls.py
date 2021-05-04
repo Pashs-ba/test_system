@@ -11,6 +11,7 @@ urlpatterns = [path('user_panel', user_panel, name='user-management'),
                path('update_competition/<int:pk>', update_competition, name='update_competition'),
                path('contest_management', contest_management, name='contest_management'),
                path('delete_contest/<int:pk>', contest_delete, name='delete_contest'),
-               path('contest_creating', create_contest, name='contest_creating')
+               path('contest_creating', create_contest, name='contest_creating'),
+               path('contest/<int:pk>', contest_page, name='contest_page')
                ]
 

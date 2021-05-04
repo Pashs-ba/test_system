@@ -11,7 +11,7 @@ class CompetitionForm(ModelForm):
                    'end_time': DateTimeInput(attrs={'type': 'datetime-local'}, format="%Y-%m-%dT%H:%M")}
 
 
-class ContestForm(ModelForm):
+class ContestCreationForm(ModelForm):
     class Meta:
         model = Contests
         fields = '__all__'
@@ -19,3 +19,8 @@ class ContestForm(ModelForm):
     tests = FileField(widget=FileInput(attrs={'accept': '.zip'}), label='Набор тестов в .zip архиве')
     ideal_ans = FileField(widget=FileInput(attrs={'accept': '.cpp,.py,.pas,.c'}), label='Идеальное решение')
 
+
+class ContestUpdateForm(ModelForm):
+    class Meta:
+        model = Contests
+        fields = '__all__'

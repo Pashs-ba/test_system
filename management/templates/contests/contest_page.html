@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Competition updating{% endblock %}
+{% load crispy_forms_tags %}
+{% block main %}
+{#        <div class="card my-5">#}
+{#        <div class="card-body">#}
+            <h2 class="text-center my-3 display-2">Общая информация</h2>
+            <div class="card my-5">
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+
+                        <div class="my-3">
+                            <button type="submit" class="btn btn-primary">Подтвердить</button>
+                            <a href="{% url 'contest_management' %}" class="btn btn-secondary">Отмена</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <h2 class="text-center my-3 display-2">Тесты</h2>
+            <div class="card my-5">
+                    <div class="card-body">
+                        <table class="table my-3 table-bordered text-center table-striped ">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col" class="col-md-5 align-middle">Тест</th>
+                                <th scope="col" class="col-md-5 align-middle">Ответ</th>
+                                <th scope="col" class="align-middle">Является примером</th>
+                                <th scope="col" class="align-middle">Удалить</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for test in tests %}
+                                    <tr>
+                                    <td>{{test.1}}</td>
+                                    <td>{{test.2}}</td>
+                                    <td><input type="checkbox" id="{{ test.0 }}" class="form-check-input is_example"{% for j in examples %} {% if j.input == test.1 %}checked{% endif %}{% endfor %}></td>
+                                    <td><a href="#" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i></a></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% if tests.has_other_pages %}
+                        <nav aria-label="Page navigation example">
+                      <ul class="pagination">
+                        {% if tests.has_previous %}
+                          <li class="page-item"><a class="page-link" href="?page={{ tests.previous_page_number }}">&laquo;</a></li>
+                        {% else %}
+                          <li class=" page-item  disabled"><a class="page-link" href="#">&laquo;</a></li>
+                        {% endif %}
+                        {% for i in tests.paginator.page_range %}
+                          {% if tests.number == i %}
+                              <li class=" page-item disabled"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                          {% else %}
+                            <li class="page-item "><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                          {% endif %}
+                        {% endfor %}
+                        {% if tests.has_next %}
+                          <li class="page-item  "><a class="page-link" href="?page={{ tests.next_page_number }}">&raquo;</a></li>
+                        {% else %}
+                          <li class=" page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
+                        {% endif %}
+                      </ul>
+                        </nav>
+                    {% endif %}
+                </div>
+            </div>
+
+{% endblock %}

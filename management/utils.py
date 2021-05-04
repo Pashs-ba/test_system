@@ -62,3 +62,20 @@ def create_ans(name: str, path_ans: str, path_test: str):
         print(output.decode(), _.decode())
         with open(os.path.join(path_ans, i), 'w') as f:
             f.write(output.decode())
+
+
+def get_tests(pk: str) -> list:
+    dir = os.path.join(settings.BASE_DIR, pk)
+    tests = []
+    id = []
+    ans = []
+    test_dir = os.path.join(dir, 'tests')
+    for i in os.listdir(test_dir):
+        id.append(i)
+        with open(os.path.join(test_dir, i), 'r') as f:
+            tests.append(f.read())
+    ans_dir = os.path.join(dir, 'ans')
+    for i in os.listdir(ans_dir):
+        with open(os.path.join(ans_dir, i), 'r') as f:
+            ans.append(f.read())
+    return list(zip(id, tests, ans))
