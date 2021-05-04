@@ -8,6 +8,13 @@ import os
 
 
 def upload_file(file: InMemoryUploadedFile, path):
+    """
+    Upload files from form
+
+    :param file: request.FILE['<name>']
+    :param path: way to save
+    :return:
+    """
     if not os.path.exists(path):
         os.mkdir(path)
     with open(os.path.join(path, file.name), 'wb') as f:

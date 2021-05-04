@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from core.decorators import admin_only
-from .utils import create_user, add_tests
+from .utils import create_user, add_tests, create_ans
 from core.models import *
 from django.db import transaction
 from django.contrib import messages
@@ -8,6 +8,8 @@ from .forms import CompetitionForm, ContestForm
 from core.utils import upload_file
 from django.conf import settings
 import os.path
+import shutil
+from threading import Thread
 
 
 @admin_only
@@ -97,7 +99,8 @@ def update_competition(request, pk):
             return redirect('competition_management')
     else:
 
-        return render(request, 'competitions/competition_updating.html', {'form': CompetitionForm(instance=Competitions.objects.get(pk=pk))})
+        return render(request, 'competitions/competition_updating.html',
+                      {'form': CompetitionForm(instance=Competitions.objects.get(pk=pk))})
 
 
 @admin_only
@@ -112,6 +115,7 @@ def contest_delete(request, pk):
 
         Contests.objects.get(pk=pk).delete()
         messages.success(request, 'Successful delete contest')
+        shutil.rmtree(os.path.join(settings.BASE_DIR, f'{pk}'))
         return redirect('contest_management')
     else:
         return render(request, 'contests/contest_deleting.html')
@@ -131,7 +135,10 @@ def create_contest(request):
             upload_file(request.FILES.get('tests'), os.path.join(settings.BASE_DIR, f'{pk}\\tests'))
             upload_file(request.FILES.get('ideal_ans'), os.path.join(settings.BASE_DIR, f'{pk}'))
             add_tests(request.FILES.get('tests').name, os.path.join(settings.BASE_DIR, f'{pk}\\tests'))
-
+            Thread(target=create_ans,
+                   args=(os.path.join(os.path.join(settings.BASE_DIR, f'{pk}\\'), request.FILES.get('ideal_ans').name),
+                         os.path.join(settings.BASE_DIR, f'{pk}\\ans'),
+                         os.path.join(settings.BASE_DIR, f'{pk}\\tests'))).start()
             messages.success(request, 'success')
             return redirect('contest_management')
         else:
