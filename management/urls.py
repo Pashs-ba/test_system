@@ -12,6 +12,7 @@ urlpatterns = [path('user_panel', user_panel, name='user-management'),
                path('contest_management', contest_management, name='contest_management'),
                path('delete_contest/<int:pk>', contest_delete, name='delete_contest'),
                path('contest_creating', create_contest, name='contest_creating'),
-               path('contest/<int:pk>', contest_page, name='contest_page')
+               path('contest/<int:pk>', contest_page, name='contest_page'),
+               path('contest/delete_test/<int:pk>', delete_test, name='delete_test')
                ]
 

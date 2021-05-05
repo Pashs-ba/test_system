@@ -161,3 +161,15 @@ def contest_page(request, pk):
                                                               })
 
 
+@transaction.atomic
+@admin_only
+def delete_test(request, pk):
+    if request.method == "POST":
+        c_pk = Test.objects.get(pk=pk).contest.pk
+        Test.objects.get(pk=pk).delete()
+        messages.success(request, 'Successful delete test')
+        return redirect('contest_page', c_pk)
+    else:
+
+        return render(request, 'contests/test_deleting.html', context={'pk':Test.objects.get(pk=pk).contest.pk})
+

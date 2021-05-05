@@ -34,8 +34,8 @@
                         <tr>
                         <td>{{test.input}}</td>
                         <td>{{test.output}}</td>
-                        <td><input type="checkbox" id="{{ test.pk}}" onchange="make_example(this)" class="form-check-input is_example"{% for j in examples %} {% if j.input == test.1 %}checked{% endif %}{% endfor %}></td>
-                        <td><a href="#" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i></a></td>
+                        <td><input type="checkbox" id="{{ test.pk}}" onchange="make_example(this)" class="form-check-input is_example"{% if test.is_example %} checked{% endif %}></td>
+                        <td><a href="{% url 'delete_test' test.pk %}" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i></a></td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -63,7 +63,17 @@
           </ul>
             </nav>
         {% endif %}
-    </div>
+        <div class="card-body my-3">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="addTest">Email address</label>
+                <input type="file" class="form-control" id="addTest" accept="">
+
+            </div>
+        </form>
+        </div>
+        </div>
 </div>
 <script>
     function make_example(that){
