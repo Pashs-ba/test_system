@@ -4,6 +4,11 @@ from django.contrib.auth.models import PermissionsMixin
 from .managers import UserManager
 
 
+def upload(instance, filename):
+    print(instance)
+    return f'contests/{instance.name}/{filename}'
+
+
 class Users(AbstractBaseUser, PermissionsMixin):
     username = models.CharField('Username', unique=True, max_length=1024)
 
@@ -35,10 +40,11 @@ class Passwords(models.Model):
 
 
 class Contests(models.Model):
-    name = models.CharField(max_length=1024, verbose_name="Название")
+    name = models.CharField(max_length=1024, verbose_name="Название", unique=True)
     description = models.TextField(null=True, verbose_name='Описание')
     time_limit = models.IntegerField(default=1, verbose_name='Ограничение по времени, секунды')
     memory_limit = models.IntegerField(default=256, verbose_name='Ограничение по памяти, MB')
+    ideal_ans = models.FileField(verbose_name='Идеальное решение', upload_to=upload)
 
     class Meta:
         verbose_name = 'Contest'
@@ -80,7 +86,8 @@ class Solutions(models.Model):
         return f'{self.user} {self.contest} {self.result}'
 
 
-class TestExamples(models.Model):
+class Test(models.Model):
     contest = models.ForeignKey(Contests, on_delete=models.CASCADE)
     input = models.TextField()
-    output = models.TextField()
+    output = models.TextField(null=True)
+    is_example = models.BooleanField(default=False)

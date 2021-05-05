@@ -114,9 +114,9 @@ def contest_management(request):
 def contest_delete(request, pk):
     if request.method == "POST":
 
-        Contests.objects.get(pk=pk).delete()
         messages.success(request, 'Successful delete contest')
-        shutil.rmtree(os.path.join(settings.BASE_DIR, f'{pk}'))
+        shutil.rmtree(os.path.join(settings.BASE_DIR, f'contests/{Contests.objects.get(pk=pk).name}'))
+        Contests.objects.get(pk=pk).delete()
         return redirect('contest_management')
     else:
         return render(request, 'contests/contest_deleting.html')
@@ -127,21 +127,13 @@ def contest_delete(request, pk):
 def create_contest(request):
     if request.method == "POST":
         form = ContestCreationForm(request.POST, request.FILES)
-        # print(form)
-        print(form.errors)
         if form.is_valid():
             form.save()
-            pk = Contests.objects.get(name=request.POST['name']).pk
-
-            os.mkdir(os.path.join(settings.BASE_DIR, f'{pk}\\'))
-            upload_file(request.FILES.get('tests'), os.path.join(settings.BASE_DIR, f'{pk}\\tests'))
-            upload_file(request.FILES.get('ideal_ans'), os.path.join(settings.BASE_DIR, f'{pk}'))
-
-            add_tests(request.FILES.get('tests').name, os.path.join(settings.BASE_DIR, f'{pk}\\tests'))
+            pk = Contests.objects.get(name=request.POST['name']).name
+            upload_file(request.FILES.get('tests'), os.path.join(settings.BASE_DIR, f'contests/{pk}'))
+            add_tests(request.FILES.get('tests').name, os.path.join(settings.BASE_DIR, f'contests/{pk}'), pk)
             Thread(target=create_ans,
-                   args=(os.path.join(os.path.join(settings.BASE_DIR, f'{pk}\\'), request.FILES.get('ideal_ans').name),
-                         os.path.join(settings.BASE_DIR, f'{pk}\\ans'),
-                         os.path.join(settings.BASE_DIR, f'{pk}\\tests'))).start()
+                   args=(pk, os.path.join(settings.BASE_DIR, f'contests/{pk}/{request.FILES.get("ideal_ans").name}'))).start()
             messages.success(request, 'success')
             return redirect('contest_management')
 
@@ -160,11 +152,12 @@ def contest_page(request, pk):
             return redirect('contest_management')
     else:
         page = request.GET.get('page', 1)
-        print(page)
-        tests = get_tests(str(pk))
+
+        tests = Test.objects.filter(contest=Contests.objects.get(pk=pk))
 
         return render(request, 'contests/contest_page.html', {'form': ContestUpdateForm(instance=Contests.objects.get(pk=pk)),
                                                               'tests': Paginator(tests, 5).page(page),
-                                                              'examples': TestExamples.objects.all()})
+                                                              'examples': Test.objects.all(),
+                                                              })
 
 

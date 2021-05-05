@@ -1,4 +1,4 @@
-from core.models import Users, Passwords
+from core.models import Users, Passwords, Test, Contests
 from django.conf import settings
 import string
 import random
@@ -6,6 +6,7 @@ import zipfile
 import os
 import shutil
 from subprocess import Popen, PIPE
+
 
 
 def create_user() -> Passwords:
@@ -30,7 +31,7 @@ def create_user() -> Passwords:
             return a
 
 
-def add_tests(name: str, path: str):
+def add_tests(name: str, path: str, pk: str):
     """
     Unpack tests from archive to folder
 
@@ -39,29 +40,24 @@ def add_tests(name: str, path: str):
     :return:
 
     """
-    with zipfile.ZipFile(os.path.join(path, name)) as f:
-        f.extractall(path)
+    with zipfile.ZipFile(os.path.join(path, name), 'r') as archive:
+        for i in archive.namelist():
+            if i[-1] != '/':
+                with archive.open(i, 'r') as f:
+                    test = Test(contest=Contests.objects.get(name=pk), input=f.read().decode())
+                    test.save()
     os.remove(os.path.join(path, name))
-    for i in os.listdir(path):
-        if os.path.isdir(os.path.join(path, i)):
-            for j in os.listdir(os.path.join(path, i)):
-                shutil.move(os.path.join(os.path.join(path, i), j), path)
-            os.rmdir(os.path.join(path, i))
 
 
-def create_ans(name: str, path_ans: str, path_test: str):
-    if not os.path.exists(path_ans):
-        os.mkdir(path_ans)
-    for i in os.listdir(path_test):
-        p = os.path.join(path_test, i)
-        process = Popen(['python', name], stdout=PIPE, stderr=PIPE, stdin=PIPE)
-        with open(p, 'r') as f:
-            process.communicate(input=f.read().encode())
+def create_ans(pk: str, path_ideal: str):
+    tests = Test.objects.filter(contest=Contests.objects.get(name=pk))
+    for i in tests:
+        process = Popen(['python', path_ideal], stdout=PIPE, stderr=PIPE, stdin=PIPE)
+        process.communicate(input=i.input.encode())
         process.wait()
         output, _ = process.communicate()
-        print(output.decode(), _.decode())
-        with open(os.path.join(path_ans, i), 'w') as f:
-            f.write(output.decode())
+        i.output = output.decode()
+        i.save()
 
 
 def get_tests(pk: str) -> list:

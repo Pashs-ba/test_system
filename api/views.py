@@ -1,21 +1,25 @@
-from django.shortcuts import render, redirect
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework.status import HTTP_200_OK
-from core.utils import upload_file
-import zipfile
-import platform
+from django.shortcuts import render, redirect, HttpResponse
+from django.db import transaction
+from core.decorators import admin_only
+from django.views.decorators.http import require_http_methods
+from django.conf import settings
+from core.models import Test
 import os
 
 
-@api_view(['POST'])
-def create_test(request, pk):
-    upload_file(request.FILES['tests'], f'contests/{pk}/tests/{pk}.zip')
-    # upload_file(request.FILES['checker'], f'contest/{pk}') Need?
-    upload_file(request.FILES['ideal_answer'], f'contests/{pk}.cpp')
-    with zipfile.ZipFile(f'contests/{pk}/tests', 'r') as zip_f:
-        zip_f.extractall(f'contests/{pk}/tests')
-    return Response(status=HTTP_200_OK)
+@admin_only
+@require_http_methods(["POST"])
+def make_example(request):
+    pk = request.POST['pk']
+    test = Test.objects.get(pk=pk)
+    test.is_example = not test.is_example
+    test.save()
+    return HttpResponse('OK')
+
+
+
+
+
 
 
 
