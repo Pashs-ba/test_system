@@ -11,8 +11,8 @@
             {{ form|crispy }}
 
             <div class="my-3">
-                <button type="submit" class="btn btn-primary">Подтвердить</button>
-                <a href="{% url 'contest_management' %}" class="btn btn-secondary">Отмена</a>
+                <button type="submit" class="btn btn-primary">Изменить</button>
+
             </div>
         </form>
     </div>
@@ -33,7 +33,7 @@
                     {% for test in tests %}
                         <tr>
                         <td>{{test.input}}</td>
-                        <td>{{test.output}}</td>
+                        <td>{% if test.output == None %}Генерируем ответ...{% else %}{{test.output}}{% endif %}</td>
                         <td><input type="checkbox" id="{{ test.pk}}" onchange="make_example(this)" class="form-check-input is_example"{% if test.is_example %} checked{% endif %}></td>
                         <td><a href="{% url 'delete_test' test.pk %}" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i></a></td>
                         </tr>
@@ -41,7 +41,7 @@
                 </tbody>
             </table>
         {% if tests.has_other_pages %}
-            <nav aria-label="Page navigation example">
+            <nav aria-label="Page navigation example" class="d-flex justify-content-center">
           <ul class="pagination">
             {% if tests.has_previous %}
               <li class="page-item"><a class="page-link" href="?page={{ tests.previous_page_number }}">&laquo;</a></li>
@@ -63,13 +63,31 @@
           </ul>
             </nav>
         {% endif %}
-        <div class="card-body my-3">
-        <form method="POST">
+        <div class="my-3">
+        <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
+            <input type="text" name="new_tests" hidden value="heh">
             <div class="form-group">
-                <label for="addTest">Email address</label>
-                <input type="file" class="form-control" id="addTest" accept="">
+                <label for="addTest">Добавить новых тестов, все так же в .zip архиве</label>
+                <input type="file" class="form-control my-3" id="addTest" accept=".zip" name="new_tests">
 
+            </div>
+            <div class="my-3">
+                <button type="submit" class="btn btn-primary">Отправить</button>
+            </div>
+        </form>
+        </div>
+        <div class="my-3">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="text" name="new_ideal" hidden value="heh">
+            <div class="form-group">
+                <label for="new_ideal">Изменить идеальное решение</label>
+                <input type="file" class="form-control my-3" id="new_ideal" accept="{{acceptable}}" name="new_ideal">
+
+            </div>
+            <div class="my-3">
+                <button type="submit" class="btn btn-primary">Отправить</button>
             </div>
         </form>
         </div>

@@ -145,19 +145,42 @@ def create_contest(request):
 @admin_only
 def contest_page(request, pk):
     if request.method == 'POST':
-        form = ContestUpdateForm(request.POST, request.FILES, instance=Contests.objects.get(pk=pk))
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'success')
-            return redirect('contest_management')
+        if request.POST.get('new_tests'):
+            name = Contests.objects.get(pk=pk).name
+            upload_file(request.FILES.get('new_tests'), os.path.join(settings.BASE_DIR, f'contests/{name}'))
+            add_tests(request.FILES.get('new_tests').name, os.path.join(settings.BASE_DIR, f'contests/{name}'), name)
+
+            Thread(target=create_ans,
+                   args=(name, os.path.join(settings.BASE_DIR, str(Contests.objects.get(pk=pk).ideal_ans)).replace('/', '\\'))).start()
+            return redirect('contest_page', pk)
+        elif request.POST.get('new_ideal'):
+            a = Contests.objects.get(pk=pk)
+            old = str(a.ideal_ans).replace('/', '\\')
+            a.ideal_ans = request.FILES['new_ideal']
+            a.save()
+            os.remove(os.path.join(settings.BASE_DIR, old))
+            Thread(target=create_ans,
+                   args=(a.name, os.path.join(settings.BASE_DIR, str(Contests.objects.get(pk=pk).ideal_ans)).replace('/',
+                                                                                                                   '\\'))).start()
+            return redirect('contest_page', pk)
+        else:
+            form = ContestUpdateForm(request.POST, instance=Contests.objects.get(pk=pk))
+            if form.is_valid():
+                if request.POST['name'] != Contests.objects.get(pk=pk).name:
+                    name = Contests.objects.get(pk=pk).name
+                    os.rename(os.path.join(settings.BASE_DIR, f'contests\\{name}'), os.path.join(settings.BASE_DIR, f'contests\\{request.POST["name"]}'))
+
+                form.save()
+
+                messages.success(request, 'success')
+                return redirect('contest_management')
     else:
         page = request.GET.get('page', 1)
-
         tests = Test.objects.filter(contest=Contests.objects.get(pk=pk))
-
         return render(request, 'contests/contest_page.html', {'form': ContestUpdateForm(instance=Contests.objects.get(pk=pk)),
-                                                              'tests': Paginator(tests, 5).page(page),
+                                                              'tests': Paginator(tests, 10).page(page),
                                                               'examples': Test.objects.all(),
+                                                              'acceptable': settings.ACCEPTABLE_FORMATS
                                                               })
 
 
@@ -171,5 +194,5 @@ def delete_test(request, pk):
         return redirect('contest_page', c_pk)
     else:
 
-        return render(request, 'contests/test_deleting.html', context={'pk':Test.objects.get(pk=pk).contest.pk})
+        return render(request, 'contests/test_deleting.html', context={'pk': Test.objects.get(pk=pk).contest.pk})
 

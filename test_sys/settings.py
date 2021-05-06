@@ -127,9 +127,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_DIRS = ['core/static',
+               '/static',
+               'management/static'
                ]
 
 USERNAME_LENGTH = 2
 PASSWORD_LENGTH = 5
 DATETIME_FORMAT = "%d.%m.%Y %H:%M"
 
+ACCEPTABLE_FORMATS = ".py"

@@ -1,6 +1,7 @@
 from django.forms import ModelForm, DateTimeInput, FileField, FileInput
 from .views import Competitions, Contests
 import datetime
+from django.conf import settings
 
 
 class CompetitionForm(ModelForm):
@@ -16,12 +17,18 @@ class ContestCreationForm(ModelForm):
         model = Contests
         fields = '__all__'
         widgets = {
-            'ideal_ans': FileInput(attrs={'accept': '.py,.cpp,.pas,.c'})
+            'ideal_ans': FileInput(attrs={'accept': settings.ACCEPTABLE_FORMATS,
+                                          'class': 'form-control'})
         }
-    tests = FileField(widget=FileInput(attrs={'accept': '.zip'}), label='Набор тестов в .zip архиве')
+    tests = FileField(widget=FileInput(attrs={'accept': '.zip',
+                                              'class': 'form-control'}), label='Набор тестов в .zip архиве')
 
 
 class ContestUpdateForm(ModelForm):
     class Meta:
         model = Contests
-        fields = '__all__'
+        exclude = ['ideal_ans',]
+        # widgets = {
+        #     'ideal_ans': FileInput(attrs={'accept': settings.ACCEPTABLE_FORMATS,
+        #                                   'class': 'form-control'})
+        # }
