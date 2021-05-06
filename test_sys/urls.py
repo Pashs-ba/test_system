@@ -21,4 +21,5 @@ urlpatterns = [
     path('', include('core.urls')),
     path('management/', include('management.urls')),
     path('api/', include('api.urls')),
+    path('competition/', include('competition.urls'))
 ]

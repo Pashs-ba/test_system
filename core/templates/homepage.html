@@ -3,7 +3,30 @@
 {% block title %}Homepage{% endblock %}
 {% block main %}
 
-    <h1 class = 'display-1'>Hello</h1>
+    <h1 class = 'display-1 text-center'>Мы все Победители!</h1>
+    {% if user.is_staff %}
+        <div class="card my-3 align-middle" style="">
+          <div class="card-body text-center">
+            <h5 class="card-title text-center">Перейти на панель управления</h5>
+
+            <a href="{% url 'management-page' %}" class="btn btn-primary text-center">Перейти</a>
+          </div>
+        </div>
+    {% else %}
+        <div class="row my-4 d-flex justify-content-center">
+            {% for competiton in user.competitions_set.all%}
+                <div class="col-md-4 col-sm-6 col-lg-3 my-3 text-center">
+                    <div class="card" >
+                      <div class="card-body">
+                        <h5 class="card-title">{{ competiton.name }}</h5>
+                        <p class="card-text">{{ competiton.description }}</p>
+                        <a href="{% url 'competition_page' competiton.pk %}" class="btn btn-primary text-center">Перейти</a>
+                      </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 
 
 {% endblock %}

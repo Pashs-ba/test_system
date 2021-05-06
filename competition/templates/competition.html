@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ competition.name }}{% endblock %}
+{% block main %}
+       <h2 class="display-2 my-3 text-center">{{ competition.name }}</h2>
+       <table class="table my-3 table-striped table-bordered">
+          <thead class="table-dark text-center">
+            <tr>
+              <th scope="col" class="col-9">Название</th>
+              <th scope="col" class="col-1">Время</th>
+              <th scope="col" class="col-1">Память</th>
+              <th scope="col" class="col-1">Статус</th>
+
+            </tr>
+          </thead>
+          <tbody>
+          {% for contest in competition.contests.all %}
+            <tr>
+                <th>{{ contest.name }}</th>
+                <th class="text-center">{{ contest.time_limit }} с</th>
+                <th class="text-center">{{ contest.memory_limit }} MB</th>
+                <th class="text-center"> - </th>
+            </tr>
+          {% endfor %}
+          </tbody>
+       </table>
+{% endblock %}

@@ -27,6 +27,7 @@
         <option value="$MODULE_DIR$/templates" />
         <option value="$MODULE_DIR$/core/templates" />
         <option value="$MODULE_DIR$/management/templates" />
+        <option value="$MODULE_DIR$/competition/templates" />
       </list>
     </option>
   </component>
