@@ -4,7 +4,12 @@ from django.contrib import messages
 from .utils import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
+from .models import Competitions
+import datetime
+import pytz
+from django.utils import timezone
 
+utc = pytz.UTC
 
 def make_submission(request):
     if request.method == "POST":
@@ -20,7 +25,22 @@ def make_submission(request):
 
 @login_required(login_url='/login')
 def homepage(request):
-    return render(request, 'homepage.html')
+    context = {}
+    if not request.user.is_staff:
+        status = {}
+        for i in Competitions.objects.filter(participants=request.user):
+            now_local = timezone.datetime.now(i.start_time.tzinfo)
+            if i.is_unlimited:
+                status.update({i.pk: 'ОТКРЫТО'})
+            elif i.start_time < now_local < i.end_time:
+                status.update({i.pk: 'ИДЕТ'})
+            elif i.start_time > now_local > i.end_time:
+                status.update({i.pk: 'НЕ НАЧАЛОСЬ'})
+            else:
+                status.update({i.pk: 'ЗАКОНЧИЛОСЬ'})
+        context.update({'status': status})
+
+    return render(request, 'homepage.html', context)
 
 
 def login_user(request):

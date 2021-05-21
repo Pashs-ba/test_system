@@ -25,7 +25,7 @@
                 <tr>
 
                     <td>{{ competition.name }}</td>
-                    {% if competition.start_time is None %}
+                    {% if competition.is_unlimited %}
                         <td colspan="2" class="text-center">Бессрочно</td>
                     {% else %}
                         <td>{{ competition.start_time }}</td>

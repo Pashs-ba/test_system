@@ -46,6 +46,7 @@ class Contests(models.Model):
     memory_limit = models.IntegerField(default=256, verbose_name='Ограничение по памяти, MB')
     ideal_ans = models.FileField(verbose_name='Идеальное решение', upload_to=upload)
 
+
     class Meta:
         verbose_name = 'Contest'
         verbose_name_plural = 'Contests'
