@@ -29,15 +29,7 @@ def homepage(request):
     if not request.user.is_staff:
         status = {}
         for i in Competitions.objects.filter(participants=request.user):
-            now_local = timezone.datetime.now(i.start_time.tzinfo)
-            if i.is_unlimited:
-                status.update({i.pk: 'ОТКРЫТО'})
-            elif i.start_time < now_local < i.end_time:
-                status.update({i.pk: 'ИДЕТ'})
-            elif i.start_time > now_local > i.end_time:
-                status.update({i.pk: 'НЕ НАЧАЛОСЬ'})
-            else:
-                status.update({i.pk: 'ЗАКОНЧИЛОСЬ'})
+            status.update({i.pk: competition_status(i)})
         context.update({'status': status})
 
     return render(request, 'homepage.html', context)

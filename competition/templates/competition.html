@@ -3,6 +3,7 @@
 {% block title %}{{ competition.name }}{% endblock %}
 {% block main %}
        <h2 class="display-2 my-3 text-center">{{ competition.name }}</h2>
+    {% if status == 'ОТКРЫТО' or status == 'ИДЕТ' %}
        <table class="table my-3 table-striped table-bordered">
           <thead class="table-dark text-center">
             <tr>
@@ -10,13 +11,12 @@
               <th scope="col" class="col-1">Время</th>
               <th scope="col" class="col-1">Память</th>
               <th scope="col" class="col-1">Статус</th>
-
             </tr>
           </thead>
           <tbody>
           {% for contest in competition.contests.all %}
             <tr>
-                <th>{{ contest.name }}</th>
+                <th><a href="{% url %}">{{ contest.name }}</a></th>
                 <th class="text-center">{{ contest.time_limit }} с</th>
                 <th class="text-center">{{ contest.memory_limit }} MB</th>
                 <th class="text-center"> - </th>
@@ -24,4 +24,26 @@
           {% endfor %}
           </tbody>
        </table>
+    {% else %}
+        <h3 class="display-3 my-3 text-center">{{ status }}</h3>
+    {% endif %}
+    {% if status == 'НЕ НАЧАЛОСЬ' %}
+        <script>
+        function aa(){
+            $.ajax({
+                url: '{% url 'is_open' competition.pk %}',
+                data: {},
+                success: function (data){
+                    if (data['open']) {
+                        document.location.reload();
+                    }
+                    console.log(data)
+                },
+                method: 'get'
+            })
+
+        }
+        setInterval(aa, 5000)
+        </script>
+    {% endif %}
 {% endblock %}

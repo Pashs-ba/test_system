@@ -5,7 +5,8 @@ from django.conf import settings
 import string
 import random
 import os
-
+from .models import Competitions
+from django.utils import timezone
 
 def upload_file(file: InMemoryUploadedFile, path):
     """
@@ -22,6 +23,16 @@ def upload_file(file: InMemoryUploadedFile, path):
             f.write(i)
 
 
-
+def competition_status(competition: Competitions):
+    now_local = timezone.datetime.now(competition.start_time.tzinfo)
+    print(competition.start_time, now_local, competition.end_time)
+    if competition.is_unlimited:
+        return 'ОТКРЫТО'
+    elif competition.start_time < now_local < competition.end_time:
+        return 'ИДЕТ'
+    elif competition.start_time > now_local:
+        return 'НЕ НАЧАЛОСЬ'
+    else:
+        return 'ЗАКОНЧИЛОСЬ'
 
 
