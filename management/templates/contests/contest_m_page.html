@@ -11,7 +11,7 @@
             {{ form|crispy }}
 
             <div class="my-3">
-                <button type="submit" class="btn btn-primary">Изменить</button>
+                <button type="submit" class="btn btn-primary">Редактировать</button>
 
             </div>8965
         </form>
@@ -68,7 +68,7 @@
             {% csrf_token %}
             <input type="text" name="new_tests" hidden value="heh">
             <div class="form-group">
-                <label for="addTest">Добавить новых тестов, все так же в .zip архиве</label>
+                <label for="addTest">Добавить новых тестов (по прежнему в .zip архиве)</label>
                 <input type="file" class="form-control my-3" id="addTest" accept=".zip" name="new_tests">
 
             </div>
