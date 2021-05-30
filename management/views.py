@@ -177,11 +177,11 @@ def contest_page(request, pk):
     else:
         page = request.GET.get('page', 1)
         tests = Test.objects.filter(contest=Contests.objects.get(pk=pk))
-        return render(request, 'contests/contest_page.html', {'form': ContestUpdateForm(instance=Contests.objects.get(pk=pk)),
+        return render(request, 'contests/contest_m_page.html', {'form': ContestUpdateForm(instance=Contests.objects.get(pk=pk)),
                                                               'tests': Paginator(tests, 10).page(page),
                                                               'examples': Test.objects.all(),
                                                               'acceptable': settings.ACCEPTABLE_FORMATS
-                                                              })
+                                                                })
 
 
 @transaction.atomic

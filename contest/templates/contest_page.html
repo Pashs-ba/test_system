@@ -1,5 +1,27 @@
 {% extends 'base.html' %}
 
 {% block main %}
-    <h1 class="text-center display-1">{{ competition.name }}</h1>
+    <h1 class="text-center display-1">{{ contest.name }}</h1>
+    <div class="text-center mt-3">Ограничения по времени: <b>{{ contest.time_limit }} сек.</b></div>
+    <div class="text-center mb-3">Ограничения по памяти: <b>{{ contest.memory_limit }} MB</b></div>
+    <div>{{ contest.description }}</div>
+    <div class="my-3">
+    <div><b>Входные данные</b></div>
+    <div>{{ contest.input }}</div>
+    </div>
+    <div class="my-3">
+    <div><b>Выходные данные</b></div>
+    <div>{{ contest.output }}</div>
+    </div>
+    <div class="my-3">
+        <div><b>Примеры</b></div>
+        {% for i in examples %}
+        <table class="table my-3 border border-dark">
+            <thead><tr class=""><td>Входные данные</td></tr></thead>
+            <tr class="table-secondary"><td>{{ i.input }}</td></tr>
+            <thead><tr class=""><td>Выходные данные</td></tr></thead>
+            <tr class="table-secondary border border-dark"><td>{{ i.output }}</td></tr>
+        </table>
+        {% endfor %}
+    </div>
 {% endblock %}

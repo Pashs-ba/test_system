@@ -16,7 +16,7 @@
           <tbody>
           {% for contest in competition.contests.all %}
             <tr>
-                <th><a href="{% url %}">{{ contest.name }}</a></th>
+                <th><a href="{% url 'contest_page' contest.pk %}" style="text-decoration: none; color: black">{{ contest.name }}</a></th>
                 <th class="text-center">{{ contest.time_limit }} с</th>
                 <th class="text-center">{{ contest.memory_limit }} MB</th>
                 <th class="text-center"> - </th>
