@@ -29,13 +29,20 @@
         <div class="text-center my-3"><label for="ans_area" class="text-right">Код решения: </label></div>
         <div id="editor" class="col-form-label" style="box-sizing: border-box; height: 370px; border: 1px solid rgb(170, 170, 170); width: 100% !important; display: block;"></div>
     </div>
-
+    <textarea hidden name="code" id="code"></textarea>
 
 </form>
 
 <script>
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/chrome");
-    editor.session.setMode("ace/mode/javascript");
+    editor.session.setMode("ace/mode/python");
+    editor.setOptions({
+                enableBasicAutocompletion: true
+            });
+    editor.session.on('change', function (delta){
+        document.getElementById('code').innerText = editor.getValue()
+        console.log(document.getElementById('code').innerText)
+    })
 </script>
 {% endblock %}
