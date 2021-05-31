@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<script src="https://pagecdn.io/lib/ace/1.4.12/ace.js"></script>
+<h2 class="display-2 text-center">Отослать решение</h2>
+<form class="text-center form my-3">
+    {% csrf_token %}
+    <div class="row align-items-center my-3">
+        <div class="col-3 "><label for="task" class="text-right">Выберите задачу: </label></div>
+        <div class="col-9 text-center"><select name="task" id="task" class="col-form-label form-control">
+            {% for i in competition.contests.all %}
+                {% if i.name == contest.name %}
+                    <option selected value="{{ i.pk }}">{{ i.name }}</option>
+                {% else %}
+                    <option value="{{ i.pk }}">{{ i.name }}</option>
+                {% endif %}
+            {% endfor %}
+        </select></div>
+    </div>
+    <div class="row align-items-center my-3">
+        <div class="col-3"><label for="task" class="text-right">Выберите язык: </label></div>
+        <div class="col-9 text-center"><select name="task" id="task" class="col-form-label form-control">
+            {% for i in langs%}
+                <option value="{{ i }}">{{ i }}</option>
+            {% endfor %}
+        </select></div>
+    </div>
+    <div class="my-3">
+        <div class="text-center my-3"><label for="ans_area" class="text-right">Код решения: </label></div>
+        <div id="editor" class="col-form-label" style="box-sizing: border-box; height: 370px; border: 1px solid rgb(170, 170, 170); width: 100% !important; display: block;"></div>
+    </div>
+
+
+</form>
+
+<script>
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/chrome");
+    editor.session.setMode("ace/mode/javascript");
+</script>
+{% endblock %}
