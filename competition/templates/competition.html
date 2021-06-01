@@ -2,9 +2,12 @@
 {% load static %}
 {% block title %}{{ competition.name }}{% endblock %}
 {% block main %}
-       <h2 class="display-2 my-3 text-center">{{ competition.name }}</h2>
+       <h2 class="display-2 text-center">{{ competition.name }}</h2>
     {% if status == 'ОТКРЫТО' or status == 'ИДЕТ' %}
-       <table class="table my-3 table-striped table-bordered">
+       <div class="text-center">
+       <a class="btn btn-primary my-4  btn-lg btn-block col-auto" href="{% url 'load_ans' competition.pk %}">Загрузить решение</a>
+       </div>
+       <table class="table table-striped table-bordered">
           <thead class="table-dark text-center">
             <tr>
               <th scope="col" class="col-9">Название</th>

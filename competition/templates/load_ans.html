@@ -37,12 +37,11 @@
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/chrome");
     editor.session.setMode("ace/mode/python");
-    editor.setOptions({
-                enableBasicAutocompletion: true
-            });
-    editor.session.on('change', function (delta){
+    {#editor.setOptions({#}
+    {#          ..0    enableBasicAutocompletion: true#}
+    {#        });#}
+    editor.session.on('change', function (_){
         document.getElementById('code').innerText = editor.getValue()
-        console.log(document.getElementById('code').innerText)
     })
 </script>
 {% endblock %}
