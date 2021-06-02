@@ -18,11 +18,12 @@
         </select></div>
     </div>
     <div class="row align-items-center my-3">
-        <div class="col-3"><label for="task" class="text-right">Выберите язык: </label></div>
-        <div class="col-9 text-center"><select name="task" id="task" class="col-form-label form-control">
-            {% for i in langs%}
-                <option value="{{ i }}">{{ i }}</option>
+        <div class="col-3"><label for="lang" class="text-right">Выберите язык: </label></div>
+        <div class="col-9 text-center"><select name="lang" id="lang" class="col-form-label form-control" onchange="change_lang()">
+            {% for i, j in langs.items%}
+                <option value="{{ j.0 }}">{{ i }}</option>
             {% endfor %}
+
         </select></div>
     </div>
     <div class="my-3">
@@ -30,18 +31,37 @@
         <div id="editor" class="col-form-label" style="box-sizing: border-box; height: 370px; border: 1px solid rgb(170, 170, 170); width: 100% !important; display: block;"></div>
     </div>
     <textarea hidden name="code" id="code"></textarea>
-
+    <div class="row align-items-center my-3">
+        <div class="col-3"><label for="task" class="text-right">Или загруженный файл: </label></div>
+        <div class="col-9 text-center"><input type="file" name="file" id="file" class="col-form-label form-control"></div>
+    </div>
 </form>
 
 <script>
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/chrome");
-    editor.session.setMode("ace/mode/python");
-    {#editor.setOptions({#}
-    {#          ..0    enableBasicAutocompletion: true#}
-    {#        });#}
+    editor.session.setMode("ace/mode/text");
+    editor.setOptions({
+              enableBasicAutocompletion: true
+            });
     editor.session.on('change', function (_){
         document.getElementById('code').innerText = editor.getValue()
     })
+
+
+
+
 </script>
+    <script>
+
+    function change_lang(){
+        const langs = {
+            {% for i, j in langs.items %}
+                '{{ j.0 }}': '{{ j.1 }}',
+            {% endfor %}
+        }
+        document.getElementById('file').setAttribute('accept', langs[document.getElementById('lang').value])
+    }
+    change_lang()
+    </script>
 {% endblock %}

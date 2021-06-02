@@ -137,5 +137,6 @@ USERNAME_LENGTH = 2
 PASSWORD_LENGTH = 5
 DATETIME_FORMAT = "%d.%m.%Y %H:%M"
 
-ACCEPTABLE_FORMATS = ".py"
-ACCEPTABLE_LANGUAGES = ['Python 3.9', ]
+ACCEPTABLE_FORMATS_IDEAL = ".py"
+ACCEPTABLE_LANGUAGES = {'Python 3.9': ['python', '.py'],
+                        'MS C++ 17': ['cpp', '.cpp']}

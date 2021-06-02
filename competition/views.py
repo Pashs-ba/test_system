@@ -15,6 +15,7 @@ def competition_page(request, pk):
 
 def load_ans(request, pk):
     competition = Competitions.objects.get(pk=pk)
+
     context = {
         'competition': competition,
         'langs': settings.ACCEPTABLE_LANGUAGES
