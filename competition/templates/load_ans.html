@@ -30,7 +30,7 @@
         <div class="text-center my-3"><label for="ans_area" class="text-right">Код решения: </label></div>
         <div id="editor" class="col-form-label" style="box-sizing: border-box; height: 370px; border: 1px solid rgb(170, 170, 170); width: 100% !important; display: block;"></div>
     </div>
-    <textarea hidden name="code" id="code"></textarea>
+    <textarea hidden name="code" id="code" onchange="disable_file()"></textarea>
     <div class="row align-items-center my-3">
         <div class="col-3"><label for="task" class="text-right">Или загруженный файл: </label></div>
         <div class="col-9 text-center"><input type="file" name="file" id="file" class="col-form-label form-control"></div>
@@ -40,7 +40,7 @@
 <script>
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/chrome");
-    editor.session.setMode("ace/mode/text");
+    editor.session.setMode("ace/mode/python");
     editor.setOptions({
               enableBasicAutocompletion: true
             });
@@ -52,16 +52,27 @@
 
 
 </script>
-    <script>
+<script>
 
-    function change_lang(){
-        const langs = {
-            {% for i, j in langs.items %}
-                '{{ j.0 }}': '{{ j.1 }}',
-            {% endfor %}
-        }
-        document.getElementById('file').setAttribute('accept', langs[document.getElementById('lang').value])
+function change_lang(){
+    const langs = {
+        {% for i, j in langs.items %}
+            '{{ j.0 }}': '{{ j.1 }}',
+        {% endfor %}
     }
-    change_lang()
-    </script>
+    editor.session.setMode('ace/mode/'+document.getElementById('lang').value)
+    document.getElementById('file').setAttribute('accept', langs[document.getElementById('lang').value])
+}
+change_lang()
+</script>
+<script>
+function disable_file(){
+    if (document.getElementById('code').value !== ''){
+        document.getElementById('file').setAttribute("disabled", "disabled")
+    }else{
+        document.getElementById('file').removeAttribute("disabled")
+    }
+
+}
+</script>
 {% endblock %}

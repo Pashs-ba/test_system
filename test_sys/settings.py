@@ -139,4 +139,4 @@ DATETIME_FORMAT = "%d.%m.%Y %H:%M"
 
 ACCEPTABLE_FORMATS_IDEAL = ".py"
 ACCEPTABLE_LANGUAGES = {'Python 3.9': ['python', '.py'],
-                        'MS C++ 17': ['cpp', '.cpp']}
+                        'MS C++ 17': ['c_cpp', '.cpp']}
