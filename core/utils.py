@@ -8,6 +8,7 @@ import os
 from .models import Competitions
 from django.utils import timezone
 
+
 def upload_file(file: InMemoryUploadedFile, path):
     """
     Upload files from form
