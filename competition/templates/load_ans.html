@@ -3,7 +3,7 @@
 {% block main %}
 <script src="https://pagecdn.io/lib/ace/1.4.12/ace.js"></script>
 <h2 class="display-2 text-center">Отослать решение</h2>
-<form class="text-center form my-3">
+<form class="text-center form my-3" enctype="multipart/form-data" method="post">
     {% csrf_token %}
     <div class="row align-items-center my-3">
         <div class="col-3 "><label for="task" class="text-right">Выберите задачу: </label></div>
@@ -35,6 +35,7 @@
         <div class="col-3"><label for="task" class="text-right">Или загруженный файл: </label></div>
         <div class="col-9 text-center"><input type="file" name="file" id="file" class="col-form-label form-control"></div>
     </div>
+    <button class="btn btn-primary">Отправить решение</button>
 </form>
 
 <script>
