@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
-from core.models import Competitions, Contests
-from core.utils import competition_status, upload_file, get_extension, get_next_name
+from core.models import Competitions, Contests, Solutions
+from core.utils import competition_status, upload_file
+from .utils import get_extension, get_next_name, save_solution
 from django.conf import settings
 from django.contrib import messages
 import os
@@ -21,15 +22,11 @@ def load_ans(request, pk):
         task = request.POST['task']
         lang = request.POST['lang']
         code = request.POST.get('code', None)
-        if not os.path.exists(f'{request.user.pk}\\'):
-            os.mkdir(f'{request.user.pk}\\')
-        name = get_next_name(f'{request.user.pk}\\')
-        ext = get_extension(lang)
-        if code == '\n' or code == '':
-            upload_file(request.FILES['file'], f'{request.user.pk}\\', name+ext)
-        else:
-            with open(f'{request.user.pk}\\'+name+ext, 'w') as f:
-                f.write(code)
+        solution_path = save_solution(request, lang, code)
+
+        solution = Solutions(user=request.user, contest=Contests.objects.get(pk=task), file_name=solution_path)
+        solution.save()
+
         messages.info(request, 'Решение отправленно на проверку')
         return redirect('competition_page', competition.pk)
     else:

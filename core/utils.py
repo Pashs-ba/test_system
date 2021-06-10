@@ -1,12 +1,9 @@
-from pathlib import PosixPath
-from django.core.files.uploadedfile import InMemoryUploadedFile
-from .models import Users
-from django.conf import settings
-import string
-import random
 import os
-from .models import Competitions
+
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.utils import timezone
+
+from .models import Competitions
 
 
 def upload_file(file: InMemoryUploadedFile, path, name):
@@ -36,17 +33,4 @@ def competition_status(competition: Competitions):
         return 'ЗАКОНЧИЛОСЬ'
 
 
-def get_extension(lang: str):
-    for i in settings.ACCEPTABLE_LANGUAGES:
-        if lang in settings.ACCEPTABLE_LANGUAGES[i]:
-            return settings.ACCEPTABLE_LANGUAGES[i][1]
-    raise ValueError('Lang not found')
 
-
-def get_next_name(path: str):
-    max = 0
-    for i in os.listdir(path):
-        if int(i.split('.')[0]) > max:
-            max = int(i.split('.')[0])
-
-    return str(max+1)
