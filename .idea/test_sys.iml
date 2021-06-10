@@ -20,7 +20,7 @@
       <excludeFolder url="file://$MODULE_DIR$/competition/migrations" />
       <excludeFolder url="file://$MODULE_DIR$/contest/migrations" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.8 (test_system)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.9 (test_system)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TemplatesService">
