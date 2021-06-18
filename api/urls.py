@@ -2,4 +2,5 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [path('make_example', make_example, name='make_example'),
-               path('status/<int:pk>', is_open, name='is_open')]
+               path('status/<int:pk>', is_open, name='is_open'),
+               path('solution', get_status, name='solution_status')]
