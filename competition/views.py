@@ -9,9 +9,14 @@ import os
 
 def competition_page(request, pk):
     competition = Competitions.objects.get(pk=pk)
+    solutions = {}
+    for i in Solutions.objects.filter(user=request.user, contest__in=competition.contests.all()).order_by('date'):
+        solutions[i.contest.pk] = i.result
+    print(solutions)
     context = {
         'competition': competition,
-        'solutions': 'heh'
+        'solutions': solutions,
+        'bad': ['TL', 'ML', 'WA', 'CE'],
     }
     context.update({'status': competition_status(competition)})
     return render(request, 'competition.html', context=context)

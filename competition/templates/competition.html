@@ -22,7 +22,19 @@
                 <th><a href="{% url 'contest_page' contest.pk %}" style="text-decoration: none; color: black">{{ contest.name }}</a></th>
                 <th class="text-center">{{ contest.time_limit }} с</th>
                 <th class="text-center">{{ contest.memory_limit }} MB</th>
-                <th class="text-center"> - </th>
+                {% for pk, result in solutions.items %}
+                    {% if pk == contest.pk %}
+                        {% if result in bad %}
+                            <th class="text-center table-danger">{{ result }}</th>
+                        {% elif result == 'OK'%}
+                            <th class="text-center table-success">{{ result }}</th>
+                        {% else %}
+                            <th class="text-center">{{ result }}</th>
+                        {% endif %}
+                    {% else %}
+                        <th class="text-center"> - </th>
+                    {% endif %}
+                {% endfor %}
             </tr>
           {% endfor %}
           </tbody>

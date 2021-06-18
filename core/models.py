@@ -81,6 +81,7 @@ class Solutions(models.Model):
     memory = models.IntegerField(null=True)
     result = models.CharField(max_length=1024, null=True)
     file_name = models.CharField(max_length=1024, null=True)
+    date = models.DateTimeField(verbose_name='Дата посылки', null=True)
 
     class Meta:
         verbose_name = 'Solution'
