@@ -25,9 +25,8 @@ def is_open(request, pk):
 
 @require_http_methods(["POST"])
 def get_status(request):
-    contest = request.POST['contest']
-    user = request.user
-    solution = Solutions.objects.get(user=user, contest=Contests.objects.get(pk=contest))
+    pk = request.POST['pk']
+    solution = Solutions.objects.get(pk=pk)
     return JsonResponse({'status': solution.result})
 
 
