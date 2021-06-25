@@ -4,24 +4,60 @@
     <h1 class="text-center display-1">{{ contest.name }}</h1>
     <div class="text-center mt-3">Ограничения по времени: <b>{{ contest.time_limit }} сек.</b></div>
     <div class="text-center mb-3">Ограничения по памяти: <b>{{ contest.memory_limit }} MB</b></div>
-    <div>{{ contest.description }}</div>
-    <div class="my-3">
-    <div><b>Входные данные</b></div>
-    <div>{{ contest.input }}</div>
-    </div>
-    <div class="my-3">
-    <div><b>Выходные данные</b></div>
-    <div>{{ contest.output }}</div>
-    </div>
-    <div class="my-3">
-        <div><b>Примеры</b></div>
-        {% for i in examples %}
-        <table class="table my-3 border border-dark">
-            <thead><tr class=""><td>Входные данные</td></tr></thead>
-            <tr class="table-secondary"><td>{{ i.input }}</td></tr>
-            <thead><tr class=""><td>Выходные данные</td></tr></thead>
-            <tr class="table-secondary border border-dark"><td>{{ i.output }}</td></tr>
-        </table>
-        {% endfor %}
+    <div class="row">
+        <div class="col-9">
+            <div>{{ contest.description }}</div>
+            <div class="my-3">
+            <div><b>Входные данные</b></div>
+            <div>{{ contest.input }}</div>
+            </div>
+            <div class="my-3">
+            <div><b>Выходные данные</b></div>
+            <div>{{ contest.output }}</div>
+            </div>
+            <div class="my-3">
+                <div><b>Примеры</b></div>
+                {% for i in examples %}
+                <table class="table my-3 border border-dark">
+                    <thead><tr class=""><td>Входные данные</td></tr></thead>
+                    <tr class="table-secondary"><td>{{ i.input }}</td></tr>
+                    <thead><tr class=""><td>Выходные данные</td></tr></thead>
+                    <tr class="table-secondary border border-dark"><td>{{ i.output }}</td></tr>
+                </table>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-3">
+            <table class="table">
+
+                <thead>
+                    <tr>
+                      <th scope="col" colspan="2">Ваши решения:</th>
+                    </tr>
+                </thead>
+                {% if not solutions %}
+                    <tbody>
+                    <tr>
+                        <td colspan="2">Тут ничего нет...</td>
+                    </tr>
+                    </tbody>
+                {% else %}
+                    <tbody>
+                    {% for i in solutions %}
+                        <tr>
+                            <td>{{i.date| date:'Y-m-d H:m:s'}}</td>
+                            {% if i.result in bad %}
+                                <td class=" text-center table-danger" style = "border-width: 2px">{{ i.result }}</td>
+                            {% elif i.result == 'OK'%}
+                                <td class=" text-center table-success" style = "border-width: 2px">{{ i.result }}</td>
+                            {% else %}
+                                <td class="text-center" style = "border-width: 2px">{{ i.result }}</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                {% endif %}
+            </table>
+        </div>
     </div>
 {% endblock %}
