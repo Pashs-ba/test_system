@@ -27,6 +27,7 @@ def save_solution(request, lang, code):
     if code == '\n' or code == '':
         upload_file(request.FILES['file'], f'{request.user.pk}\\', name + ext)
     else:
+        print(code)
         with open(f'{request.user.pk}\\' + name + ext, 'w') as f:
             f.write(code)
     return f'{request.user.pk}\\'+name+ext

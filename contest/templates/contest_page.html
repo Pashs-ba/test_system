@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="col-3">
-            <table class="table">
+            <table class="table table-hover">
 
                 <thead>
                     <tr>
@@ -45,7 +45,9 @@
                     <tbody>
                     {% for i in solutions %}
                         <tr>
-                            <td>{{i.date| date:'Y-m-d H:m:s'}}</td>
+                            <td><a href="{% url 'result_page' i.pk %}" style="text-decoration:
+                            none; color: black"
+                            >{{i.date| date:'Y-m-d H:m:s'}}</a></td>
                             {% if i.result in bad %}
                                 <td class=" text-center table-danger" style = "border-width: 2px">{{ i.result }}</td>
                             {% elif i.result == 'OK'%}

@@ -18,6 +18,7 @@ def competition_page(request, pk):
         'solutions': solutions,
         'bad': ['TL', 'ML', 'WA', 'CE'],
     }
+    # TODO fix ok solution
     context.update({'status': competition_status(competition)})
     return render(request, 'competition.html', context=context)
 
@@ -30,7 +31,8 @@ def load_ans(request, pk):
         code = request.POST.get('code', None)
         solution_path = save_solution(request, lang, code)
 
-        solution = Solutions(user=request.user, contest=Contests.objects.get(pk=task), file_name=solution_path)
+        solution = Solutions(user=request.user, contest=Contests.objects.get(pk=task),
+                             file_name=solution_path, lang=lang, result='Проверка')
         solution.save()
 
         messages.info(request, 'Решение отправленно на проверку')

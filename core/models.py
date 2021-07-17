@@ -77,11 +77,12 @@ class Competitions(models.Model):
 class Solutions(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     contest = models.ForeignKey(Contests, on_delete=models.CASCADE)
-    time = models.IntegerField(null=True)
+    lang = models.CharField(verbose_name="Язык", null=True, max_length=1024)
+    time = models.FloatField(null=True)
     memory = models.IntegerField(null=True)
     result = models.CharField(max_length=1024, null=True)
     file_name = models.CharField(max_length=1024, null=True)
-    date = models.DateTimeField(verbose_name='Дата посылки', null=True)
+    date = models.DateTimeField(verbose_name='Дата посылки', null=True, auto_now=True)
 
     class Meta:
         verbose_name = 'Solution'
