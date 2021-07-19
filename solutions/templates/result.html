@@ -1,6 +1,57 @@
 {% extends 'base.html' %}
 
 {% block main %}
-    <div class="row justify-content-md-center">
+    <script src="https://pagecdn.io/lib/ace/1.4.12/ace.js"></script>
+    <h2>Детали:</h2>
+    <div class="row my-3">
+        <div class="col-4">
+            <table class="table table-striped ">
+                <tbody>
+                    <tr>
+                        <td>Результат:</td>
+                        {% if solution.result in bad %}
+                            <td class="text-center table-danger">{{ solution.result }} </td>
+                        {% elif solution.result == 'OK'%}
+                            <td class="table-success">{{ solution.result }} </td>
+                        {% else %}
+                            <td class="">{{ solution.result }} </td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>Время:</td>
+                        <td>{{ solution.time }} сек.</td>
+                    </tr>
+                    <tr>
+                        <td>Память:</td>
+                        <td>{{ solution.memory }} MB</td>
+                    </tr>
+                    <tr>
+                        <td>Время отправки:</td>
+                        <td>{{ solution.date|date:"Y.m.d G:i:s" }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
     </div>
+    <h2 class="my-3">Код:</h2>
+    <div class="row my-3">
+        <div class="col">
+            <div id="editor" style="box-sizing: border-box; height: 370px; border: 1px solid rgb(170, 170, 170); width: 100% !important; display: block;"></div>
+        </div>
+    </div>
+    <script>
+    function replace(string){
+        string =  string.replace('\\n', '\n')
+        string = string.replace(new RegExp('&#x27;', 'g'), '\'')
+        string = string.replace(new RegExp('&quot;', 'g'), '\"')
+        console.log(string)
+        return string
+    }
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/chrome");
+        editor.session.setMode("ace/mode/python");
+        editor.setValue(replace('{{ code }}'))
+        editor.setReadOnly(true);
+    </script>
 {% endblock %}
