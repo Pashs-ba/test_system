@@ -4,8 +4,13 @@
     <h1 class="text-center display-1">{{ contest.name }}</h1>
     <div class="text-center mt-3">Ограничения по времени: <b>{{ contest.time_limit }} сек.</b></div>
     <div class="text-center mb-3">Ограничения по памяти: <b>{{ contest.memory_limit }} MB</b></div>
+    <div class="text-center my-3">
+       <a class="btn btn-primary  btn-lg btn-block col-auto" href="
+{% url 'load_ans' comp_pk %}">Загрузить решение</a>
+    </div>
     <div class="row">
         <div class="col-9">
+
             <div>{{ contest.description }}</div>
             <div class="my-3">
             <div><b>Входные данные</b></div>
@@ -45,7 +50,7 @@
                     <tbody>
                     {% for i in solutions %}
                         <tr>
-                            <td><a href="{% url 'result_page' i.pk %}" style="text-decoration:
+                            <td><a href="{% url 'result_page' i.pk comp_pk%}" style="text-decoration:
                             none; color: black"
                             >{{i.date| date:'Y-m-d H:m:s'}}</a></td>
                             {% if i.result in bad %}
