@@ -75,3 +75,18 @@ def get_tests(pk: str) -> list:
         with open(os.path.join(ans_dir, i), 'r') as f:
             ans.append(f.read())
     return list(zip(id, tests, ans))
+
+
+def upload_tests(file, path):
+    """
+    Upload files from form
+
+    :param file: request.FILE['<name>']
+    :param path: way to save
+    :return:
+    """
+    if not os.path.exists(path):
+        os.mkdir(path)
+    with open(os.path.join(path, file.name), 'wb') as f:
+        for i in file.chunks():
+            f.write(i)

@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect
 from core.decorators import admin_only
-from .utils import create_user, add_tests, create_ans, get_tests
+from .utils import create_user, add_tests, create_ans, get_tests, upload_tests
 from core.models import *
 from django.db import transaction
 from django.contrib import messages
 from .forms import CompetitionForm, ContestCreationForm, ContestUpdateForm
-from core.utils import upload_file
 from django.conf import settings
 import os.path
 import shutil
@@ -130,7 +129,8 @@ def create_contest(request):
         if form.is_valid():
             form.save()
             pk = Contests.objects.get(name=request.POST['name']).name
-            upload_file(request.FILES.get('tests'), os.path.join(settings.BASE_DIR, f'contests/{pk}'))
+            upload_tests(request.FILES.get('tests'), os.path.join(settings.BASE_DIR, f'contests/'
+                                                                                    f'{pk}'))
             add_tests(request.FILES.get('tests').name, os.path.join(settings.BASE_DIR, f'contests/{pk}'), pk)
             Thread(target=create_ans,
                    args=(pk, os.path.join(settings.BASE_DIR, f'contests/{pk}/{request.FILES.get("ideal_ans").name}'))).start()
@@ -147,7 +147,8 @@ def contest_page(request, pk):
     if request.method == 'POST':
         if request.POST.get('new_tests'):
             name = Contests.objects.get(pk=pk).name
-            upload_file(request.FILES.get('new_tests'), os.path.join(settings.BASE_DIR, f'contests/{name}'))
+            upload_tests(request.FILES.get('new_tests'), os.path.join(settings.BASE_DIR,
+                                                                  f'contests/{name}'))
             add_tests(request.FILES.get('new_tests').name, os.path.join(settings.BASE_DIR, f'contests/{name}'), name)
 
             Thread(target=create_ans,

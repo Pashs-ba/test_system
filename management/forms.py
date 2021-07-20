@@ -18,7 +18,9 @@ class ContestCreationForm(ModelForm):
         fields = '__all__'
         widgets = {
             'ideal_ans': FileInput(attrs={'accept': settings.ACCEPTABLE_FORMATS_IDEAL,
-                                          'class': 'form-control'})
+                                          'class': 'form-control'}),
+            # 'checker': FileInput(attrs={'accept': settings.ACCEPTABLE_FORMATS_IDEAL,
+            #                               'class': 'form-control'})
         }
     tests = FileField(widget=FileInput(attrs={'accept': '.zip',
                                               'class': 'form-control'}), label='Набор тестов в .zip архиве')

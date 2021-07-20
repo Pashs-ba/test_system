@@ -42,12 +42,15 @@ class Passwords(models.Model):
 class Contests(models.Model):
     name = models.CharField(max_length=1024, verbose_name="Название", unique=True)
     description = models.TextField(null=True, verbose_name='Описание')
+
     time_limit = models.IntegerField(default=1, verbose_name='Ограничение по времени, секунды')
     memory_limit = models.IntegerField(default=256, verbose_name='Ограничение по памяти, MB')
 
     input = models.TextField(verbose_name='Формат ввода', null=True)
     output = models.TextField(verbose_name='Формат вывода', null=True)
+
     ideal_ans = models.FileField(verbose_name='Идеальное решение', upload_to=upload)
+    # checker = models.FileField(verbose_name="Чекер", upload_to=upload, null=True)
 
     class Meta:
         verbose_name = 'Contest'
