@@ -100,3 +100,4 @@ class Test(models.Model):
     input = models.TextField()
     output = models.TextField(null=True)
     is_example = models.BooleanField(default=False)
+    is_error = models.BooleanField(default=False)

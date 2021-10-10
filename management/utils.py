@@ -55,8 +55,14 @@ def create_ans(pk: str, path_ideal: str):
         process = Popen(['python', path_ideal], stdout=PIPE, stderr=PIPE, stdin=PIPE)
         process.communicate(input=i.input.encode())
         process.wait()
-        output, _ = process.communicate()
-        i.output = output.decode()
+        output, error = process.communicate()
+        print(error.decode())
+        if error.decode() != '':
+            print(error.decode())
+            i.is_error = True
+        else:
+            i.is_error = False
+            i.output = output.decode()
         i.save()
 
 

@@ -130,10 +130,11 @@ def create_contest(request):
             form.save()
             pk = Contests.objects.get(name=request.POST['name']).name
             upload_tests(request.FILES.get('tests'), os.path.join(settings.BASE_DIR, f'contests/'
-                                                                                    f'{pk}'))
+                                                                                     f'{pk}'))
             add_tests(request.FILES.get('tests').name, os.path.join(settings.BASE_DIR, f'contests/{pk}'), pk)
             Thread(target=create_ans,
-                   args=(pk, os.path.join(settings.BASE_DIR, f'contests/{pk}/{request.FILES.get("ideal_ans").name}'))).start()
+                   args=(
+                   pk, os.path.join(settings.BASE_DIR, f'contests/{pk}/{request.FILES.get("ideal_ans").name}'))).start()
             messages.success(request, 'success')
             return redirect('contest_management')
 
@@ -148,12 +149,13 @@ def contest_page(request, pk):
         if request.POST.get('new_tests'):
             name = Contests.objects.get(pk=pk).name
             upload_tests(request.FILES.get('new_tests'), os.path.join(settings.BASE_DIR,
-                                                                  f'contests/{name}'))
+                                                                      f'contests/{name}'))
             add_tests(request.FILES.get('new_tests').name, os.path.join(settings.BASE_DIR, f'contests/{name}'), name)
 
             Thread(target=create_ans,
-                   args=(name, os.path.join(settings.BASE_DIR, str(Contests.objects.get(pk=pk).ideal_ans)).replace('/', '\\'))).start()
-            return redirect('contest_page', pk)
+                   args=(name, os.path.join(settings.BASE_DIR, str(Contests.objects.get(pk=pk).ideal_ans)).replace('/',
+                                                                                                                   '\\'))).start()
+            return redirect('contest_management')
         elif request.POST.get('new_ideal'):
             a = Contests.objects.get(pk=pk)
             old = str(a.ideal_ans).replace('/', '\\')
@@ -161,15 +163,17 @@ def contest_page(request, pk):
             a.save()
             os.remove(os.path.join(settings.BASE_DIR, old))
             Thread(target=create_ans,
-                   args=(a.name, os.path.join(settings.BASE_DIR, str(Contests.objects.get(pk=pk).ideal_ans)).replace('/',
-                                                                                                                   '\\'))).start()
-            return redirect('contest_page', pk)
+                   args=(
+                   a.name, os.path.join(settings.BASE_DIR, str(Contests.objects.get(pk=pk).ideal_ans)).replace('/',
+                                                                                                               '\\'))).start()
+            return redirect('contest_management')
         else:
             form = ContestUpdateForm(request.POST, instance=Contests.objects.get(pk=pk))
             if form.is_valid():
                 if request.POST['name'] != Contests.objects.get(pk=pk).name:
                     name = Contests.objects.get(pk=pk).name
-                    os.rename(os.path.join(settings.BASE_DIR, f'contests\\{name}'), os.path.join(settings.BASE_DIR, f'contests\\{request.POST["name"]}'))
+                    os.rename(os.path.join(settings.BASE_DIR, f'contests\\{name}'),
+                              os.path.join(settings.BASE_DIR, f'contests\\{request.POST["name"]}'))
 
                 form.save()
 
@@ -177,12 +181,17 @@ def contest_page(request, pk):
                 return redirect('contest_management')
     else:
         page = request.GET.get('page', 1)
-        tests = Test.objects.filter(contest=Contests.objects.get(pk=pk))
-        return render(request, 'contests/contest_m_page.html', {'form': ContestUpdateForm(instance=Contests.objects.get(pk=pk)),
-                                                              'tests': Paginator(tests, 10).page(page),
-                                                              'examples': Test.objects.all(),
-                                                              'acceptable': settings.ACCEPTABLE_FORMATS_IDEAL
-                                                                })
+        tests = Test.objects.filter(contest=Contests.objects.get(pk=pk)).order_by('-is_error')
+        is_error = False
+        if len(tests.filter(is_error=True)) != 0:
+            is_error = True
+        return render(request, 'contests/contest_m_page.html',
+                      {'form': ContestUpdateForm(instance=Contests.objects.get(pk=pk)),
+                       'tests': Paginator(tests, 10).page(page),
+                       'examples': Test.objects.all(),
+                       'acceptable': settings.ACCEPTABLE_FORMATS_IDEAL,
+                       'is_error': is_error
+                       })
 
 
 @transaction.atomic
@@ -196,4 +205,3 @@ def delete_test(request, pk):
     else:
 
         return render(request, 'contests/test_deleting.html', context={'pk': Test.objects.get(pk=pk).contest.pk})
-

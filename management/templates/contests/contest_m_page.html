@@ -20,6 +20,11 @@
 <h2 class="text-center my-3 display-2">Тесты</h2>
 <div class="card my-5">
         <div class="card-body">
+                {% if is_error %}
+                    <div class="alert alert-danger" role="alert">
+                        Обнаружена ошибка в идеальном решении, тесты вызвавшие ошибку работать не будут
+                    </div>
+                {% endif %}
             <table class="table my-3 table-bordered text-center table-striped">
                 <thead class="table-dark ">
                 <tr>
@@ -30,12 +35,18 @@
                 </tr>
                 </thead>
                 <tbody>
+
                     {% for test in tests %}
                         <tr>
-                        <td>{{test.input}}</td>
-                        <td>{% if test.output == None %}Генерируем ответ...{% else %}{{test.output}}{% endif %}</td>
-                        <td><input type="checkbox" id="{{ test.pk}}" onchange="make_example(this)" class="form-check-input is_example"{% if test.is_example %} checked{% endif %}></td>
-                        <td><a href="{% url 'delete_test' test.pk %}" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i></a></td>
+                            <td>{% if test.input|length > 200 %}{{test.input|slice:200}} ...{% else %}{{test.input}}{% endif %}</td>
+                        {% if test.is_error %}
+                            <td>ОШИБКА</td>
+                            <td><input  disabled type="checkbox" id="{{ test.pk}}" onchange="make_example(this)" class="form-check-input is_example"{% if test.is_example %} checked{% endif %}></td>
+                        {% else %}
+                            <td>{% if test.output == None %}Генерируем ответ...{% else %}{% if test.output|length > 200 %}{{test.output|slice:200}} ...{% else %}{{test.output}}{% endif %}{% endif %}</td>
+                            <td><input type="checkbox" id="{{ test.pk}}" onchange="make_example(this)" class="form-check-input is_example"{% if test.is_example %} checked{% endif %}></td>
+                        {% endif %}
+                            <td><a href="{% url 'delete_test' test.pk %}" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i></a></td>
                         </tr>
                     {% endfor %}
                 </tbody>
