@@ -185,6 +185,7 @@ def contest_page(request, pk):
         is_error = False
         if len(tests.filter(is_error=True)) != 0:
             is_error = True
+        print(tests[0].input)
         return render(request, 'contests/contest_m_page.html',
                       {'form': ContestUpdateForm(instance=Contests.objects.get(pk=pk)),
                        'tests': Paginator(tests, 10).page(page),

@@ -18,7 +18,9 @@
           <th scope="col">Соревнование</th>
 
           <th scope="col">Изменить</th>
+          <th scope="col">Открыть</th>
           <th scope="col">Удалить</th>
+
         </tr>
       </thead>
         <tbody>
@@ -30,10 +32,21 @@
                     <td> {{ contest.memory_limit }} MB</td>
                     <td>{{ contest.time_limit }} с</td>
                     <td> {% if  contest.competitions_set.all  %}{% for i in contest.competitions_set.all%}{{ i }} {% endfor %}{% else %} - {% endif %}</td>
-                    <td> <a href="{% url 'contest_m_page' contest.pk%}" class="btn btn-sm btn-primary">
-                        <i class="bi bi-pencil-square"></i></a> </td>
-                    <td> <a href="{% url 'delete_contest' contest.pk %}" class="btn btn-sm btn-danger">
-                       <i class="bi bi-trash-fill"></i></a> </td>
+                    <td>
+                        <a href="{% url 'contest_m_page' contest.pk%}" class="btn btn-sm btn-primary">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{% url 'contest_page' contest.pk 10000%}" class="btn btn-sm btn-primary">
+                            <i class="bi bi-eye-fill"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{% url 'delete_contest' contest.pk %}" class="btn btn-sm btn-danger">
+                            <i class="bi bi-trash-fill"></i>
+                        </a>
+                    </td>
                 </tr>
 
             {% endfor %}

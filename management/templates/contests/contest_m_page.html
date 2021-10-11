@@ -38,12 +38,12 @@
 
                     {% for test in tests %}
                         <tr>
-                            <td>{% if test.input|length > 200 %}{{test.input|slice:200}} ...{% else %}{{test.input}}{% endif %}</td>
+                            <td>{% if test.input|length > 200 %}{{test.input|slice:200|linebreaksbr}} ...{% else %}{{test.input|linebreaksbr}}{% endif %}</td>
                         {% if test.is_error %}
                             <td>ОШИБКА</td>
                             <td><input  disabled type="checkbox" id="{{ test.pk}}" onchange="make_example(this)" class="form-check-input is_example"{% if test.is_example %} checked{% endif %}></td>
                         {% else %}
-                            <td>{% if test.output == None %}Генерируем ответ...{% else %}{% if test.output|length > 200 %}{{test.output|slice:200}} ...{% else %}{{test.output}}{% endif %}{% endif %}</td>
+                            <td>{% if test.output == None %}Генерируем ответ...{% else %}{% if test.output|length > 200 %}{{test.output|slice:200|linebreaksbr}} ...{% else %}{{test.output|linebreaksbr}}{% endif %}{% endif %}</td>
                             <td><input type="checkbox" id="{{ test.pk}}" onchange="make_example(this)" class="form-check-input is_example"{% if test.is_example %} checked{% endif %}></td>
                         {% endif %}
                             <td><a href="{% url 'delete_test' test.pk %}" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i></a></td>

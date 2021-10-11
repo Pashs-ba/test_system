@@ -5,8 +5,11 @@
     <div class="text-center mt-3">Ограничения по времени: <b>{{ contest.time_limit }} сек.</b></div>
     <div class="text-center mb-3">Ограничения по памяти: <b>{{ contest.memory_limit }} MB</b></div>
     <div class="text-center my-3">
-       <a class="btn btn-primary  btn-lg btn-block col-auto" href="
-{% url 'load_ans' comp_pk %}">Загрузить решение</a>
+        {% if comp_pk == 10000 %}
+            <a class="btn btn-primary  btn-lg btn-block col-auto disabled" href="#">Загрузить решение</a>
+        {% else %}
+            <a class="btn btn-primary  btn-lg btn-block col-auto" href="{% url 'load_ans' comp_pk %}">Загрузить решение</a>
+        {% endif %}
     </div>
     <div class="row">
         <div class="col-9">
@@ -14,20 +17,20 @@
             <div>{{ contest.description }}</div>
             <div class="my-3">
             <div><b>Входные данные</b></div>
-            <div>{{ contest.input }}</div>
+            <div>{{ contest.input|linebreaks }}</div>
             </div>
             <div class="my-3">
             <div><b>Выходные данные</b></div>
-            <div>{{ contest.output }}</div>
+            <div>{{ contest.output|linebreaks }}</div>
             </div>
             <div class="my-3">
                 <div><b>Примеры</b></div>
                 {% for i in examples %}
                 <table class="table my-3 border border-dark">
                     <thead><tr class=""><td>Входные данные</td></tr></thead>
-                    <tr class="table-secondary"><td>{{ i.input }}</td></tr>
+                    <tr class="table-secondary"><td>{{ i.input|linebreaksbr }}</td></tr>
                     <thead><tr class=""><td>Выходные данные</td></tr></thead>
-                    <tr class="table-secondary border border-dark"><td>{{ i.output }}</td></tr>
+                    <tr class="table-secondary border border-dark"><td>{{ i.output|linebreaksbr }}</td></tr>
                 </table>
                 {% endfor %}
             </div>

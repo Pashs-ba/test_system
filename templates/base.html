@@ -18,9 +18,11 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            {% if back_url %}
             <div class="navbar-nav">
                 <a class="nav-link active" aria-current="page" href="{{ back_url }}">{{ back }}</a>
             </div>
+            {% endif %}
 
           <div class="navbar-nav">
             {% if user.is_staff %}

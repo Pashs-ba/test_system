@@ -44,7 +44,9 @@ def add_tests(name: str, path: str, pk: str):
         for i in archive.namelist():
             if i[-1] != '/':
                 with archive.open(i, 'r') as f:
-                    test = Test(contest=Contests.objects.get(name=pk), input=f.read().decode())
+                    a = f.read().decode()
+                    print(a)
+                    test = Test(contest=Contests.objects.get(name=pk), input=a)
                     test.save()
     os.remove(os.path.join(path, name))
 
@@ -56,9 +58,9 @@ def create_ans(pk: str, path_ideal: str):
         process.communicate(input=i.input.encode())
         process.wait()
         output, error = process.communicate()
-        print(error.decode())
+        # print(error.decode())
         if error.decode() != '':
-            print(error.decode())
+            # print(error.decode())
             i.is_error = True
         else:
             i.is_error = False
