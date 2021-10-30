@@ -128,7 +128,7 @@ def create_contest(request):
         form = ContestCreationForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            pk = Contests.objects.get(name=request.POST['name']).name
+            pk = Contests.objects.get(name=request.POST['name']).pk
             upload_tests(request.FILES.get('tests'), os.path.join(settings.BASE_DIR, f'contests/'
                                                                                      f'{pk}'))
             add_tests(request.FILES.get('tests').name, os.path.join(settings.BASE_DIR, f'contests/{pk}'), pk)
@@ -145,9 +145,10 @@ def create_contest(request):
 @transaction.atomic
 @admin_only
 def contest_page(request, pk):
+    print(Contests.objects.get(pk=pk).pk)
     if request.method == 'POST':
         if request.POST.get('new_tests'):
-            name = Contests.objects.get(pk=pk).name
+            name = Contests.objects.get(pk=pk).pk
             upload_tests(request.FILES.get('new_tests'), os.path.join(settings.BASE_DIR,
                                                                       f'contests/{name}'))
             add_tests(request.FILES.get('new_tests').name, os.path.join(settings.BASE_DIR, f'contests/{name}'), name)
@@ -166,6 +167,11 @@ def contest_page(request, pk):
                    args=(
                    a.name, os.path.join(settings.BASE_DIR, str(Contests.objects.get(pk=pk).ideal_ans)).replace('/',
                                                                                                                '\\'))).start()
+            return redirect('contest_management')
+        elif request.POST.get('new_checker'):
+            a = Contests.objects.get(pk=pk)
+            a.checker = request.FILES['new_checker']
+            a.save()
             return redirect('contest_management')
         else:
             form = ContestUpdateForm(request.POST, instance=Contests.objects.get(pk=pk))

@@ -19,8 +19,8 @@ class ContestCreationForm(ModelForm):
         widgets = {
             'ideal_ans': FileInput(attrs={'accept': settings.ACCEPTABLE_FORMATS_IDEAL,
                                           'class': 'form-control'}),
-            # 'checker': FileInput(attrs={'accept': settings.ACCEPTABLE_FORMATS_IDEAL,
-            #                               'class': 'form-control'})
+            'checker': FileInput(attrs={'accept': settings.ACCEPTABLE_FORMATS_IDEAL,
+                                          'class': 'form-control'})
         }
     tests = FileField(widget=FileInput(attrs={'accept': '.zip',
                                               'class': 'form-control'}), label='Набор тестов в .zip архиве')
@@ -29,7 +29,7 @@ class ContestCreationForm(ModelForm):
 class ContestUpdateForm(ModelForm):
     class Meta:
         model = Contests
-        exclude = ['ideal_ans',]
+        exclude = ['ideal_ans', 'checker']
         # widgets = {
         #     'ideal_ans': FileInput(attrs={'accept': settings.ACCEPTABLE_FORMATS,
         #                                   'class': 'form-control'})

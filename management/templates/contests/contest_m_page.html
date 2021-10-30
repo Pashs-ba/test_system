@@ -13,7 +13,7 @@
             <div class="my-3">
                 <button type="submit" class="btn btn-primary">Редактировать</button>
 
-            </div>8965
+            </div>
         </form>
     </div>
 </div>
@@ -101,6 +101,22 @@
                 <button type="submit" class="btn btn-primary">Отправить</button>
             </div>
         </form>
+        </div>
+
+        <div class="my-3">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="text" name="new_checker" hidden value="heh">
+            <div class="form-group">
+                <label for="new_checker">Изменить чекер</label>
+                <input type="file" class="form-control my-3" id="new_ideal" accept=".cpp" name="new_checker">
+
+            </div>
+            <div class="my-3">
+                <button type="submit" class="btn btn-primary">Отправить</button>
+            </div>
+        </form>
+        </div>
         </div>
         </div>
 </div>

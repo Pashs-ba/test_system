@@ -5,8 +5,8 @@ from .managers import UserManager
 
 
 def upload(instance, filename):
-    print(instance)
-    return f'contests/{instance.name}/{filename}'
+    # print(instance)
+    return f'contests/{instance.pk}/{filename}'
 
 
 class Users(AbstractBaseUser, PermissionsMixin):
@@ -50,7 +50,7 @@ class Contests(models.Model):
     output = models.TextField(verbose_name='Формат вывода', null=True)
 
     ideal_ans = models.FileField(verbose_name='Идеальное решение', upload_to=upload)
-    # checker = models.FileField(verbose_name="Чекер", upload_to=upload, null=True)
+    checker = models.FileField(verbose_name="Чекер", upload_to=upload, null=True)
 
     class Meta:
         verbose_name = 'Contest'

@@ -25,7 +25,7 @@ SECRET_KEY = 'n90gvfs-c$f#i-)&3_mdd)@c#o*5s@1la(abe)e@vfm618s8v8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'api',
     'competition',
     'contest',
-    'solutions'
+    'solutions',
+    'questions',
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -133,9 +134,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_DIRS = ['core/static',
                '/static',
-               'management/static'
+               # 'management/static'
                ]
-
+STATIC_ROOT = 'static/'
 USERNAME_LENGTH = 2
 PASSWORD_LENGTH = 5
 DATETIME_FORMAT = "%d.%m.%Y %H:%M"
