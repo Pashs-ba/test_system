@@ -1,5 +1,6 @@
 from django.forms import ModelForm, DateTimeInput, FileField, FileInput
-from .views import Competitions, Contests
+from django import forms
+from .views import Competitions, Contests, Question
 import datetime
 from django.conf import settings
 
@@ -34,3 +35,16 @@ class ContestUpdateForm(ModelForm):
         #     'ideal_ans': FileInput(attrs={'accept': settings.ACCEPTABLE_FORMATS,
         #                                   'class': 'form-control'})
         # }
+
+
+class QuestionCreationForm(ModelForm):
+    class Meta:
+        model = Question
+        exclude = ['question']
+        widgets = {
+            'type': forms.Select(choices=Question.QUESTION_TYPE, attrs={'class': 'form-control',
+                                                                        'onchange': 'make_question()'}),
+            'image': forms.FileInput(attrs={'accept': 'image/*',
+                                            'class': 'form-control'})
+        }
+    question = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'need'}))

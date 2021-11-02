@@ -22,7 +22,8 @@ def upload_file(file: InMemoryUploadedFile, path, name):
 
 
 def competition_status(competition: Competitions):
-    now_local = timezone.datetime.now(competition.start_time.tzinfo)
+    if not competition.is_unlimited:
+        now_local = timezone.datetime.now(competition.start_time.tzinfo)
     if competition.is_unlimited:
         return 'ОТКРЫТО'
     elif competition.start_time < now_local < competition.end_time:

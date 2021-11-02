@@ -3,10 +3,10 @@
 {% block title %}Management{% endblock %}
 {% block main %}
         <div class="row my-4 d-flex justify-content-center">
-            <div class="col-md-4 col-sm-6 col-lg-3 my-3 text-center">
+            <div class="col-sm-3 my-3 text-center">
                 <div class="card" >
                   <a href="{% url 'user-management' %}">
-                    <img class="card-img-top p-4" src="{% static "img/add.svg" %}" alt="Card image cap">
+                    <img class="card-img-top p-4 " src="{% static "management/img/add.svg" %}" height="256" width="256" alt="Card image cap">
                   </a>
                   <div class="card-body">
                     <h5 class="card-title">Управление пользователями</h5>
@@ -14,10 +14,10 @@
                   </div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6 col-lg-3 my-3 text-center">
+            <div class="col-sm-3 my-3 text-center">
                 <div class="card h-100" >
                   <a href="{% url 'competition_management' %}">
-                    <img class="card-img-top p-4" src="{% static "img/competition.svg" %}" alt="Card image cap">
+                    <img class="card-img-top p-4" src="{% static "management/img/competition.svg" %}" height="256" width="256" alt="Card image cap">
                   </a>
                   <div class="card-body">
                     <h5 class="card-title">Управление соревнованиями</h5>
@@ -25,16 +25,30 @@
                   </div>
                 </div>
             </div>
-             <div class="col-md-4 col-sm-6 col-lg-3 my-3 text-center">
-                    <div class="card h-100" >
-                      <a href="{% url 'contest_management' %}">
-                        <img class="card-img-top p-4" src="{% static "img/trophy.svg" %}" alt="Card image cap">
-                      </a>
-                      <div class="card-body">
-                        <h5 class="card-title">Управление задачами</h5>
-                        <p class="card-text">Ну... Я думаю вы поняли</p>
-                      </div>
-                    </div>
+             <div class="col-sm-3 my-3 text-center">
+                <div class="card h-100" >
+                  <a href="{% url 'contest_management' %}">
+                    <img class="card-img-top p-4" src="{% static "management/img/trophy.svg" %}" height="256" width="256" alt="Card image cap">
+                  </a>
+                  <div class="card-body">
+                    <h5 class="card-title">Управление задачами</h5>
+                    <p class="card-text">Ну... Я думаю вы поняли</p>
+                  </div>
+                </div>
+             </div>
+            <div class="col-sm-3 my-3 text-center">
+                <div class="card h-100" >
+                  <a href="{% url 'question_management' %}">
+                    <img class="card-img-top p-4" src="{% static "management/img/question-mark.png" %}" height="256" width="256" alt="Card image cap">
+                  </a>
+                  <div class="card-body">
+                    <h5 class="card-title">Управление вопросами</h5>
+                    <p class="card-text">Ну... Я думаю вы поняли</p>
+                  </div>
                 </div>
             </div>
+        </div>
+        <div class="row my-4 d-flex justify-content-center">
+
+        </div>
 {% endblock %}

@@ -4,6 +4,9 @@ from django.contrib.auth.models import PermissionsMixin
 from .managers import UserManager
 
 
+
+
+
 def upload(instance, filename):
     # print(instance)
     return f'contests/{instance.pk}/{filename}'
@@ -18,7 +21,6 @@ class Users(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'username'
-
 
     class Meta:
         verbose_name = 'User'
@@ -60,6 +62,27 @@ class Contests(models.Model):
         return f'{self.name}'
 
 
+class Question(models.Model):
+    QUESTION_TYPE = [
+        (0, 'Свободный ответ'),
+        (1, 'Один вариант ответа'),
+        (2, 'Несколько ответов'),
+    ]
+
+    name = models.CharField(max_length=1024, verbose_name='Имя')
+    description = models.TextField(verbose_name='Текст задания')
+    image = models.FileField(null=True, blank=True, verbose_name='Изображение')
+    type = models.CharField(max_length=256, choices=QUESTION_TYPE, verbose_name='Тип')
+    question = models.JSONField(null=True)
+
+    class Meta:
+        verbose_name = 'Question'
+        verbose_name_plural = 'Questions'
+
+    def __str__(self):
+        return f'{self.name}'
+
+
 class Competitions(models.Model):
     name = models.CharField(max_length=1024, unique=True, verbose_name='Имя')
     description = models.TextField(null=True, verbose_name='Описание', blank=True)
@@ -68,6 +91,7 @@ class Competitions(models.Model):
     start_time = models.DateTimeField(null=True, verbose_name='Дата начала', blank=True)
     end_time = models.DateTimeField(null=True, verbose_name='Дата конца', blank=True)
     contests = models.ManyToManyField(Contests, null=True, verbose_name='Задачи')
+    questions = models.ManyToManyField(Question, null=True, verbose_name='Вопросы')
 
     class Meta:
         verbose_name = 'Competition'

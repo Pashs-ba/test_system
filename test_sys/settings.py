@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'competition',
     'contest',
     'solutions',
-    'questions',
+
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 

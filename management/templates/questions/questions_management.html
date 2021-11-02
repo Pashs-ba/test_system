@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Contest management{% endblock %}
+{% block main %}
+
+    <h1 class = 'display-1 text-center'>Управление вопросами</h1>
+    <div class="text-center">
+        <a class="btn btn-primary my-4  btn-lg btn-block" href="{% url 'question_creating' %}"> Создать новый вопрос</a>
+    </div>
+
+    <table class="table table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">Название</th>
+          <th scope="col"> Тип</th>
+          <th scope="col">Соревнование</th>
+
+          <th scope="col">Изменить</th>
+          <th scope="col">Открыть</th>
+          <th scope="col">Удалить</th>
+
+        </tr>
+      </thead>
+        <tbody>
+        {% for question in questions %}
+            <tr>
+                <th>{{ question.name }}</th>
+                <th>{{ question.type }}</th>
+                <th>{% if question.competitions_set.all %}{% for cometition in question.competitions_set.all %}{{ cometition.name }} {% endfor %}{% else %} - {% endif %}</th>
+                <td>
+                    <a href="#" class="btn btn-sm btn-primary">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-sm btn-primary">
+                        <i class="bi bi-eye-fill"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-sm btn-danger">
+                        <i class="bi bi-trash-fill"></i>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

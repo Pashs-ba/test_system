@@ -4,12 +4,13 @@ from .utils import create_user, add_tests, create_ans, get_tests, upload_tests
 from core.models import *
 from django.db import transaction
 from django.contrib import messages
-from .forms import CompetitionForm, ContestCreationForm, ContestUpdateForm
+from .forms import CompetitionForm, ContestCreationForm, ContestUpdateForm, QuestionCreationForm
 from django.conf import settings
 import os.path
 import shutil
 from threading import Thread
 from django.core.paginator import Paginator
+from django.http import HttpResponse
 
 
 @admin_only
@@ -212,3 +213,21 @@ def delete_test(request, pk):
     else:
 
         return render(request, 'contests/test_deleting.html', context={'pk': Test.objects.get(pk=pk).contest.pk})
+
+
+@admin_only
+def questions_management(request):
+    return render(request, 'questions/questions_management.html', {'questions': Question.objects.all()})
+
+
+@admin_only
+@transaction.atomic
+def question_create(request):
+    if request.method == 'POST':
+        form = QuestionCreationForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+        else:
+            return HttpResponse('Some Wrong!')
+    else:
+        return render(request, 'questions/question_creating.html', {'form': QuestionCreationForm()})
