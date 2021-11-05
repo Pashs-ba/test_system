@@ -64,9 +64,9 @@ class Contests(models.Model):
 
 class Question(models.Model):
     QUESTION_TYPE = [
-        (0, 'Свободный ответ'),
-        (1, 'Один вариант ответа'),
-        (2, 'Несколько ответов'),
+        ('0', 'Свободный ответ'),
+        ('1', 'Один вариант ответа'),
+        ('2', 'Несколько ответов'),
     ]
 
     name = models.CharField(max_length=1024, verbose_name='Имя')

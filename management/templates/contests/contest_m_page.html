@@ -3,28 +3,28 @@
 {% block title %}Competition updating{% endblock %}
 {% load crispy_forms_tags %}
 {% block main %}
-<h2 class="text-center my-3 display-2">Общая информация</h2>
-<div class="card my-5">
-    <div class="card-body">
-        <form method="POST">
-            {% csrf_token %}
-            {{ form|crispy }}
-
-            <div class="my-3">
-                <button type="submit" class="btn btn-primary">Редактировать</button>
-
-            </div>
-        </form>
-    </div>
-</div>
-<h2 class="text-center my-3 display-2">Тесты</h2>
-<div class="card my-5">
+    <h2 class="text-center my-3 display-2">Общая информация</h2>
+    <div class="card my-5">
         <div class="card-body">
-                {% if is_error %}
-                    <div class="alert alert-danger" role="alert">
-                        Обнаружена ошибка в идеальном решении, тесты вызвавшие ошибку работать не будут
-                    </div>
-                {% endif %}
+            <form method="POST">
+                {% csrf_token %}
+                {{ form|crispy }}
+
+                <div class="my-3">
+                    <button type="submit" class="btn btn-primary">Редактировать</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+    <h2 class="text-center my-3 display-2">Тесты</h2>
+    <div class="card my-5">
+        <div class="card-body">
+            {% if is_error %}
+                <div class="alert alert-danger" role="alert">
+                    Обнаружена ошибка в идеальном решении, тесты вызвавшие ошибку работать не будут
+                </div>
+            {% endif %}
             <table class="table my-3 table-bordered text-center table-striped">
                 <thead class="table-dark ">
                 <tr>
@@ -36,109 +36,119 @@
                 </thead>
                 <tbody>
 
-                    {% for test in tests %}
-                        <tr>
-                            <td>{% if test.input|length > 200 %}{{test.input|slice:200|linebreaksbr}} ...{% else %}{{test.input|linebreaksbr}}{% endif %}</td>
+                {% for test in tests %}
+                    <tr>
+                        <td>{% if test.input|length > 200 %}{{ test.input|slice:200|linebreaksbr }} ...{% else %}
+                            {{ test.input|linebreaksbr }}{% endif %}</td>
                         {% if test.is_error %}
                             <td>ОШИБКА</td>
-                            <td><input  disabled type="checkbox" id="{{ test.pk}}" onchange="make_example(this)" class="form-check-input is_example"{% if test.is_example %} checked{% endif %}></td>
+                            <td><input disabled type="checkbox" id="{{ test.pk }}" onchange="make_example(this)"
+                                       class="form-check-input is_example"{% if test.is_example %} checked{% endif %}>
+                            </td>
                         {% else %}
-                            <td>{% if test.output == None %}Генерируем ответ...{% else %}{% if test.output|length > 200 %}{{test.output|slice:200|linebreaksbr}} ...{% else %}{{test.output|linebreaksbr}}{% endif %}{% endif %}</td>
-                            <td><input type="checkbox" id="{{ test.pk}}" onchange="make_example(this)" class="form-check-input is_example"{% if test.is_example %} checked{% endif %}></td>
+                            <td>{% if test.output == None %}Генерируем ответ...
+                                {% else %}{% if test.output|length > 200 %}{{ test.output|slice:200|linebreaksbr }} ...
+                                {% else %}{{ test.output|linebreaksbr }}{% endif %}{% endif %}</td>
+                            <td><input type="checkbox" id="{{ test.pk }}" onchange="make_example(this)"
+                                       class="form-check-input is_example"{% if test.is_example %} checked{% endif %}>
+                            </td>
                         {% endif %}
-                            <td><a href="{% url 'delete_test' test.pk %}" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i></a></td>
-                        </tr>
-                    {% endfor %}
+                        <td><a href="{% url 'delete_test' test.pk %}" class="btn btn-sm btn-danger"><i
+                                class="bi bi-trash-fill"></i></a></td>
+                    </tr>
+                {% endfor %}
                 </tbody>
             </table>
-        {% if tests.has_other_pages %}
-            <nav aria-label="Page navigation example" class="d-flex justify-content-center">
-          <ul class="pagination">
-            {% if tests.has_previous %}
-              <li class="page-item"><a class="page-link" href="?page={{ tests.previous_page_number }}">&laquo;</a></li>
-            {% else %}
-              <li class=" page-item  disabled"><a class="page-link" href="#">&laquo;</a></li>
+            {% if tests.has_other_pages %}
+                <nav aria-label="Page navigation example" class="d-flex justify-content-center">
+                    <ul class="pagination">
+                        {% if tests.has_previous %}
+                            <li class="page-item"><a class="page-link" href="?page={{ tests.previous_page_number }}">&laquo;</a>
+                            </li>
+                        {% else %}
+                            <li class=" page-item  disabled"><a class="page-link" href="#">&laquo;</a></li>
+                        {% endif %}
+                        {% for i in tests.paginator.page_range %}
+                            {% if tests.number == i %}
+                                <li class=" page-item disabled"><a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item "><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if tests.has_next %}
+                            <li class="page-item  "><a class="page-link" href="?page={{ tests.next_page_number }}">&raquo;</a>
+                            </li>
+                        {% else %}
+                            <li class=" page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
             {% endif %}
-            {% for i in tests.paginator.page_range %}
-              {% if tests.number == i %}
-                  <li class=" page-item disabled"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
-              {% else %}
-                <li class="page-item "><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
-              {% endif %}
-            {% endfor %}
-            {% if tests.has_next %}
-              <li class="page-item  "><a class="page-link" href="?page={{ tests.next_page_number }}">&raquo;</a></li>
-            {% else %}
-              <li class=" page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
-            {% endif %}
-          </ul>
-            </nav>
-        {% endif %}
-        <div class="my-3">
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <input type="text" name="new_tests" hidden value="heh">
-            <div class="form-group">
-                <label for="addTest">Добавить новых тестов (по прежнему в .zip архиве)</label>
-                <input type="file" class="form-control my-3" id="addTest" accept=".zip" name="new_tests">
+            <div class="my-3">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="text" name="new_tests" hidden value="heh">
+                    <div class="form-group">
+                        <label for="addTest">Добавить новых тестов (по прежнему в .zip архиве)</label>
+                        <input type="file" class="form-control my-3" id="addTest" accept=".zip" name="new_tests">
 
+                    </div>
+                    <div class="my-3">
+                        <button type="submit" class="btn btn-primary">Отправить</button>
+                    </div>
+                </form>
             </div>
             <div class="my-3">
-                <button type="submit" class="btn btn-primary">Отправить</button>
-            </div>
-        </form>
-        </div>
-        <div class="my-3">
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <input type="text" name="new_ideal" hidden value="heh">
-            <div class="form-group">
-                <label for="new_ideal">Изменить идеальное решение</label>
-                <input type="file" class="form-control my-3" id="new_ideal" accept="{{acceptable}}" name="new_ideal">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="text" name="new_ideal" hidden value="heh">
+                    <div class="form-group">
+                        <label for="new_ideal">Изменить идеальное решение</label>
+                        <input type="file" class="form-control my-3" id="new_ideal" accept="{{ acceptable }}"
+                               name="new_ideal">
 
+                    </div>
+                    <div class="my-3">
+                        <button type="submit" class="btn btn-primary">Отправить</button>
+                    </div>
+                </form>
             </div>
+
             <div class="my-3">
-                <button type="submit" class="btn btn-primary">Отправить</button>
-            </div>
-        </form>
-        </div>
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="text" name="new_checker" hidden value="heh">
+                    <div class="form-group">
+                        <label for="new_checker">Изменить чекер</label>
+                        <input type="file" class="form-control my-3" id="new_ideal" accept=".cpp" name="new_checker">
 
-        <div class="my-3">
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <input type="text" name="new_checker" hidden value="heh">
-            <div class="form-group">
-                <label for="new_checker">Изменить чекер</label>
-                <input type="file" class="form-control my-3" id="new_ideal" accept=".cpp" name="new_checker">
-
+                    </div>
+                    <div class="my-3">
+                        <button type="submit" class="btn btn-primary">Отправить</button>
+                    </div>
+                </form>
             </div>
-            <div class="my-3">
-                <button type="submit" class="btn btn-primary">Отправить</button>
-            </div>
-        </form>
         </div>
-        </div>
-        </div>
-</div>
-<script>
-    function make_example(that){
-        let csrftoken = $('input[name="csrfmiddlewaretoken"]').val()
-        console.log(that.id, that.checked, csrftoken)
-        $.ajax({
-            url: '{% url 'make_example'%}',
-            data: {
-                'csrfmiddlewaretoken': csrftoken,
-                'pk': that.id
-            },
-            success: function (){
-                console.log('sucsess')
-            },
-            method: 'post'
+    </div>
+    </div>
+    <script>
+        function make_example(that) {
+            let csrftoken = $('input[name="csrfmiddlewaretoken"]').val()
+            console.log(that.id, that.checked, csrftoken)
+            $.ajax({
+                    url: '{% url 'make_example'%}',
+                    data: {
+                        'csrfmiddlewaretoken': csrftoken,
+                        'pk': that.id
+                    },
+                    success: function () {
+                        console.log('sucsess')
+                    },
+                    method: 'post'
+                }
+            )
         }
-
-
-        )
-    }
-</script>
+    </script>
 
 {% endblock %}

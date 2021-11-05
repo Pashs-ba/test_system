@@ -3,17 +3,122 @@
 {% load crispy_forms_tags %}
 {% block title %}Question creating{% endblock %}
 {% block main %}
-        <div class="card my-5">
+    <div class="card my-5">
         <div class="card-body">
 
-            <form method="POST" enctype='multipart/form-data'>
+            <form method="POST" enctype='multipart/form-data' id="form">
                 {% csrf_token %}
                 {{ form|crispy }}
-                <div class="my-3">
-                    <button type="submit" class="btn btn-primary">Подтвердить</button>
-                    <a href="{% url 'question_management' %}" class="btn btn-secondary">Отмена</a>
-                </div>
+
             </form>
+            <script>
+                let test_ones_ans_lab = `<label for="test_one_ans" class="col-form-label">Добавьте варианты ответа и отметьте правильный.</label>`
+                let test_ones_ans = `
+                        <div class="input-group mb-3 ans_element">
+                            <div class="input-group-text">
+                                <input class="form-check-input mt-0 is_true" id="is_true" name="one_ans" type="radio" onchange="test_ans_set()" aria-label="Checkbox for following text input">
+                            </div>
+                            <input type="text" class="form-control test_ans" aria-label="Text input with checkbox" onchange="test_ans_set()" style="margin-top: 0px">
+                            <button class="btn btn-danger" type="button" id="button-addon2" onclick="delete_ans(this)"><i class="bi bi-x"></i></button>
+                        </div>`
+                let test_mult_ans_lab = `<label for="test_mult_ans" class="col-form-label">Добавьте варианты ответа и отметьте правильные.</label>`
+                let test_mult_ans = `
+                        <div class="input-group mb-3 ans_element">
+                            <div class="input-group-text">
+                                <input class="form-check-input mt-0 is_true" name="one_ans" type="checkbox" onchange="test_ans_set()" aria-label="Checkbox for following text input">
+                            </div>
+                            <input type="text" class="form-control test_ans" aria-label="Text input with checkbox" onchange="test_ans_set()" style="margin-top: 0px">
+                            <button class="btn btn-danger" type="button" id="button-addon2" onclick="delete_ans(this)"><i class="bi bi-x"></i></button>
+                        </div>`
+                let plus_mult_button = `<div class="d-flex justify-content-center"><button type="button" onclick="create_element(document.getElementsByClassName('ans_element')[document.getElementsByClassName('ans_element').length-1], test_mult_ans, 'div', []); test_ans_set()" class="btn btn-primary btn-large">+</button></div>`
+                let plus_button = `<div class="d-flex justify-content-center"><button type="button" onclick="create_element(document.getElementsByClassName('ans_element')[document.getElementsByClassName('ans_element').length-1], test_ones_ans, 'div', []); test_ans_set()" class="btn btn-primary btn-large">+</button></div>`
+
+                function test_ans_set() {
+                    let data = document.getElementById('need').value
+                    let elements = document.getElementsByClassName('ans_element')
+                    let json = JSON.parse(data)
+                    json['ans'] = {}
+                    for (let i = 0; i < elements.length; i++) {
+                        let val = elements[i].getElementsByClassName('is_true')[0].checked
+                        let text = elements[i].getElementsByClassName('test_ans')[0].value
+                        json['ans'][i] = [text, val]
+                    }
+                    document.getElementById('need').value = JSON.stringify(json)
+                }
+
+                function delete_ans(but) {
+                    but.closest('div.ans_element').remove()
+                    test_ans_set()
+                }
+
+                function create_element(after, text, element, classes, id = '') {
+                    let one_ans = document.createElement(element);
+                    for (let i in classes) {
+                        one_ans.classList.add(classes[i])
+                    }
+                    if (id) {
+                        one_ans.id = id
+                    }
+                    one_ans.innerHTML = text
+                    after.after(one_ans)
+                }
+
+                function delete_ans_field() {
+                    if (document.getElementById("ans")) {
+                        document.getElementById('ans').remove()
+                        document.getElementById('need').value = JSON.stringify({})
+                    }
+                }
+
+                function close_ans_add(inp) {
+                    document.getElementById('need').value = JSON.stringify({
+                        'type': 0,
+                        'value': inp.value
+                    })
+                }
+
+                function select_type() {
+
+                    delete_ans_field()
+                    switch (document.getElementById('type').value) {
+                        case '0':
+                            create_element(document.getElementById('form'),
+                                '<label for="one_ans" class="form-label">Правильный ответ</label> <input type="text" class="form-control" onchange="close_ans_add(this)" id="one_ans">',
+                                'div',
+                                ['mb-3', 'ans'],
+                                id = 'ans')
+                            break
+                        case '1':
+                            create_element(document.getElementById('form'),
+                                test_ones_ans_lab + test_ones_ans + plus_button,
+                                'div',
+                                ['mb-3', 'ans'],
+                                id = 'ans')
+                            document.getElementById('need').value = JSON.stringify({
+                                'type': 1,
+                                'ans': {}
+                            })
+                            break
+                        case '2':
+                            create_element(document.getElementById('form'),
+                                test_mult_ans_lab + test_mult_ans + plus_mult_button,
+                                'div',
+                                ['mb-3', 'ans'],
+                                id = 'ans')
+                            document.getElementById('need').value = JSON.stringify({
+                                'type': 2,
+                                'ans': {}
+                            })
+                            break
+
+                    }
+
+                }
+            </script>
+            <div class="my-3">
+                <button type="submit" class="btn btn-primary" form="form">Подтвердить</button>
+                <a href="{% url 'question_management' %}" class="btn btn-secondary">Отмена</a>
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -3,30 +3,31 @@
 {% block title %}Contest management{% endblock %}
 {% block main %}
 
-    <h1 class = 'display-1 text-center'>Управление вопросами</h1>
+    <h1 class='display-1 text-center'>Управление вопросами</h1>
     <div class="text-center">
         <a class="btn btn-primary my-4  btn-lg btn-block" href="{% url 'question_creating' %}"> Создать новый вопрос</a>
     </div>
 
     <table class="table table-striped">
-      <thead class="table-dark">
+        <thead class="table-dark">
         <tr>
-          <th scope="col">Название</th>
-          <th scope="col"> Тип</th>
-          <th scope="col">Соревнование</th>
+            <th scope="col">Название</th>
+            <th scope="col"> Тип</th>
+            <th scope="col">Соревнование</th>
 
-          <th scope="col">Изменить</th>
-          <th scope="col">Открыть</th>
-          <th scope="col">Удалить</th>
+            <th scope="col">Изменить</th>
+            <th scope="col">Открыть</th>
+            <th scope="col">Удалить</th>
 
         </tr>
-      </thead>
+        </thead>
         <tbody>
         {% for question in questions %}
             <tr>
                 <th>{{ question.name }}</th>
                 <th>{{ question.type }}</th>
-                <th>{% if question.competitions_set.all %}{% for cometition in question.competitions_set.all %}{{ cometition.name }} {% endfor %}{% else %} - {% endif %}</th>
+                <th>{% if question.competitions_set.all %}{% for cometition in question.competitions_set.all %}
+                    {{ cometition.name }} {% endfor %}{% else %} - {% endif %}</th>
                 <td>
                     <a href="#" class="btn btn-sm btn-primary">
                         <i class="bi bi-pencil-square"></i>

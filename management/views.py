@@ -135,7 +135,8 @@ def create_contest(request):
             add_tests(request.FILES.get('tests').name, os.path.join(settings.BASE_DIR, f'contests/{pk}'), pk)
             Thread(target=create_ans,
                    args=(
-                   pk, os.path.join(settings.BASE_DIR, f'contests/{pk}/{request.FILES.get("ideal_ans").name}'))).start()
+                       pk,
+                       os.path.join(settings.BASE_DIR, f'contests/{pk}/{request.FILES.get("ideal_ans").name}'))).start()
             messages.success(request, 'success')
             return redirect('contest_management')
 
@@ -166,8 +167,8 @@ def contest_page(request, pk):
             os.remove(os.path.join(settings.BASE_DIR, old))
             Thread(target=create_ans,
                    args=(
-                   a.name, os.path.join(settings.BASE_DIR, str(Contests.objects.get(pk=pk).ideal_ans)).replace('/',
-                                                                                                               '\\'))).start()
+                       a.name, os.path.join(settings.BASE_DIR, str(Contests.objects.get(pk=pk).ideal_ans)).replace('/',
+                                                                                                                   '\\'))).start()
             return redirect('contest_management')
         elif request.POST.get('new_checker'):
             a = Contests.objects.get(pk=pk)
@@ -225,9 +226,15 @@ def questions_management(request):
 def question_create(request):
     if request.method == 'POST':
         form = QuestionCreationForm(request.POST, request.FILES)
+        print(request.POST['type'])
         if form.is_valid():
-            form.save()
+            a = form.save()
+            print(a)
+            a.question = form.cleaned_data['question']
+            a.save()
+            messages.success(request, 'success')
+            return redirect('question_management')
         else:
-            return HttpResponse('Some Wrong!')
+            return HttpResponse(form.errors)
     else:
         return render(request, 'questions/question_creating.html', {'form': QuestionCreationForm()})

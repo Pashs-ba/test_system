@@ -2,53 +2,57 @@
 {% load static %}
 {% block title %}Management{% endblock %}
 {% block main %}
-        <div class="row my-4 d-flex justify-content-center">
-            <div class="col-sm-3 my-3 text-center">
-                <div class="card" >
-                  <a href="{% url 'user-management' %}">
-                    <img class="card-img-top p-4 " src="{% static "management/img/add.svg" %}" height="256" width="256" alt="Card image cap">
-                  </a>
-                  <div class="card-body">
+    <div class="row my-4 d-flex justify-content-center">
+        <div class="col-sm-3 my-3 text-center">
+            <div class="card">
+                <a href="{% url 'user-management' %}">
+                    <img class="card-img-top p-4 " src="{% static "management/img/add.svg" %}" height="256" width="256"
+                         alt="Card image cap">
+                </a>
+                <div class="card-body">
                     <h5 class="card-title">Управление пользователями</h5>
                     <p class="card-text">Создание и управление аккаунтами пользователей</p>
-                  </div>
                 </div>
             </div>
-            <div class="col-sm-3 my-3 text-center">
-                <div class="card h-100" >
-                  <a href="{% url 'competition_management' %}">
-                    <img class="card-img-top p-4" src="{% static "management/img/competition.svg" %}" height="256" width="256" alt="Card image cap">
-                  </a>
-                  <div class="card-body">
+        </div>
+        <div class="col-sm-3 my-3 text-center">
+            <div class="card h-100">
+                <a href="{% url 'competition_management' %}">
+                    <img class="card-img-top p-4" src="{% static "management/img/competition.svg" %}" height="256"
+                         width="256" alt="Card image cap">
+                </a>
+                <div class="card-body">
                     <h5 class="card-title">Управление соревнованиями</h5>
                     <p class="card-text">Создание и управление соревнованиями</p>
-                  </div>
                 </div>
             </div>
-             <div class="col-sm-3 my-3 text-center">
-                <div class="card h-100" >
-                  <a href="{% url 'contest_management' %}">
-                    <img class="card-img-top p-4" src="{% static "management/img/trophy.svg" %}" height="256" width="256" alt="Card image cap">
-                  </a>
-                  <div class="card-body">
+        </div>
+        <div class="col-sm-3 my-3 text-center">
+            <div class="card h-100">
+                <a href="{% url 'contest_management' %}">
+                    <img class="card-img-top p-4" src="{% static "management/img/trophy.svg" %}" height="256"
+                         width="256" alt="Card image cap">
+                </a>
+                <div class="card-body">
                     <h5 class="card-title">Управление задачами</h5>
                     <p class="card-text">Ну... Я думаю вы поняли</p>
-                  </div>
-                </div>
-             </div>
-            <div class="col-sm-3 my-3 text-center">
-                <div class="card h-100" >
-                  <a href="{% url 'question_management' %}">
-                    <img class="card-img-top p-4" src="{% static "management/img/question-mark.png" %}" height="256" width="256" alt="Card image cap">
-                  </a>
-                  <div class="card-body">
-                    <h5 class="card-title">Управление вопросами</h5>
-                    <p class="card-text">Ну... Я думаю вы поняли</p>
-                  </div>
                 </div>
             </div>
         </div>
-        <div class="row my-4 d-flex justify-content-center">
-
+        <div class="col-sm-3 my-3 text-center">
+            <div class="card h-100">
+                <a href="{% url 'question_management' %}">
+                    <img class="card-img-top p-4" src="{% static "management/img/question-mark.png" %}" height="256"
+                         width="256" alt="Card image cap">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">Управление вопросами</h5>
+                    <p class="card-text">Ну... Я думаю вы поняли</p>
+                </div>
+            </div>
         </div>
+    </div>
+    <div class="row my-4 d-flex justify-content-center">
+
+    </div>
 {% endblock %}

@@ -43,7 +43,8 @@ class QuestionCreationForm(ModelForm):
         exclude = ['question']
         widgets = {
             'type': forms.Select(choices=Question.QUESTION_TYPE, attrs={'class': 'form-control',
-                                                                        'onchange': 'make_question()'}),
+                                                                        'onchange': 'select_type()',
+                                                                        'id': 'type'}),
             'image': forms.FileInput(attrs={'accept': 'image/*',
                                             'class': 'form-control'})
         }
