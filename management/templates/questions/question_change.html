@@ -114,6 +114,62 @@
                     }
 
                 }
+                function get_data(){
+                        let need = JSON.parse(document.getElementById('need').value)
+
+                        switch (need['type']){
+                            case 0:
+                                create_element(document.getElementById('form'),
+                                '<label for="one_ans" class="form-label">Правильный ответ</label> <input type="text" class="form-control" onchange="close_ans_add(this)" id="one_ans">',
+                                'div',
+                                ['mb-3', 'ans'],
+                                id = 'ans')
+                                document.getElementById('one_ans').value = need['ans']
+                            break
+                            case 1:
+                                create_element(document.getElementById('form'),
+                                test_ones_ans_lab + test_ones_ans + plus_button,
+                                'div',
+                                ['mb-3', 'ans'],
+                                id = 'ans')
+
+                                Object.keys(need['ans']).forEach(function (item, i){
+                                    if(i === 0){
+                                        let first = document.getElementsByClassName('ans_element')[0]
+                                        first.getElementsByClassName('is_true')[0].checked = need['ans'][item][1]
+                                        first.getElementsByClassName('test_ans')[0].value = need['ans'][item][0]
+                                    }else{
+                                        create_element(document.getElementsByClassName('ans_element')[document.getElementsByClassName('ans_element').length-1], test_ones_ans, 'div', [])
+                                        let next = document.getElementsByClassName('ans_element')[document.getElementsByClassName('ans_element').length-1]
+                                        next.getElementsByClassName('is_true')[0].checked = need['ans'][item][1]
+                                        next.getElementsByClassName('test_ans')[0].value = need['ans'][item][0]
+                                    }
+                                })
+                                break
+                            case 2:
+                                create_element(document.getElementById('form'),
+                                test_mult_ans_lab + test_mult_ans + plus_mult_button,
+                                'div',
+                                ['mb-3', 'ans'],
+                                id = 'ans')
+
+                                Object.keys(need['ans']).forEach(function (item, i){
+                                    if(i === 0){
+                                        let first = document.getElementsByClassName('ans_element')[0]
+                                        first.getElementsByClassName('is_true')[0].checked = need['ans'][item][1]
+                                        first.getElementsByClassName('test_ans')[0].value = need['ans'][item][0]
+                                    }else{
+                                        create_element(document.getElementsByClassName('ans_element')[document.getElementsByClassName('ans_element').length-1], test_mult_ans, 'div', [])
+                                        let next = document.getElementsByClassName('ans_element')[document.getElementsByClassName('ans_element').length-1]
+                                        next.getElementsByClassName('is_true')[0].checked = need['ans'][item][1]
+                                        next.getElementsByClassName('test_ans')[0].value = need['ans'][item][0]
+                                    }
+                                })
+                                break
+
+                        }
+                    }
+                    get_data()
             </script>
             <div class="my-3">
                 <button type="submit" class="btn btn-primary" form="form">Подтвердить</button>

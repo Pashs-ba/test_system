@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from core.decorators import admin_only
-from .utils import create_user, add_tests, create_ans, get_tests, upload_tests
+from .utils import create_user, add_tests, create_ans, upload_tests
 from core.models import *
 from django.db import transaction
 from django.contrib import messages
@@ -11,6 +11,8 @@ import shutil
 from threading import Thread
 from django.core.paginator import Paginator
 from django.http import HttpResponse
+import ast
+import json
 
 
 @admin_only
@@ -115,7 +117,7 @@ def contest_delete(request, pk):
     if request.method == "POST":
 
         messages.success(request, 'Successful delete contest')
-        shutil.rmtree(os.path.join(settings.BASE_DIR, f'contests/{Contests.objects.get(pk=pk).name}'))
+        # shutil.rmtree(os.path.join(settings.BASE_DIR, f'contests/{Contests.objects.get(pk=pk).pk}'))
         Contests.objects.get(pk=pk).delete()
         return redirect('contest_management')
     else:
@@ -128,15 +130,15 @@ def create_contest(request):
     if request.method == "POST":
         form = ContestCreationForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            pk = Contests.objects.get(name=request.POST['name']).pk
-            upload_tests(request.FILES.get('tests'), os.path.join(settings.BASE_DIR, f'contests/'
-                                                                                     f'{pk}'))
-            add_tests(request.FILES.get('tests').name, os.path.join(settings.BASE_DIR, f'contests/{pk}'), pk)
+            model = form.save()
+            pk = model.pk
+            upload_tests(request.FILES.get('tests'), os.path.join(settings.BASE_DIR, f'media/contests/tests/'))
+            add_tests(request.FILES.get('tests').name, os.path.join(settings.BASE_DIR, f'media/contests/tests/'), pk)
+
             Thread(target=create_ans,
                    args=(
                        pk,
-                       os.path.join(settings.BASE_DIR, f'contests/{pk}/{request.FILES.get("ideal_ans").name}'))).start()
+                       os.path.join(settings.BASE_DIR, f'media/{model.ideal_ans}'))).start()
             messages.success(request, 'success')
             return redirect('contest_management')
 
@@ -151,24 +153,19 @@ def contest_page(request, pk):
     if request.method == 'POST':
         if request.POST.get('new_tests'):
             name = Contests.objects.get(pk=pk).pk
-            upload_tests(request.FILES.get('new_tests'), os.path.join(settings.BASE_DIR,
-                                                                      f'contests/{name}'))
-            add_tests(request.FILES.get('new_tests').name, os.path.join(settings.BASE_DIR, f'contests/{name}'), name)
-
+            upload_tests(request.FILES.get('new_tests'), os.path.join(f'media/contests/tests/'))
+            add_tests(request.FILES.get('new_tests').name, os.path.join(settings.BASE_DIR, f'media/contests/tests/'), name)
             Thread(target=create_ans,
-                   args=(name, os.path.join(settings.BASE_DIR, str(Contests.objects.get(pk=pk).ideal_ans)).replace('/',
-                                                                                                                   '\\'))).start()
+                   args=(name, os.path.join(settings.BASE_DIR, 'media/'+str(Contests.objects.get(pk=pk).ideal_ans)))).start()
             return redirect('contest_management')
         elif request.POST.get('new_ideal'):
             a = Contests.objects.get(pk=pk)
-            old = str(a.ideal_ans).replace('/', '\\')
+            old = str(a.ideal_ans)
             a.ideal_ans = request.FILES['new_ideal']
             a.save()
-            os.remove(os.path.join(settings.BASE_DIR, old))
             Thread(target=create_ans,
                    args=(
-                       a.name, os.path.join(settings.BASE_DIR, str(Contests.objects.get(pk=pk).ideal_ans)).replace('/',
-                                                                                                                   '\\'))).start()
+                       a.pk, os.path.join(settings.BASE_DIR, 'media/'+str(Contests.objects.get(pk=pk).ideal_ans)))).start()
             return redirect('contest_management')
         elif request.POST.get('new_checker'):
             a = Contests.objects.get(pk=pk)
@@ -178,13 +175,7 @@ def contest_page(request, pk):
         else:
             form = ContestUpdateForm(request.POST, instance=Contests.objects.get(pk=pk))
             if form.is_valid():
-                if request.POST['name'] != Contests.objects.get(pk=pk).name:
-                    name = Contests.objects.get(pk=pk).name
-                    os.rename(os.path.join(settings.BASE_DIR, f'contests\\{name}'),
-                              os.path.join(settings.BASE_DIR, f'contests\\{request.POST["name"]}'))
-
                 form.save()
-
                 messages.success(request, 'success')
                 return redirect('contest_management')
     else:
@@ -193,7 +184,6 @@ def contest_page(request, pk):
         is_error = False
         if len(tests.filter(is_error=True)) != 0:
             is_error = True
-        print(tests[0].input)
         return render(request, 'contests/contest_m_page.html',
                       {'form': ContestUpdateForm(instance=Contests.objects.get(pk=pk)),
                        'tests': Paginator(tests, 10).page(page),
@@ -229,8 +219,8 @@ def question_create(request):
         print(request.POST['type'])
         if form.is_valid():
             a = form.save()
-            print(a)
-            a.question = form.cleaned_data['question']
+
+            a.question = ast.literal_eval(form.cleaned_data['question'])
             a.save()
             messages.success(request, 'success')
             return redirect('question_management')
@@ -238,3 +228,49 @@ def question_create(request):
             return HttpResponse(form.errors)
     else:
         return render(request, 'questions/question_creating.html', {'form': QuestionCreationForm()})
+
+
+@admin_only
+@transaction.atomic
+def question_change(request, pk):
+    if request.method == 'POST':
+        form = QuestionCreationForm(request.POST, request.FILES, instance=Question.objects.get(pk=pk))
+        print(request.POST['type'])
+        if form.is_valid():
+            a = form.save()
+
+            a.question = form.cleaned_data['question']
+            a.save()
+            messages.success(request, 'success')
+            return redirect('question_management')
+        else:
+            return HttpResponse(form.errors)
+    else:
+        form = QuestionCreationForm(instance=Question.objects.get(pk=pk), initial={'question': Question.objects.get(pk=pk).question})
+        return render(request, 'questions/question_change.html', {'form': form})
+
+
+@transaction.atomic
+@admin_only
+def question_delete(request, pk):
+    if request.method == "POST":
+
+        messages.success(request, 'Successful delete question')
+        Question.objects.get(pk=pk).delete()
+        return redirect('contest_management')
+    else:
+        return render(request, 'questions/question_delete.html')
+
+
+@admin_only
+def question_example(request, pk):
+    question = Question.objects.get(pk=pk)
+    answers = []
+    print(json.loads(question.question))
+
+    if json.loads(question.question)['type'] != 0:
+        for i in json.loads(question.question)['ans']:
+            answers.append(json.loads(question.question)['ans'][i][0])
+
+    return render(request, 'questions/question_example.html', {'question': question,
+                                                               'answers': answers})

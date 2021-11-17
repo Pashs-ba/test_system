@@ -26,11 +26,11 @@
             <div class="my-3">
                 <div><b>Примеры</b></div>
                 {% for i in examples %}
-                <table class="table my-3 border border-dark">
+                <table class="table my-3 table-bordered" >
                     <thead><tr class=""><td>Входные данные</td></tr></thead>
                     <tr class="table-secondary"><td>{{ i.input|linebreaksbr }}</td></tr>
                     <thead><tr class=""><td>Выходные данные</td></tr></thead>
-                    <tr class="table-secondary border border-dark"><td>{{ i.output|linebreaksbr }}</td></tr>
+                    <tr class="table-secondary"><td>{{ i.output|linebreaksbr }}</td></tr>
                 </table>
                 {% endfor %}
             </div>

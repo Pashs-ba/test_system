@@ -4,12 +4,9 @@ from django.contrib.auth.models import PermissionsMixin
 from .managers import UserManager
 
 
-
-
-
 def upload(instance, filename):
     # print(instance)
-    return f'contests/{instance.pk}/{filename}'
+    return f'contests/{filename}'
 
 
 class Users(AbstractBaseUser, PermissionsMixin):
@@ -91,7 +88,7 @@ class Competitions(models.Model):
     start_time = models.DateTimeField(null=True, verbose_name='Дата начала', blank=True)
     end_time = models.DateTimeField(null=True, verbose_name='Дата конца', blank=True)
     contests = models.ManyToManyField(Contests, null=True, verbose_name='Задачи')
-    questions = models.ManyToManyField(Question, null=True, verbose_name='Вопросы')
+    questions = models.ManyToManyField(Question, null=True, blank=True, verbose_name='Вопросы')
 
     class Meta:
         verbose_name = 'Competition'
@@ -117,6 +114,14 @@ class Solutions(models.Model):
 
     def __str__(self):
         return f'{self.user} {self.contest} {self.result}'
+
+
+class QuestionAns(models.Model):
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now=True)
+    number_of_attempt = models.IntegerField(default=1)
+    result = models.BooleanField()
 
 
 class Test(models.Model):

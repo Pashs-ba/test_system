@@ -33,6 +33,8 @@
         <option value="$MODULE_DIR$/competition/templates" />
         <option value="$MODULE_DIR$/contest/templates" />
         <option value="$MODULE_DIR$/solutions/templates" />
+        <option value="$MODULE_DIR$/questions/templates" />
+        <option value="$MODULE_DIR$/management/templatetags" />
       </list>
     </option>
   </component>

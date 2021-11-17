@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Example {% endblock %}
+{% block main %}
+    <h2 class="display-2 text-center mb-4">{{ question.name }}</h2>
+
+    {% if question.image %}
+        <div class="container d-flex justify-content-center">
+            <img src="/media/{{ question.image }}" alt="some wrong" class="mw-100">
+        </div>
+    {% endif %}
+    <div class="container d-flex justify-content-center mt-4">
+        <p>{{ question.description }}</p>
+    </div>
+    <div class="container d-flex justify-content-center">
+        <form >
+            {% if question.type == '0' %}
+                <label for="ans" class="form-label"> Введите правильные ответ</label>
+                <input id='ans' name="ans" class="form-control">
+            {% else %}
+                <label class="form-label"> {% if question.type == '1'  %}Выберите один правильный вариант ответа{% else %}Выберите все правильные варианты ответа{% endif %}</label>
+                {% for i in answers %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="{% if question.type == '1'  %}radio{% else %} checkbox{% endif %}" name="flexRadioDefault" id="flexRadioDefault1">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            {{ i }}
+                        </label>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <div class="my-3 d-flex justify-content-center">
+                <a class="btn btn-primary disabled" href="#" role="button"><i class="bi bi-arrow-left-short"></i></a>
+                <button type="submit" disabled class="btn btn-success" form="form" style="margin-right: 0.5em;margin-left: 0.5em">Подтвердить</button>
+                <a class="btn btn-primary disabled" href="#" role="button"><i class="bi bi-arrow-right-short"></i></a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

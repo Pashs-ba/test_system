@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from core.models import Competitions, Contests, Solutions
+from core.models import Competitions, Contests, Solutions, QuestionAns
 from core.utils import competition_status, upload_file
 from .utils import get_extension, get_next_name, save_solution
 from django.conf import settings
@@ -12,7 +12,6 @@ def competition_page(request, pk):
     solutions = {}
     for i in Solutions.objects.filter(user=request.user, contest__in=competition.contests.all()).order_by('date'):
         solutions[i.contest.pk] = i.result
-    print(solutions)
     context = {
         'competition': competition,
         'solutions': solutions,

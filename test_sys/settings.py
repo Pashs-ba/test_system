@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'competition',
     'contest',
     'solutions',
+    'questions',
 
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -137,6 +138,11 @@ STATIC_DIRS = ['core/static',
                # 'management/static'
                ]
 STATIC_ROOT = 'static/'
+
+MEDIA_ROOT = 'media/'
+MEDIA_URL = '/media/'
+
+
 USERNAME_LENGTH = 2
 PASSWORD_LENGTH = 5
 DATETIME_FORMAT = "%d.%m.%Y %H:%M"

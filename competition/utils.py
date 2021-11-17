@@ -4,6 +4,7 @@ from django.conf import settings
 
 from core.utils import upload_file
 
+
 def get_extension(lang: str):
     for i in settings.ACCEPTABLE_LANGUAGES:
         if lang in settings.ACCEPTABLE_LANGUAGES[i]:

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load filters %}
 {% load static %}
 {% block title %}Contest management{% endblock %}
 {% block main %}
@@ -25,21 +26,21 @@
         {% for question in questions %}
             <tr>
                 <th>{{ question.name }}</th>
-                <th>{{ question.type }}</th>
+                <th>{{ question.type|get_type_name }}</th>
                 <th>{% if question.competitions_set.all %}{% for cometition in question.competitions_set.all %}
                     {{ cometition.name }} {% endfor %}{% else %} - {% endif %}</th>
                 <td>
-                    <a href="#" class="btn btn-sm btn-primary">
+                    <a href="{% url 'question_change' question.pk %}" class="btn btn-sm btn-primary">
                         <i class="bi bi-pencil-square"></i>
                     </a>
                 </td>
                 <td>
-                    <a href="#" class="btn btn-sm btn-primary">
+                    <a href="{% url 'question_example' question.pk %}" class="btn btn-sm btn-primary">
                         <i class="bi bi-eye-fill"></i>
                     </a>
                 </td>
                 <td>
-                    <a href="#" class="btn btn-sm btn-danger">
+                    <a href="{% url 'question_delete' question.pk%}" class="btn btn-sm btn-danger">
                         <i class="bi bi-trash-fill"></i>
                     </a>
                 </td>

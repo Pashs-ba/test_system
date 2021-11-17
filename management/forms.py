@@ -8,7 +8,7 @@ from django.conf import settings
 class CompetitionForm(ModelForm):
     class Meta:
         model = Competitions
-        fields = ['name', 'description', 'is_unlimited', 'start_time', 'end_time', 'contests', 'participants']
+        fields = ['name', 'description', 'is_unlimited', 'start_time', 'end_time', 'questions', 'contests', 'participants', ]
         widgets = {'start_time': DateTimeInput(attrs={'type': 'datetime-local'}, format="%Y-%m-%dT%H:%M"),
                    'end_time': DateTimeInput(attrs={'type': 'datetime-local'}, format="%Y-%m-%dT%H:%M")}
 
@@ -20,7 +20,7 @@ class ContestCreationForm(ModelForm):
         widgets = {
             'ideal_ans': FileInput(attrs={'accept': settings.ACCEPTABLE_FORMATS_IDEAL,
                                           'class': 'form-control'}),
-            'checker': FileInput(attrs={'accept': settings.ACCEPTABLE_FORMATS_IDEAL,
+            'checker': FileInput(attrs={'accept': '.cpp',
                                           'class': 'form-control'})
         }
     tests = FileField(widget=FileInput(attrs={'accept': '.zip',

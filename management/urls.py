@@ -20,6 +20,9 @@ urlpatterns = [
                path('contest/delete_test/<int:pk>', delete_test, name='delete_test'),
 
                path('question', questions_management, name='question_management'),
-               path('question_creating', question_create, name='question_creating'),
+               path('question/create', question_create, name='question_creating'),
+               path('question/<int:pk>', question_change, name='question_change'),
+               path('question/delete/<int:pk>', question_delete, name='question_delete'),
+               path('question/example/<int:pk>', question_example, name='question_example')
                ]
 

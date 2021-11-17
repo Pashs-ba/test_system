@@ -46,21 +46,21 @@ def add_tests(name: str, path: str, pk: str):
                 with archive.open(i, 'r') as f:
                     a = f.read().decode()
                     print(a)
-                    test = Test(contest=Contests.objects.get(name=pk), input=a)
+                    test = Test(contest=Contests.objects.get(pk=pk), input=a)
                     test.save()
     os.remove(os.path.join(path, name))
 
 
 def create_ans(pk: str, path_ideal: str):
-    tests = Test.objects.filter(contest=Contests.objects.get(name=pk))
+    tests = Test.objects.filter(contest=Contests.objects.get(pk=pk))
+    print('heh')
     for i in tests:
         process = Popen(['python', path_ideal], stdout=PIPE, stderr=PIPE, stdin=PIPE)
         process.communicate(input=i.input.encode())
         process.wait()
         output, error = process.communicate()
-        # print(error.decode())
         if error.decode() != '':
-            # print(error.decode())
+            print(error.decode())
             i.is_error = True
         else:
             i.is_error = False
