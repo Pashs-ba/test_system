@@ -87,7 +87,7 @@ class Competitions(models.Model):
     is_unlimited = models.BooleanField(default=False, verbose_name='Нет сроков')
     start_time = models.DateTimeField(null=True, verbose_name='Дата начала', blank=True)
     end_time = models.DateTimeField(null=True, verbose_name='Дата конца', blank=True)
-    contests = models.ManyToManyField(Contests, null=True, verbose_name='Задачи')
+    contests = models.ManyToManyField(Contests, null=True, blank=True, verbose_name='Задачи')
     questions = models.ManyToManyField(Question, null=True, blank=True, verbose_name='Вопросы')
 
     class Meta:

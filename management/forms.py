@@ -1,4 +1,4 @@
-from django.forms import ModelForm, DateTimeInput, FileField, FileInput
+from django.forms import ModelForm, DateTimeInput, FileField, FileInput, Textarea, TextInput
 from django import forms
 from .views import Competitions, Contests, Question
 import datetime
@@ -21,7 +21,13 @@ class ContestCreationForm(ModelForm):
             'ideal_ans': FileInput(attrs={'accept': settings.ACCEPTABLE_FORMATS_IDEAL,
                                           'class': 'form-control'}),
             'checker': FileInput(attrs={'accept': '.cpp',
-                                          'class': 'form-control'})
+                                          'class': 'form-control'}),
+            'description': Textarea(attrs={'onchange': 'render_text()',
+                                           'id': 'raw'}),
+            'input': Textarea(attrs={'onchange': 'render_text_2()',
+                                           'id': 'raw_2'}),
+            'output': Textarea(attrs={'onchange': 'render_text_3()',
+                                      'id': 'raw_3'}),
         }
     tests = FileField(widget=FileInput(attrs={'accept': '.zip',
                                               'class': 'form-control'}), label='Набор тестов в .zip архиве')
@@ -31,10 +37,14 @@ class ContestUpdateForm(ModelForm):
     class Meta:
         model = Contests
         exclude = ['ideal_ans', 'checker']
-        # widgets = {
-        #     'ideal_ans': FileInput(attrs={'accept': settings.ACCEPTABLE_FORMATS,
-        #                                   'class': 'form-control'})
-        # }
+        widgets = {
+            'description': Textarea(attrs={'onchange': 'render_text()',
+                                           'id': 'raw'}),
+            'input': Textarea(attrs={'onchange': 'render_text_2()',
+                                           'id': 'raw_2'}),
+            'output': Textarea(attrs={'onchange': 'render_text_3()',
+                                      'id': 'raw_3'}),
+        }
 
 
 class QuestionCreationForm(ModelForm):

@@ -1,14 +1,81 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load widget_tweaks %}
 {% block title %}Competition updating{% endblock %}
 {% load crispy_forms_tags %}
 {% block main %}
     <h2 class="text-center my-3 display-2">Общая информация</h2>
     <div class="card my-5">
         <div class="card-body">
-            <form method="POST">
+            <form method="POST" enctype='multipart/form-data'>
                 {% csrf_token %}
-                {{ form|crispy }}
+                {% for i in form %}
+                    {% if i == form.description %}
+                        <div class="mb-3">
+                            <label for="{{ i.label }}" class="form-label">{{ i.label }}</label>
+                            {% render_field i class='form-control' %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="need_text" class="form-label">Пример:</label>
+                            <p id="need_text">{{ i.value }}</p>
+                            <script>
+                                function render_text() {
+
+                                    document.getElementById('need_text').innerText = document.getElementById('raw').value
+                                    var MathJax = window.MathJax;
+                                    MathJax.texReset();
+                                    MathJax.typeset();
+                                }
+                            </script>
+                        </div>
+                    {% elif i == form.output %}
+
+                        <div class="mb-3">
+                            <label for="{{ i.label }}" class="form-label">{{ i.label }}</label>
+                            {% render_field i class='form-control' %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="need_text_2" class="form-label">Пример:</label>
+                            <p id="need_text_3">{{ i.value }}</p>
+                            <script>
+                                function render_text_3() {
+
+                                    document.getElementById('need_text_3').innerText = document.getElementById('raw_3').value
+                                    var MathJax = window.MathJax;
+                                    MathJax.texReset();
+                                    MathJax.typeset();
+                                }
+                            </script>
+                        </div>
+                        {% elif i == form.input %}
+
+                        <div class="mb-3">
+                            <label for="{{ i.label }}" class="form-label">{{ i.label }}</label>
+                            {% render_field i class='form-control' %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="need_text_2" class="form-label">Пример:</label>
+                            <p id="need_text_2">{{ i.value }}</p>
+                            <script>
+                                function render_text_2() {
+
+                                    document.getElementById('need_text_2').innerText = document.getElementById('raw_2').value
+                                    var MathJax = window.MathJax;
+                                    MathJax.texReset();
+                                    MathJax.typeset();
+                                }
+                            </script>
+                        </div>
+                    {% else %}
+                        <div class="mb-3">
+                            <label for="{{ i.label }}" class="form-label">{{ i.label }}</label>
+                            {% render_field i class='form-control' %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
 
                 <div class="my-3">
                     <button type="submit" class="btn btn-primary">Редактировать</button>
