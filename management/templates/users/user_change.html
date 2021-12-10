@@ -5,10 +5,10 @@
 
         <div class="card my-5">
         <div class="card-body">
-            <p>Вы уверены, что хотите удалить пользователей?</p>
             <form method="POST">
                 {% csrf_token %}
-                <input type="hidden" name="to_del" value="{{ to_del }}">
+                <label for="name" class="form-label">Введите новое имя</label>
+                <input id="name" name="name" type="text" class="form-control mb-3" value="{{ old }}">
                 <button type="submit" class="btn btn-danger">Подтвердить</button>
                 <a href="{% url 'user-management' %}" class="btn btn-success">Отмена</a>
             </form>

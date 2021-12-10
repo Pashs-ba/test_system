@@ -24,20 +24,31 @@ def user_panel(request):
 
 
 @admin_only
+def user_change(request, pk):
+    if request.method == 'POST':
+        user = Passwords.objects.get(pk=pk).user
+        user.username = request.POST['name']
+        user.save()
+        return redirect('user-management')
+    else:
+        return render(request, 'users/user_change.html', {'old': Passwords.objects.get(pk=pk).user.username})
+
+
+@admin_only
 def management_page(request):
     return render(request, 'management.html')
 
 
 @admin_only
-def delete_user(request, pk):
+def delete_user(request):
     if request.method == "POST":
-        print(pk)
-        a = Users.objects.get(pk=pk)
-        messages.info(request, f'Successful delete user {a.username}')
-        a.delete()
+        for i in request.POST['to_del'].split(' '):
+            a = Passwords.objects.get(pk=int(i))
+            a.user.delete()
+            a.delete()
         return redirect('user-management')
     else:
-        return render(request, 'users/user_delete.html')
+        return render(request, 'users/user_delete.html', {'to_del': request.GET['to_del']})
 
 
 @transaction.atomic
@@ -220,7 +231,7 @@ def question_create(request):
         if form.is_valid():
             a = form.save()
 
-            a.question = ast.literal_eval(form.cleaned_data['question'])
+            a.question = form.cleaned_data['question']
             a.save()
             messages.success(request, 'success')
             return redirect('question_management')

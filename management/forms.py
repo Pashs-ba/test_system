@@ -1,4 +1,4 @@
-from django.forms import ModelForm, DateTimeInput, FileField, FileInput, Textarea, TextInput
+from django.forms import ModelForm, DateTimeInput, FileField, FileInput, Textarea, TextInput, CheckboxInput
 from django import forms
 from .views import Competitions, Contests, Question
 import datetime
@@ -9,8 +9,9 @@ class CompetitionForm(ModelForm):
     class Meta:
         model = Competitions
         fields = ['name', 'description', 'is_unlimited', 'start_time', 'end_time', 'questions', 'contests', 'participants', ]
-        widgets = {'start_time': DateTimeInput(attrs={'type': 'datetime-local'}, format="%Y-%m-%dT%H:%M"),
-                   'end_time': DateTimeInput(attrs={'type': 'datetime-local'}, format="%Y-%m-%dT%H:%M")}
+        widgets = {'start_time': DateTimeInput(attrs={'type': 'datetime-local', 'class': 'time'}, format="%Y-%m-%dT%H:%M"),
+                   'end_time': DateTimeInput(attrs={'type': 'datetime-local', 'class': 'time'}, format="%Y-%m-%dT%H:%M"),
+                   'is_unlimited': CheckboxInput(attrs={'onchange': 'time_close()', 'id': 'unlim'})}
 
 
 class ContestCreationForm(ModelForm):

@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
 from core.models import Competitions, Contests, Solutions, QuestionAns
 from core.utils import competition_status, upload_file
-from .utils import get_extension, get_next_name, save_solution
+from .utils import get_extension, get_next_name, save_solution, check_solution
 from django.conf import settings
 from django.contrib import messages
 import os
+import subprocess
+from threading import Thread
 
 
 def competition_page(request, pk):
@@ -15,11 +17,16 @@ def competition_page(request, pk):
     context = {
         'competition': competition,
         'solutions': solutions,
-        'bad': ['TL', 'ML', 'WA', 'CE'],
+        'bad': ['TL', 'ML', 'WA', 'CE', 'PE'],
     }
     # TODO fix ok solution
     context.update({'status': competition_status(competition)})
     return render(request, 'competition.html', context=context)
+
+
+def result(request, pk):
+    competition = Competitions.objects.get(pk=pk)
+    return render(request, 'result.html')
 
 
 def load_ans(request, pk):
@@ -33,7 +40,7 @@ def load_ans(request, pk):
         solution = Solutions(user=request.user, contest=Contests.objects.get(pk=task),
                              file_name=solution_path, lang=lang, result='Проверка')
         solution.save()
-
+        Thread(target=check_solution, args=(solution,)).start()
         messages.info(request, 'Решение отправленно на проверку')
         return redirect('competition_page', competition.pk)
     else:

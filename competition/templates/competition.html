@@ -8,6 +8,7 @@
         <div class="text-center">
             <a class="btn btn-primary my-4  btn-lg btn-block col-auto" href="{% url 'load_ans' competition.pk %}">Загрузить
                 решение</a>
+            <a class="btn btn-primary my-4  btn-lg btn-block col-auto" href="{% url 'result_comp' competition.pk %}">Таблица результатов</a>
         </div>
 
         {% if competition.questions.all %}

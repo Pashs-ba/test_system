@@ -3,12 +3,19 @@
 {% load crispy_forms_tags %}
 {% block title %}Users generating{% endblock %}
 {% block main %}
-        <div class="card my-5">
+    <div class="card my-5">
         <div class="card-body">
 
             <form method="POST">
                 {% csrf_token %}
                 {{ form|crispy }}
+                <script>
+                    function time_close() {
+                        for (let i in document.getElementsByClassName('time')) {
+                            document.getElementsByClassName('time')[i].disabled = document.getElementById('unlim').checked
+                        }
+                    }
+                </script>
                 <div class="my-3">
                     <button type="submit" class="btn btn-primary">Подтвердить</button>
                     <a href="{% url 'competition_management' %}" class="btn btn-secondary">Отмена</a>

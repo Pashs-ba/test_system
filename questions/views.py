@@ -39,12 +39,15 @@ def question(request, pk, ret):
         return redirect('competition_page', ret)
     else:
         answers = []
-        print(json.loads(question.question))
         if json.loads(question.question)['type'] != 0:
             for i in json.loads(question.question)['ans']:
                 answers.append([json.loads(question.question)['ans'][i][0], i])
-
-        return render(request, 'question_page.html', {'question': question,
-                                                      'answers': answers})
+        context = {
+            'question': question,
+            'answers': answers
+        }
+        if QuestionAns.objects.filter(question=question):
+            context.update({'need': True})
+        return render(request, 'question_page.html', context)
 
 # Create your views here.

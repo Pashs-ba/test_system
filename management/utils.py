@@ -1,4 +1,6 @@
-from core.models import Users, Passwords, Test, Contests
+import subprocess
+
+from core.models import Users, Passwords, Test, Contests, Solutions
 from django.conf import settings
 import string
 import random
@@ -98,3 +100,4 @@ def upload_tests(file, path):
     with open(os.path.join(path, file.name), 'wb') as f:
         for i in file.chunks():
             f.write(i)
+
