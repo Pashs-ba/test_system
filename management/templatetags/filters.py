@@ -13,8 +13,4 @@ def get_type_name(type_num: str):
     return 'Not found'
 
 
-@register.filter
-def check_ans_id(user, question):
-    if QuestionAns.objects.filter(user=user, question=question):
 
-        return QuestionAns.objects.filter(user=user, question=question).order_by('date')[0].result

@@ -35,7 +35,8 @@
                  color: black">{{ i.1.name }}</a>
 
                         </th>
-                        <th class="text-center">{% if request.user|check_ans_id:i %}Правильно{% else %}Неправильно{% endif %}</th>
+                        {% comment %} TODO fix question result {% endcomment %}
+                        <th class="text-center">{% if request.user|check_ans_id:i.1 and request.user|check_ans_id:i.1 != -1 %}Правильно{% elif request.user|check_ans_id:i.1 == -1  %} {% else %}Неправильно{% endif %}</th>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -48,24 +49,25 @@
 
                 <thead class="table-dark text-center">
                 <tr>
-                    <th scope="col" class="col-9">Название</th>
+                    <th scope="col" class="col-1">#</th>
+                    <th scope="col" class="col-7">Название</th>
                     <th scope="col" class="col-1">Время</th>
                     <th scope="col" class="col-1">Память</th>
-                    <th scope="col" class="col-1">Статус</th>
+                    <th scope="col" class="col-2">Статус</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for contest in competition.contests.all|enumer %}
                     <tr>
                         <th>{{ contest.0 }}</th>
-                        <th><a href="{% url 'contest_page' contest.pk competition.pk %}"
+                        <th><a href="{% url 'contest_page' contest.1.pk competition.pk %}"
                                style="text-decoration: none;
                  color: black">{{ contest.1.name }}</a></th>
                         <th class="text-center">{{ contest.1.time_limit }} с</th>
                         <th class="text-center">{{ contest.1.memory_limit }} MB</th>
                         {% if solutions %}
                         {% for pk, result in solutions.items %}
-                            {% if pk == contest.pk %}
+                            {% if pk == contest.1.pk %}
                                 {% if result in bad %}
                                     <th class="text-center table-danger">{{ result }}</th>
                                 {% elif result == 'OK' %}
