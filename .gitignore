@@ -3,3 +3,7 @@
 db.sqlite3
 /*/migrations
 /contests
+/*/__pychache__
+media/
+.idea/
+__pychache__
