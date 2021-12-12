@@ -9,6 +9,7 @@ import subprocess
 from threading import Thread
 
 
+
 def competition_page(request, pk):
     competition = Competitions.objects.get(pk=pk)
     solutions = {}
@@ -26,7 +27,7 @@ def competition_page(request, pk):
 
 def result(request, pk):
     competition = Competitions.objects.get(pk=pk)
-    return render(request, 'result.html')
+    return render(request, 'result.html', {'competition': competition})
 
 
 def load_ans(request, pk):

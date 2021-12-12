@@ -1,8 +1,15 @@
 {% extends 'base.html' %}
 
 {% block main %}
-    <table class="table">
-        <thead>
+    <table class="table table-bordered">
+        <thead class="table-dark">
+        {% if competition.contests and competition.questions %}
+            <tr>
+                <th></th>
+                <th colspan="{{ competition.questions.all|length }}">Вопросы</th>
+                <th colspan="{{ competition.contests.all|length }}">Задачи</th>
+            </tr>
+        {% endif %}
         <tr>
             <th scope="col">Имя</th>
             <th scope="col">First</th>

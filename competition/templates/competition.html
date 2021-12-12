@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load filters %}
+{% load comptition_filter %}
 {% block title %}{{ competition.name }}{% endblock %}
 {% block main %}
     <h2 class="display-2 text-center">{{ competition.name }}</h2>
@@ -17,17 +18,21 @@
 
                 <thead class="table-dark text-center">
                 <tr>
+                    <th scope="col" class="col-1">#</th>
                     <th scope="col" class="col-9">Название</th>
                     <th scope="col" class="col-1">Статус</th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for i in competition.questions.all %}
+                {% for i in competition.questions.all|enumer %}
                     <tr>
                         <th>
-                            <a href="{% url 'question' i.pk competition.pk %}"
+                            {{ i.0 }}
+                        </th>
+                        <th>
+                            <a href="{% url 'question' i.1.pk competition.pk %}"
                                style="text-decoration: none;
-                 color: black">{{ i.name }}</a>
+                 color: black">{{ i.1.name }}</a>
 
                         </th>
                         <th class="text-center">{% if request.user|check_ans_id:i %}Правильно{% else %}Неправильно{% endif %}</th>
@@ -50,13 +55,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for contest in competition.contests.all %}
+                {% for contest in competition.contests.all|enumer %}
                     <tr>
+                        <th>{{ contest.0 }}</th>
                         <th><a href="{% url 'contest_page' contest.pk competition.pk %}"
                                style="text-decoration: none;
-                 color: black">{{ contest.name }}</a></th>
-                        <th class="text-center">{{ contest.time_limit }} с</th>
-                        <th class="text-center">{{ contest.memory_limit }} MB</th>
+                 color: black">{{ contest.1.name }}</a></th>
+                        <th class="text-center">{{ contest.1.time_limit }} с</th>
+                        <th class="text-center">{{ contest.1.memory_limit }} MB</th>
                         {% if solutions %}
                         {% for pk, result in solutions.items %}
                             {% if pk == contest.pk %}
