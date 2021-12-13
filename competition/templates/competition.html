@@ -69,7 +69,7 @@
                         {% for pk, result in solutions.items %}
                             {% if pk == contest.1.pk %}
                                 {% if result in bad %}
-                                    <th class="text-center table-danger">{{ result }}</th>
+                                    <th class="text-center table-danger">WA</th>
                                 {% elif result == 'OK' %}
                                     <th class="text-center table-success">{{ result }}</th>
                                 {% else %}

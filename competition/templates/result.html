@@ -1,29 +1,43 @@
 {% extends 'base.html' %}
+{% load comptition_filter %}
 
 {% block main %}
     <table class="table table-bordered">
         <thead class="table-dark">
-        {% if competition.contests and competition.questions %}
             <tr>
                 <th></th>
-                <th colspan="{{ competition.questions.all|length }}">Вопросы</th>
-                <th colspan="{{ competition.contests.all|length }}">Задачи</th>
+                {% if competition.questions.all %}
+                    <th colspan="{{ competition.questions.all|length }}">Вопросы</th>
+                {% endif %}
+                {% if competition.contests.all %}
+                    <th colspan="{{ competition.contests.all|length }}">Задачи</th>
+                {% endif %}
             </tr>
-        {% endif %}
         <tr>
-            <th scope="col">Имя</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
+            <th>Имя</th>
+            {%for i in competition.questions.all|enumer %}
+                <th scope="col">{{i.0}}</th>
+            {%endfor%}
+            {%for i in competition.contests.all|enumer %}
+                <th scope="col">{{i.0}}</th>
+            {%endfor%}
         </tr>
         </thead>
         <tbody>
+        {%for i in result%}
         <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
+            <th>{{i.0}}</th>
+            {%for r in i.1%}
+            {% if r in bad or r == '-' %}
+            <th class="text-center table-danger">{{ r }}</th>
+            {% elif r == 'OK' or r == '+'  %}
+            <th class="text-center table-success">{{ r }}</th>
+            {% else %}
+            <th class="text-center">{{ r }}</th>
+            {% endif %}
+            {%endfor%}
         </tr>
+        {%endfor%}
         </tbody>
     </table>
 {% endblock %}

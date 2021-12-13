@@ -6,6 +6,7 @@ import re
 def change(matchobj):
     return '\\' + matchobj.groups()[0]
 
+# TODO fix this shit
 
 def result_page(request, pk, comp_pk):
     with open(Solutions.objects.get(pk=pk).file_name, 'r') as f:
@@ -13,7 +14,6 @@ def result_page(request, pk, comp_pk):
 
     code = str(re.sub(r"([.*+?^${}()\"\'\\])", change, code))
     code = code.replace('\n', '\\n')
-    print(code)
     p = Solutions.objects.get(pk=pk).contest.pk
     return render(request, 'result.html', context={'solution': Solutions.objects.get(pk=pk),
                                                    'code': code,

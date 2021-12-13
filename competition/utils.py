@@ -41,4 +41,8 @@ def check_solution(solution: Solutions):
                          stderr=subprocess.PIPE)
     a.wait()
     b, c = a.communicate()
-    print(b.decode())
+    try:
+        print(b.decode())
+    except Exception as e:
+        print(b)
+        print(e)

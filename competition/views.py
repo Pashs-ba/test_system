@@ -27,7 +27,41 @@ def competition_page(request, pk):
 
 def result(request, pk):
     competition = Competitions.objects.get(pk=pk)
-    return render(request, 'result.html', {'competition': competition})
+    users = set()
+    for i in competition.participants.all():
+        if not i.is_staff:
+            users.add(i.username)
+    result = []
+    for j in users:
+        tmp = []
+        for i in competition.questions.all():
+            if i.questionans_set.filter(user__username=j):
+                if i.questionans_set.filter(user__username=j)[0].result:
+                    tmp.append('+')
+                else:
+                    tmp.append('-')
+            else:
+                tmp.append('')
+        for i in competition.contests.all():
+            if i.solutions_set.filter(user__username=j):
+                a = True
+                for k in i.solutions_set.filter(user__username=j):
+                    if k.result.lower() == 'ok':
+                        tmp.append('OK')
+                        a = False
+                        break
+                if a:
+                    tmp.append(i.solutions_set.filter(user__username=j)[len(i.solutions_set.filter(user__username=j))-1].result)
+            else:
+                tmp.append('')
+        result.append([j, tmp])
+    print(result)
+
+    return render(request, 'result.html', {
+        'competition': competition, 
+        'result': result,
+        'bad': ['TL', 'ML', 'WA', 'CE']
+        })
 
 
 def load_ans(request, pk):
