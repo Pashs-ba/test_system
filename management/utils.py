@@ -19,12 +19,9 @@ def create_user() -> Passwords:
     """
     alphabet = string.ascii_letters + string.digits
     password = ''.join(random.choice(alphabet) for i in range(settings.PASSWORD_LENGTH))
-    names = ['Gonros', 'Mauruin', 'Galagen', 'Gilvel', 'Karankyn', 'Borerys', 'Kalseth', 'Arrogen', 'Tenranel',
-             'Caltharal', 'Moggazak', 'Ighazak', 'Skaghud', 'Graskogar', 'Algraz', 'Domesmashah', 'Domefist',
-             'Doomskorchah', 'Goregashah', 'Battlecrasha']
+    names = ['Tau', 'Mu', 'Ro', 'Alfa', 'Beta', 'Gamma', 'Omega', 'Epsilon', 'Eta', 'Nu', 'Pi', 'Dzeta', 'Psi']
     while True:
-        name = ''.join(random.choice(names)+'_' for i in range(settings.USERNAME_LENGTH))
-        name += str(random.randint(100, 1000))
+        name = ''.join(random.choice(names)+'-'+random.choice(names)+'-'+str(random.randint(1, 300)))
         # Generating unique names
         if not Users.objects.filter(username=name):
             user = Users.objects.create_user(name, password)
