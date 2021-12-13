@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{%load comptition_filter%}
 {% block title %}Homepage{% endblock %}
 {% block main %}
 
@@ -12,6 +13,68 @@
             <a href="{% url 'management-page' %}" class="btn btn-primary text-center">Перейти</a>
           </div>
         </div>
+        <form id="some" method="GET">
+        <div class="row d-flex justify-content-center">
+          <div class="col-3">
+            
+              <div class="mb-3">
+                {% comment %} {{selected}} {% endcomment %}
+                <select class="form-select" name="competiton" aria-label="Default select example">
+                  <option {%if not selected%}selected{%endif%} disabled></option>
+                  {%for i in competitions%}%
+                    <option {%if selected == i.pk%}selected{%endif%} value="{{i.pk}}">{{i.name}}</option>
+                  {%endfor%}
+                </select>
+              </div>
+            
+          </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+          <div class="col-3 d-flex justify-content-center">
+            <button type="submit" for="some" class="btn btn-primary">Показать</button>
+          </div>
+        </div>
+      </form>
+      {%if result %}
+      <table class="table table-bordered" style="margin-top: 15px">
+        <thead class="table-dark">
+            <tr>
+                <th></th>
+                {% if competition.questions.all %}
+                    <th colspan="{{ competition.questions.all|length }}">Вопросы</th>
+                {% endif %}
+                {% if competition.contests.all %}
+                    <th colspan="{{ competition.contests.all|length }}">Задачи</th>
+                {% endif %}
+            </tr>
+        <tr>
+            <th class="col-2">Имя</th>
+            {%for i in competition.questions.all %}
+                <th scope="col" class="col-1">{{i}}</th>
+            {%endfor%}
+            {%for i in competition.contests.all %}
+                <th scope="col" class="col-1">{{i}}</th>
+            {%endfor%}
+        </tr>
+        </thead>
+        <tbody>
+        {%for i in result%}
+        <tr>
+            <th>{{i.0}}</th>
+            {%for r in i.1%}
+            {% if r in bad or r == '-' %}
+            <th class="text-center table-danger">{{ r }}</th>
+            {% elif r == 'OK' or r == '+'  %}
+            <th class="text-center table-success">{{ r }}</th>
+            {% else %}
+            <th class="text-center">{{ r }}</th>
+            {% endif %}
+            {%endfor%}
+        </tr>
+        {%endfor%}
+        </tbody>
+    </table>
+    {%endif%}
     {% else %}
         <div class="row my-4 d-flex justify-content-center">
             {% for competiton in user.competitions_set.all%}
@@ -28,6 +91,7 @@
                 </div>
             {% endfor %}
         </div>
+
     {% endif %}
 
 

@@ -55,7 +55,6 @@ def result(request, pk):
             else:
                 tmp.append('')
         result.append([j, tmp])
-    print(result)
 
     return render(request, 'result.html', {
         'competition': competition, 

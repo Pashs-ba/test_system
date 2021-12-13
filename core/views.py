@@ -19,7 +19,45 @@ def homepage(request):
         for i in Competitions.objects.filter(participants=request.user):
             status.update({i.pk: competition_status(i)})
         context.update({'status': status})
-
+    else:
+        if request.GET.get('competiton', None):
+            need = request.GET.get('competiton', None)
+            context.update({'selected': int(need)})
+            users = set()
+            competition = Competitions.objects.get(pk=need)
+            for i in competition.participants.all():
+                if not i.is_staff:
+                    users.add(i.username)
+            result = []
+            for j in users:
+                tmp = []
+                for i in competition.questions.all():
+                    if i.questionans_set.filter(user__username=j):
+                        if i.questionans_set.filter(user__username=j)[0].result:
+                            tmp.append('+')
+                        else:
+                            tmp.append('-')
+                    else:
+                        tmp.append('')
+                for i in competition.contests.all():
+                    if i.solutions_set.filter(user__username=j):
+                        a = True
+                        for k in i.solutions_set.filter(user__username=j):
+                            if k.result.lower() == 'ok':
+                                tmp.append('OK')
+                                a = False
+                                break
+                        if a:
+                            tmp.append(i.solutions_set.filter(user__username=j)[len(i.solutions_set.filter(user__username=j))-1].result)
+                    else:
+                        tmp.append('')
+                result.append([j, tmp])
+                context.update({
+                    'result': result,
+                    'bad': ['TL', 'ML', 'WA', 'CE'],
+                    'competition': competition
+                })
+        context.update({'competitions': Competitions.objects.all()})
     return render(request, 'homepage.html', context)
 
 
