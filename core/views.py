@@ -11,6 +11,15 @@ from django.utils import timezone
 
 utc = pytz.UTC
 
+def sort_by_sum(tmp):
+    count = 0
+    for i in tmp:
+        if i == '+' or i == 'OK':
+            count+=1
+    # print(tmp)
+
+    return count
+
 @login_required(login_url='/login')
 def homepage(request):
     context = {}
@@ -51,12 +60,15 @@ def homepage(request):
                             tmp.append(i.solutions_set.filter(user__username=j)[len(i.solutions_set.filter(user__username=j))-1].result)
                     else:
                         tmp.append('')
+                
                 result.append([j, tmp])
-                context.update({
-                    'result': result,
-                    'bad': ['TL', 'ML', 'WA', 'CE'],
-                    'competition': competition
-                })
+            
+            result = sorted(result, key=lambda x: sort_by_sum(x[1]), reverse=True)
+            context.update({
+                'result': result,
+                'bad': ['TL', 'ML', 'WA', 'CE'],
+                'competition': competition
+            })
         context.update({'competitions': Competitions.objects.all()})
     return render(request, 'homepage.html', context)
 

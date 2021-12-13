@@ -8,7 +8,14 @@ import os
 import subprocess
 from threading import Thread
 
+def sort_by_sum(tmp):
+    count = 0
+    for i in tmp:
+        if i == '+' or i == 'OK':
+            count+=1
+    # print(tmp)
 
+    return count
 
 def competition_page(request, pk):
     competition = Competitions.objects.get(pk=pk)
@@ -55,7 +62,7 @@ def result(request, pk):
             else:
                 tmp.append('')
         result.append([j, tmp])
-
+    result = sorted(result, key=lambda x: sort_by_sum(x[1]), reverse=True)
     return render(request, 'result.html', {
         'competition': competition, 
         'result': result,
