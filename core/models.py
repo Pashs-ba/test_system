@@ -32,7 +32,6 @@ class Users(AbstractBaseUser, PermissionsMixin):
     def get_username(self):
         return self.username
 
-
 class Passwords(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     password = models.CharField(max_length=1024, verbose_name='Password')

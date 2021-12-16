@@ -24,5 +24,7 @@ urlpatterns = [
     path('question/create', question_create, name='question_creating'),
     path('question/<int:pk>', question_change, name='question_change'),
     path('question/delete/<int:pk>', question_delete, name='question_delete'),
-    path('question/example/<int:pk>', question_example, name='question_example')
+    path('question/example/<int:pk>', question_example, name='question_example'),
+
+    path('group', group_management, name="group_managment")
 ]

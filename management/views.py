@@ -13,6 +13,7 @@ from django.core.paginator import Paginator
 from django.http import HttpResponse
 import ast
 import json
+from django.contrib.auth.models import Group
 
 
 @admin_only
@@ -285,3 +286,8 @@ def question_example(request, pk):
 
     return render(request, 'questions/question_example.html', {'question': question,
                                                                'answers': answers})
+
+@admin_only
+def group_management(request):
+    return render(request, 'group/group_manage.html', {'groups': Group.objects.all()})
+
