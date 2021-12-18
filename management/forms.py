@@ -66,6 +66,6 @@ class QuestionCreationForm(ModelForm):
 class GroupForm(ModelForm):
     class Meta:
         model = StudentGroup
-        fields =['name', 'users']
+        fields ='__all__'
         
     

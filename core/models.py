@@ -32,12 +32,7 @@ class Users(AbstractBaseUser, PermissionsMixin):
     def get_username(self):
         return self.username
 
-class StudentGroup(models.Model):
-    name= models.CharField(verbose_name="Имя", max_length=1024)
-    users = models.ManyToManyField(Users, verbose_name="Пользователи")
 
-    def __str__(self):
-        return self.name
     
 class Passwords(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
@@ -137,3 +132,10 @@ class Test(models.Model):
     is_example = models.BooleanField(default=False)
     is_error = models.BooleanField(default=False)
 
+class StudentGroup(models.Model):
+    name= models.CharField(verbose_name="Имя", max_length=1024)
+    users = models.ManyToManyField(Users, verbose_name="Пользователи")
+    competitions = models.ManyToManyField(Competitions, verbose_name="Соревнования")
+
+    def __str__(self):
+        return self.name

@@ -321,8 +321,4 @@ def group_change(request, pk):
             form.save()
         return redirect('group_managment')
     else:
-
-        # print(StudentGroup(pk=int(pk)).name=='')
-
-        # print(GroupForm(instance=StudentGroup(pk=pk), initial={'name': StudentGroup(pk=pk).name}))
         return render(request, 'group/change_group.html', {'form': GroupForm(instance=StudentGroup.objects.get(pk=pk))})

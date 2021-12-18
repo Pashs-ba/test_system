@@ -15,6 +15,7 @@
         <tr>
             <th scope="col">Название</th>
             <th scope="col">Участники</th>
+            <th scope="col">Соревнования</th>
             <th scope="col">Изменить</th>
             <th scope="col">Удалить</th>
 
@@ -29,6 +30,7 @@
                 <th>
                     {%for i in group.users.all%}{{i}} {%endfor%}
                 </th>
+                <th>{%for i in group.competitions.all%}{{i}}{%endfor%}</th>
                 <th>
                     <a href="{%url 'change_group' group.pk %}" class="btn btn-sm btn-primary">
                         <i class="bi bi-pencil-square"></i>
