@@ -4,7 +4,7 @@ from .utils import create_user, add_tests, create_ans, upload_tests
 from core.models import *
 from django.db import transaction
 from django.contrib import messages
-from .forms import CompetitionForm, ContestCreationForm, ContestUpdateForm, QuestionCreationForm
+from .forms import CompetitionForm, ContestCreationForm, ContestUpdateForm, QuestionCreationForm, GroupForm
 from django.conf import settings
 import os.path
 import shutil
@@ -13,7 +13,7 @@ from django.core.paginator import Paginator
 from django.http import HttpResponse
 import ast
 import json
-from django.contrib.auth.models import Group
+
 
 
 @admin_only
@@ -289,5 +289,24 @@ def question_example(request, pk):
 
 @admin_only
 def group_management(request):
-    return render(request, 'group/group_manage.html', {'groups': Group.objects.all()})
+    return render(request, 'group/group_manage.html', {'groups': StudentGroup.objects.all()})
+
+@admin_only
+def new_group(request):
+    if request.method == 'POST':
+        form = GroupForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('group_managment')
+    else:
+        return render(request, 'group/create_group.html', {'form': GroupForm()})
+
+@admin_only
+def group_delete(request, pk):
+    selected = StudentGroup.objects.get(pk=pk)
+    if request.method == 'POST':
+        selected.delete()
+        return redirect('group_managment')
+    else:
+        return render(request, 'group/group_delete.html')
 

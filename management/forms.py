@@ -1,8 +1,9 @@
 from django.forms import ModelForm, DateTimeInput, FileField, FileInput, Textarea, TextInput, CheckboxInput
 from django import forms
-from .views import Competitions, Contests, Question
+from .views import Competitions, Contests, Question, StudentGroup
 import datetime
 from django.conf import settings
+
 
 
 class CompetitionForm(ModelForm):
@@ -60,3 +61,10 @@ class QuestionCreationForm(ModelForm):
                                             'class': 'form-control'})
         }
     question = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'need'}))
+
+
+class GroupForm(ModelForm):
+    class Meta:
+        model = StudentGroup
+        fields ='__all__'
+        

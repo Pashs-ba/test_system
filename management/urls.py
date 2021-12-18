@@ -26,5 +26,7 @@ urlpatterns = [
     path('question/delete/<int:pk>', question_delete, name='question_delete'),
     path('question/example/<int:pk>', question_example, name='question_example'),
 
-    path('group', group_management, name="group_managment")
+    path('group', group_management, name="group_managment"),
+    path('group/create', new_group, name='new_group'),
+    path('group/delete/<int:pk>', group_delete, name='delete_group')
 ]

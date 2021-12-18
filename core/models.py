@@ -32,6 +32,10 @@ class Users(AbstractBaseUser, PermissionsMixin):
     def get_username(self):
         return self.username
 
+class StudentGroup(models.Model):
+    name= models.CharField(verbose_name="Имя", max_length=1024)
+    users = models.ManyToManyField(Users, verbose_name="Пользователи")
+    
 class Passwords(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     password = models.CharField(max_length=1024, verbose_name='Password')
@@ -129,3 +133,4 @@ class Test(models.Model):
     output = models.TextField(null=True)
     is_example = models.BooleanField(default=False)
     is_error = models.BooleanField(default=False)
+

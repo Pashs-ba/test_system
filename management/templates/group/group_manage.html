@@ -5,9 +5,10 @@
 
     <h1 class='display-1 text-center'>Управление группами</h1>
     <div class="text-center">
-        <a class="btn btn-primary my-4  btn-lg btn-block" href="{% url 'contest_creating' %}"> Создать новую группу</a>
+        <a class="btn btn-primary my-4  btn-lg btn-block" href="{% url 'new_group' %}"> Создать новую группу</a>
 
     </div>
+    
 
     <table class="table table-striped">
         <thead class="table-dark">
@@ -26,7 +27,7 @@
                     {{group.name}}
                 </th>
                 <th>
-                    {%for i in group__users_set.all%}{{i}} {%endfor%}
+                    {%for i in group.users.all%}{{i}} {%endfor%}
                 </th>
                 <th>
                     <a href="#" class="btn btn-sm btn-primary">
@@ -34,7 +35,7 @@
                     </a>
                 </th>
                 <th>
-                    <a href="#" class="btn btn-sm btn-danger">
+                    <a href="{%url 'delete_group' group.pk %}" class="btn btn-sm btn-danger">
                         <i class="bi bi-trash-fill"></i>
                     </a>
                 </th>
