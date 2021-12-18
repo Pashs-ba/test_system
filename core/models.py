@@ -35,6 +35,9 @@ class Users(AbstractBaseUser, PermissionsMixin):
 class StudentGroup(models.Model):
     name= models.CharField(verbose_name="Имя", max_length=1024)
     users = models.ManyToManyField(Users, verbose_name="Пользователи")
+
+    def __str__(self):
+        return self.name
     
 class Passwords(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)

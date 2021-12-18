@@ -296,15 +296,18 @@ def new_group(request):
     if request.method == 'POST':
         form = GroupForm(request.POST)
         if form.is_valid():
-            form.save()
+            a = form.save()
+            print(a.name)
         return redirect('group_managment')
     else:
         return render(request, 'group/create_group.html', {'form': GroupForm()})
+
 
 @admin_only
 def group_delete(request, pk):
     selected = StudentGroup.objects.get(pk=pk)
     if request.method == 'POST':
+        print(selected.name)
         selected.delete()
         return redirect('group_managment')
     else:
@@ -313,12 +316,13 @@ def group_delete(request, pk):
 @admin_only
 def group_change(request, pk):
     if request.method == 'POST':
-        form = GroupForm(request.POST, instance=StudentGroup(pk=pk))
+        form = GroupForm(request.POST, instance=StudentGroup.objects.get(pk=pk))
         if form.is_valid():
             form.save()
         return redirect('group_managment')
     else:
-        print(StudentGroup(pk=pk).name)
-        
-        print(GroupForm(instance=StudentGroup(pk=pk)))
-        return render(request, 'group/change_group.html', {'form': GroupForm(instance=StudentGroup(pk=pk))})
+
+        # print(StudentGroup(pk=int(pk)).name=='')
+
+        # print(GroupForm(instance=StudentGroup(pk=pk), initial={'name': StudentGroup(pk=pk).name}))
+        return render(request, 'group/change_group.html', {'form': GroupForm(instance=StudentGroup.objects.get(pk=pk))})
