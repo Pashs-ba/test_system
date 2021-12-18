@@ -15,3 +15,5 @@ admin.site.register(models.Passwords)
 admin.site.register(models.Test)
 admin.site.register(models.Question)
 admin.site.register(models.QuestionAns)
+admin.site.register(models.StudentGroup)
+

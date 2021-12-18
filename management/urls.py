@@ -28,5 +28,6 @@ urlpatterns = [
 
     path('group', group_management, name="group_managment"),
     path('group/create', new_group, name='new_group'),
-    path('group/delete/<int:pk>', group_delete, name='delete_group')
+    path('group/delete/<int:pk>', group_delete, name='delete_group'),
+    path('group/change/<int:pk>', group_change, name='change_group')
 ]

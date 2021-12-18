@@ -30,7 +30,7 @@
                     {%for i in group.users.all%}{{i}} {%endfor%}
                 </th>
                 <th>
-                    <a href="#" class="btn btn-sm btn-primary">
+                    <a href="{%url 'change_group' group.pk %}" class="btn btn-sm btn-primary">
                         <i class="bi bi-pencil-square"></i>
                     </a>
                 </th>

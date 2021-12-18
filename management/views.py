@@ -310,3 +310,15 @@ def group_delete(request, pk):
     else:
         return render(request, 'group/group_delete.html')
 
+@admin_only
+def group_change(request, pk):
+    if request.method == 'POST':
+        form = GroupForm(request.POST, instance=StudentGroup(pk=pk))
+        if form.is_valid():
+            form.save()
+        return redirect('group_managment')
+    else:
+        print(StudentGroup(pk=pk).name)
+        
+        print(GroupForm(instance=StudentGroup(pk=pk)))
+        return render(request, 'group/change_group.html', {'form': GroupForm(instance=StudentGroup(pk=pk))})
