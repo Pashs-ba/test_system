@@ -77,19 +77,21 @@
     {%endif%}
     {% else %}
         <div class="row my-4 d-flex justify-content-center">
-            {% for competiton in user.competitions_set.all%}
-                <div class="col-md-4 col-sm-6 col-lg-3 my-3 text-center">
-                    <div class="card" >
-                      <div class="card-body">
-                        <h5 class="card-title">{{ competiton.name }}</h5>
-                        <p class="card-text">{{ competiton.description }}</p>
-{#                          <p class="card-text" id="status">Статус: {% if competiton.is_unlimited %}ОТКРЫТО{% elif competiton.start_time > now %}НЕ НАЧАЛОСЬ{% elif competiton.start_time < now and now < competition.end_time %}ИДЕТ{% else %}ЗАКОНЧИЛОСЬ{% endif %}</p>#}
-                        <p class="card-text" id="status">Статус: {% for i, j in status.items %}{% if i == competiton.pk %}{{ j }}{% endif %}{% endfor %}</p>
-                          <a href="{% url 'competition_page' competiton.pk %}" class="btn btn-primary text-center">Перейти</a>
+            {%for group in user.studentgroup_set.all%}
+              {% for competiton in group.competitions.all%}
+                  <div class="col-md-4 col-sm-6 col-lg-3 my-3 text-center">
+                      <div class="card" >
+                        <div class="card-body">
+                          <h5 class="card-title">{{ competiton.name }}</h5>
+                          <p class="card-text">{{ competiton.description }}</p>
+  {#                          <p class="card-text" id="status">Статус: {% if competiton.is_unlimited %}ОТКРЫТО{% elif competiton.start_time > now %}НЕ НАЧАЛОСЬ{% elif competiton.start_time < now and now < competition.end_time %}ИДЕТ{% else %}ЗАКОНЧИЛОСЬ{% endif %}</p>#}
+                          <p class="card-text" id="status">Статус: {% for i, j in status.items %}{% if i == competiton.pk %}{{ j }}{% endif %}{% endfor %}</p>
+                            <a href="{% url 'competition_page' competiton.pk %}" class="btn btn-primary text-center">Перейти</a>
+                        </div>
                       </div>
-                    </div>
-                </div>
-            {% endfor %}
+                  </div>
+              {% endfor %}
+            {%endfor%}
         </div>
 
     {% endif %}

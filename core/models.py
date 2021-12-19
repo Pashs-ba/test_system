@@ -84,12 +84,12 @@ class Question(models.Model):
 class Competitions(models.Model):
     name = models.CharField(max_length=1024, unique=True, verbose_name='Имя')
     description = models.TextField(null=True, verbose_name='Описание', blank=True)
-    participants = models.ManyToManyField(Users, null=True, verbose_name='Участники')
     is_unlimited = models.BooleanField(default=False, verbose_name='Нет сроков')
     start_time = models.DateTimeField(null=True, verbose_name='Дата начала', blank=True)
     end_time = models.DateTimeField(null=True, verbose_name='Дата конца', blank=True)
     contests = models.ManyToManyField(Contests, null=True, blank=True, verbose_name='Задачи')
     questions = models.ManyToManyField(Question, null=True, blank=True, verbose_name='Вопросы')
+
 
     class Meta:
         verbose_name = 'Competition'

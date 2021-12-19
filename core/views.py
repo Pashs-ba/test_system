@@ -4,7 +4,7 @@ from django.contrib import messages
 from .utils import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
-from .models import Competitions
+from .models import Competitions, StudentGroup
 import datetime
 import pytz
 from django.utils import timezone
@@ -25,7 +25,8 @@ def homepage(request):
     context = {}
     if not request.user.is_staff:
         status = {}
-        for i in Competitions.objects.filter(participants=request.user):
+        print(StudentGroup.objects.filter(users=request.user), Competitions.objects.filter(studentgroup__users=request.user))
+        for i in Competitions.objects.filter(studentgroup__users=request.user):
             status.update({i.pk: competition_status(i)})
         context.update({'status': status})
     else:
