@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
-from core.models import Competitions, Contests, Solutions, QuestionAns
+from core.models import Competitions, Contests, Solutions, QuestionAns, StudentGroup
 from core.utils import competition_status, upload_file
+from management.views import question_change
 from .utils import get_extension, get_next_name, save_solution, check_solution
 from django.conf import settings
 from django.contrib import messages
@@ -11,7 +12,9 @@ from threading import Thread
 def sort_by_sum(tmp):
     count = 0
     for i in tmp:
-        if i == '+' or i == 'OK':
+        if i == '+':
+            count+=1000
+        if i == '-':
             count+=1
     # print(tmp)
 
@@ -34,39 +37,42 @@ def competition_page(request, pk):
 
 def result(request, pk):
     competition = Competitions.objects.get(pk=pk)
-    users = set()
-    for i in competition.participants.all():
-        if not i.is_staff:
-            users.add(i.username)
-    result = []
-    for j in users:
-        tmp = []
-        for i in competition.questions.all():
-            if i.questionans_set.filter(user__username=j):
-                if i.questionans_set.filter(user__username=j)[0].result:
-                    tmp.append('+')
+    groups = StudentGroup.objects.filter(users=request.user)
+    result = {}
+    for i in groups:
+        group_table = {}
+        for j in i.users.all():
+            user_result = []
+            for k in competition.questions.all():
+                print(QuestionAns.objects.filter(user=j, question=k))
+                if QuestionAns.objects.filter(user=j, question=k):
+
+                    if QuestionAns.objects.filter(user=j, question=k)[len(QuestionAns.objects.filter(user=j, question=k))-1].result:
+                        user_result.append('+')
+                    else:
+                        user_result.append('-')
                 else:
-                    tmp.append('-')
-            else:
-                tmp.append('')
-        for i in competition.contests.all():
-            if i.solutions_set.filter(user__username=j):
-                a = True
-                for k in i.solutions_set.filter(user__username=j):
-                    if k.result.lower() == 'ok':
-                        tmp.append('OK')
-                        a = False
-                        break
-                if a:
-                    tmp.append(i.solutions_set.filter(user__username=j)[len(i.solutions_set.filter(user__username=j))-1].result)
-            else:
-                tmp.append('')
-        result.append([j, tmp])
-    result = sorted(result, key=lambda x: sort_by_sum(x[1]), reverse=True)
+                    user_result.append('')
+            for k in competition.contests.all():
+                if Solutions.objects.filter(user=j, contest=k):
+                    bad_reslut = True
+                    for q in Solutions.objects.filter(user=j, contest=k):
+                        if q.result == 'OK':
+                            bad_reslut = False
+                            break
+                    if bad_reslut:
+                        user_result.append('-')
+                    else:
+                        user_result.append('+')
+                else:
+                    user_result.append('')
+            group_table[j.username] = user_result
+        group_table = {k: v for k, v in sorted(group_table.items(), key=lambda item: sort_by_sum(item[1]), reverse=True)}
+
+        result[i.name] = group_table
     return render(request, 'result.html', {
         'competition': competition, 
         'result': result,
-        'bad': ['TL', 'ML', 'WA', 'CE']
         })
 
 

@@ -17,3 +17,7 @@ def check_ans_id(user, question):
     else:
         return -1
 
+@register.filter
+def get_vaule(dict, key):
+    return dict[key]
+

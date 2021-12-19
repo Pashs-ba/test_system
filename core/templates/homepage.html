@@ -58,20 +58,19 @@
         </tr>
         </thead>
         <tbody>
-        {%for i in result%}
-        <tr>
-            <th>{{i.0}}</th>
-            {%for r in i.1%}
-            {% if r in bad or r == '-' %}
-            <th class="text-center table-danger">{{ r }}</th>
-            {% elif r == 'OK' or r == '+'  %}
-            <th class="text-center table-success">{{ r }}</th>
-            {% else %}
-            <th class="text-center">{{ r }}</th>
-            {% endif %}
-            {%endfor%}
-        </tr>
-        {%endfor%}
+          {%for i in result%}
+          <tr>
+              <th colspan='100%' class='text-center'>Группа {{i}}</th>
+          </tr>
+          {%for j in result|get_vaule:i%}
+          <tr>
+              <th>{{j}}</th>
+              {%for k in result|get_vaule:i|get_vaule:j%}
+              <th {%if k == '+'%} class='table-success text-center' {%elif k == '-'%} class='table-danger text-center'{%endif%}>{{k}}</th>
+              {%endfor%}
+          </tr>
+          {%endfor%}
+          {%endfor%}
         </tbody>
     </table>
     {%endif%}
