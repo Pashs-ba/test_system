@@ -10,8 +10,15 @@
         </div>
     {% endif %}
     <div class="container d-flex justify-content-center mt-4">
-        <p>{{ question.description }}</p>
+        <p>{{ question.description|linebreaksbr}}</p>
     </div>
+    {%if question.file%}
+    <div class="container d-flex justify-content-center mt-4">
+        <a href="/media/{{question.file}}" role="button" class="btn btn-primary">Скачать файл</a>
+    </div>
+    {%endif%}
+
+
     <div class="container d-flex justify-content-center">
         <form id="form" method="post">
             {% csrf_token %}

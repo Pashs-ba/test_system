@@ -70,8 +70,10 @@ class Question(models.Model):
     name = models.CharField(max_length=1024, verbose_name='Имя')
     description = models.TextField(verbose_name='Текст задания')
     image = models.FileField(null=True, blank=True, verbose_name='Изображение')
+    file = models.FileField(null=True, blank=True, verbose_name='Файл')
     type = models.CharField(max_length=256, choices=QUESTION_TYPE, verbose_name='Тип')
     question = models.JSONField(null=True)
+    
 
     class Meta:
         verbose_name = 'Question'
@@ -89,7 +91,7 @@ class Competitions(models.Model):
     end_time = models.DateTimeField(null=True, verbose_name='Дата конца', blank=True)
     contests = models.ManyToManyField(Contests, null=True, blank=True, verbose_name='Задачи')
     questions = models.ManyToManyField(Question, null=True, blank=True, verbose_name='Вопросы')
-
+    is_visible_result = models.BooleanField(null=True, blank=True, verbose_name="Показывать результаты", default=True)
 
     class Meta:
         verbose_name = 'Competition'

@@ -32,7 +32,7 @@ def homepage(request):
     else:
         if request.GET.get('competiton', None):
             competition = Competitions.objects.get(pk=request.GET.get('competiton', None))
-            groups = StudentGroup.objects.all()
+            groups = StudentGroup.objects.filter(competitions=competition)
             result = {}
             for i in groups:
                 group_table = {}

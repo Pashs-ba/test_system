@@ -9,7 +9,9 @@
         <div class="text-center">
             <a class="btn btn-primary my-4  btn-lg btn-block col-auto" href="{% url 'load_ans' competition.pk %}">Загрузить
                 решение</a>
+            {%if competition.is_visible_result%}
             <a class="btn btn-primary my-4  btn-lg btn-block col-auto" href="{% url 'result_comp' competition.pk %}">Таблица результатов</a>
+            {%endif%}
         </div>
 
         {% if competition.questions.all %}
@@ -36,7 +38,7 @@
 
                         </th>
                         {% comment %} TODO fix question result {% endcomment %}
-                        <th class="text-center">{% if request.user|check_ans_id:i.1 and request.user|check_ans_id:i.1 != -1 %}Правильно{% elif request.user|check_ans_id:i.1 == -1  %} {% else %}Неправильно{% endif %}</th>
+                        <th class="text-center">{% if competition.is_visible_result%} {% if request.user|check_ans_id:i.1 and request.user|check_ans_id:i.1 != -1 %}Правильно{% elif request.user|check_ans_id:i.1 == -1  %} {% else %}Неправильно{% endif %}{%else%}Скрыто{%endif%}</th>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -65,6 +67,7 @@
                  color: black">{{ contest.1.name }}</a></th>
                         <th class="text-center">{{ contest.1.time_limit }} с</th>
                         <th class="text-center">{{ contest.1.memory_limit }} MB</th>
+                        {%if competition.is_visible_result%}
                         {% if solutions %}
                         {% for pk, result in solutions.items %}
                             {% if pk == contest.1.pk %}
@@ -82,6 +85,9 @@
                         {% else %}
                             <th class="text-center"></th>
                         {% endif %}
+                        {%else%}
+                        <th class="text-center">Скрыто</th>
+                        {%endif%}
                     </tr>
                 {% endfor %}
                 </tbody>
