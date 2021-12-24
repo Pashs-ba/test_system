@@ -2,16 +2,17 @@
 {% load static %}
 {% block title %}Conform delete{% endblock %}
 {% block main %}
-    
+
         <div class="card my-5">
         <div class="card-body">
-            <p>Вы уверены, что хотите удалить группу?</p>
+            <p>Вы уверены, что хотите удалить группы?</p>
             <form method="POST">
                 {% csrf_token %}
+                <input type="hidden" name="to_del" value="{{ to_del }}">
                 <button type="submit" class="btn btn-danger">Подтвердить</button>
                 <a href="{% url 'group_managment' %}" class="btn btn-success">Отмена</a>
             </form>
         </div>
     </div>
-    
+
 {% endblock %}

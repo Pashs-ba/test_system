@@ -17,7 +17,7 @@
             <th scope="col">Участники</th>
             <th scope="col">Соревнования</th>
             <th scope="col">Изменить</th>
-            <th scope="col">Удалить</th>
+            <th scope="col"><div class="row row-cols-lg-auto g-3 justify-content-center align-items-center"><div class="col-12 d-flex align-items-center"><a type="button" onclick="make_del_link(this)" class="btn btn-danger btn-sm me-3">Удалить</a> <input type="checkbox" onclick="select_all(this)" class="form-check-input" id="all"></div></div></th>
 
         </tr>
         </thead>
@@ -36,15 +36,33 @@
                         <i class="bi bi-pencil-square"></i>
                     </a>
                 </th>
-                <th>
-                    <a href="{%url 'delete_group' group.pk %}" class="btn btn-sm btn-danger">
-                        <i class="bi bi-trash-fill"></i>
-                    </a>
-                </th>
+                <td class="">
+                    <div class="d-flex justify-content-center">
+                        <input type="checkbox" class="form-check-input delete_item" id="{{ group.pk }}">
+                    </div>
+                </td>
             </tr>
             {%endfor%}
         </tbody>
     </table>
-
+    <script>
+        function select_all(el){
+            for(let i = 0; i<document.getElementsByClassName('delete_item').length; i++){
+                document.getElementsByClassName('delete_item')[i].checked = el.checked
+            }
+        }
+        function make_del_link(el){
+            let ret = ''
+            for(let i = 0; i<document.getElementsByClassName('delete_item').length; i++){
+                if (document.getElementsByClassName('delete_item')[i].checked){
+                    ret+=document.getElementsByClassName('delete_item')[i].id.toString()+' '
+                }
+    
+            }
+            ret = ret.slice(0, -1)
+            console.log(ret)
+            el.href='{% url 'delete_group' %}'+'?to_del='+ret
+        }
+    </script>
 
 {% endblock %}

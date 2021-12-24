@@ -93,14 +93,14 @@ def create_competition(request):
 
 @transaction.atomic
 @admin_only
-def delete_competition(request, pk):
+def delete_competition(request):
     if request.method == "POST":
-
-        Competitions.objects.get(pk=pk).delete()
-        messages.success(request, 'Successful delete competition')
+        for i in request.POST['to_del'].split(' '):
+            a = Competitions.objects.get(pk=int(i))
+            a.delete()
         return redirect('competition_management')
     else:
-        return render(request, 'competitions/competition_deleting.html')
+        return render(request, 'competitions/competition_deleting.html', {'to_del': request.GET['to_del']})
 
 
 @transaction.atomic
@@ -125,15 +125,14 @@ def contest_management(request):
 
 @transaction.atomic
 @admin_only
-def contest_delete(request, pk):
+def contest_delete(request):
     if request.method == "POST":
-
-        messages.success(request, 'Successful delete contest')
-        # shutil.rmtree(os.path.join(settings.BASE_DIR, f'contests/{Contests.objects.get(pk=pk).pk}'))
-        Contests.objects.get(pk=pk).delete()
-        return redirect('contest_management')
+        for i in request.POST['to_del'].split(' '):
+            a = Contests.objects.get(pk=int(i))
+            a.delete()
+        return redirect('group_managment')
     else:
-        return render(request, 'contests/contest_deleting.html')
+        return render(request, 'contests/contests_delete.html', {'to_del': request.GET['to_del']})
 
 
 @transaction.atomic
@@ -264,14 +263,14 @@ def question_change(request, pk):
 
 @transaction.atomic
 @admin_only
-def question_delete(request, pk):
+def question_delete(request):
     if request.method == "POST":
-
-        messages.success(request, 'Successful delete question')
-        Question.objects.get(pk=pk).delete()
-        return redirect('contest_management')
+        for i in request.POST['to_del'].split(' '):
+            a = Question.objects.get(pk=int(i))
+            a.delete()
+        return redirect('question_management')
     else:
-        return render(request, 'questions/question_delete.html')
+        return render(request, 'questions/question_delete.html', {'to_del': request.GET['to_del']})
 
 
 @admin_only
@@ -304,14 +303,15 @@ def new_group(request):
 
 
 @admin_only
-def group_delete(request, pk):
-    selected = StudentGroup.objects.get(pk=pk)
-    if request.method == 'POST':
-        print(selected.name)
-        selected.delete()
+def group_delete(request):
+    if request.method == "POST":
+        for i in request.POST['to_del'].split(' '):
+            a = StudentGroup.objects.get(pk=int(i))
+            a.delete()
         return redirect('group_managment')
     else:
-        return render(request, 'group/group_delete.html')
+        return render(request, 'group/group_delete.html', {'to_del': request.GET['to_del']})
+
 
 @admin_only
 def group_change(request, pk):
