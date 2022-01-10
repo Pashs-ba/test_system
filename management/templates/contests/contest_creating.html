@@ -4,6 +4,7 @@
 {% load crispy_forms_tags %}
 {% block title %}Users generating{% endblock %}
 {% block main %}
+
     <div class="card my-5">
         <div class="card-body">
             <p id="after" style="display: none"></p>
@@ -12,7 +13,7 @@
                 {% for i in form %}
                     {% if i == form.description %}
                         <div class="mb-3">
-                            <label for="{{ i.label }}" class="form-label">{{ i.label }}</label>
+                            <label for="{{ i.auto_id }}" class="form-label">{{ i.label }}</label>
                             {% render_field i class='form-control' %}
                         </div>
 

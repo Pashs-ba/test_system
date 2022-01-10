@@ -12,5 +12,7 @@ def get_type_name(type_num: str):
             return i[1]
     return 'Not found'
 
-
+@register.filter
+def get_widget_type(obj):
+    return obj.__class__.__name__
 
