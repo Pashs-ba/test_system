@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load widget_tweaks %}
+{%load filters %}
 
 {% block main %}
     <div class="card my-5">
@@ -7,18 +8,62 @@
             <form method="POST" id="form">
                 {% csrf_token %}
                 
-                {% for field in form.visible_fields %}
-                    <div class="mb-3">
-                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-                        {{ field|add_class:'form-control' }}
+                {% for i in form.visible_fields %}
+                <div class="mb-3">
+                    {%if i.field|get_widget_type == 'NullBooleanField' or i.field|get_widget_type == 'BooleanField' %}
+                    <div class="form-check">
+                        <label for="{{ i.auto_id }}" class="form-label">{{ i.label }}</label>
+                        {% render_field i class='form-check-input' %}
                     </div>
+                    {%elif i.field|get_widget_type == 'ModelMultipleChoiceField'%}
+                    <label for="{{ i.auto_id }}" class="form-label">{{ i.label }}</label>
+                    <div class="mb-3">
+                        <form>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text"><i class="bi bi-search"></i></span>
+                            <input type="text" class="form-control" id="search" placeholder="Найти" onchange="find('{{i.auto_id}}', this.value)">
+                          </div>
+                    </div>
+                    
+                    {% render_field i class='form-control' %}
+                    <div id="emailHelp" class="form-text">Если вы хотите выбрать несколько элементов то при нажатии на них удеживайте ctrl</div>
+                    {%else%}
+                        <label for="{{ i.auto_id }}" class="form-label">{{ i.label }}</label>
+                        {% render_field i class='form-control' %}
+                    {%endif%}
+                </div>
+                
                 {% endfor %}
                 {% for hidden in form.hidden_fields %}
                     {{ hidden }}
                 {% endfor %}
-            
+                <script>
+                    function time_close() {
+                        console.log(document.getElementsByClassName('form-control'))
+                        for (let i in document.getElementsByClassName('form-control')) {
+                            if (document.getElementsByClassName('form-control')[i].type == 'datetime-local'){
+                                document.getElementsByClassName('form-control')[i].value = ''
+                                document.getElementsByClassName('form-control')[i].disabled = document.getElementById('unlim').checked
+                            }
+                            
+                        }
+                    }
+                    function find(id, val){
+                        el = document.getElementById(id)
+                        val = val.toLowerCase()
+                        {% comment %} console.log(el, val) {% endcomment %}
+                        {% comment %} console.log(el.options) {% endcomment %}
+                        for(var i of el.options){
+                            i.hidden = false
+                            console.log(i.innerHTML.toLowerCase().match(val), val)
+                            if (!i.innerHTML.toLowerCase().match(val)){
+                                i.hidden = true
+                            }
+                        }
+                    }
+                </script>
                 <div class="my-3">
-                    <button class="btn btn-success" for="form">Создать группу</button>
+                    <button type='submit' class="btn btn-success" for="form">Создать группу</button>
                     <a class="btn btn-primary" href="{% url 'group_managment'%}" role="button" >Назад</a>
                 </div> 
             </form>

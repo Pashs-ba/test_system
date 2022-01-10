@@ -1,26 +1,71 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
+{%load filters %}
 {% load static %}
-{% block title %}Competition updating{% endblock %}
 {% load crispy_forms_tags %}
+{% block title %}Users generating{% endblock %}
 {% block main %}
-        <div class="card my-5">
+    <div class="card my-5">
         <div class="card-body">
 
             <form method="POST">
                 {% csrf_token %}
-                {{ form|crispy }}
+                {% for i in form %}
+                <div class="mb-3">
+                    {% comment %} {{i.field|get_widget_type}} {% endcomment %}
+                    {%if i.field|get_widget_type == 'NullBooleanField' or i.field|get_widget_type == 'BooleanField' %}
+                    <div class="form-check">
+                        <label for="{{ i.auto_id }}" class="form-label">{{ i.label }}</label>
+                        {% render_field i class='form-check-input' %}
+                    </div>
+                    {%elif i.field|get_widget_type == 'ModelMultipleChoiceField'%}
+                    <label for="{{ i.auto_id }}" class="form-label">{{ i.label }}</label>
+                    <div class="mb-3">
+                        <form>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text"><i class="bi bi-search"></i></span>
+                            <input type="text" class="form-control" id="search" placeholder="Найти" onchange="find('{{i.auto_id}}', this.value)">
+                          </div>
+                        </form>
+                    </div>
+                    
+                    {% render_field i class='form-control' %}
+                    <div id="emailHelp" class="form-text">Если вы хотите выбрать несколько элементов то при нажатии на них удеживайте ctrl</div>
+                    {%else%}
+                        <label for="{{ i.auto_id }}" class="form-label">{{ i.label }}</label>
+                        {% render_field i class='form-control' %}
+                    {%endif%}
+                </div>
+                {%endfor%}
                 <script>
                     function time_close() {
-                        for (let i in document.getElementsByClassName('time')) {
-                            document.getElementsByClassName('time')[i].disabled = document.getElementById('unlim').checked
+                        console.log(document.getElementsByClassName('form-control'))
+                        for (let i in document.getElementsByClassName('form-control')) {
+                            if (document.getElementsByClassName('form-control')[i].type == 'datetime-local'){
+                                document.getElementsByClassName('form-control')[i].value = ''
+                                document.getElementsByClassName('form-control')[i].disabled = document.getElementById('unlim').checked
+                            }
+                            
                         }
                     }
-                    time_close()
+                    function find(id, val){
+                        el = document.getElementById(id)
+                        val = val.toLowerCase()
+                        {% comment %} console.log(el, val) {% endcomment %}
+                        {% comment %} console.log(el.options) {% endcomment %}
+                        for(var i of el.options){
+                            i.hidden = false
+                            console.log(i.innerHTML.toLowerCase().match(val), val)
+                            if (!i.innerHTML.toLowerCase().match(val)){
+                                i.hidden = true
+                            }
+                        }
+                    }
                 </script>
                 <div class="my-3">
                     <button type="submit" class="btn btn-primary">Подтвердить</button>
                     <a href="{% url 'competition_management' %}" class="btn btn-secondary">Отмена</a>
-                    </div>
+                </div>
             </form>
         </div>
     </div>
