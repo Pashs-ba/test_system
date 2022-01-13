@@ -61,9 +61,15 @@
                             }
                         }
                     }
+                    $(document).keypress(
+                    function(event){
+                        if (event.which == '13') {
+                        event.preventDefault();
+                        }
+                    });
                 </script>
                 <div class="my-3">
-                    <button class="btn btn-success" for="form">Изменить группу</button>
+                    <button type="submit" class="btn btn-success" for="form">Изменить группу</button>
                     <a class="btn btn-primary" href="{% url 'group_managment'%}" role="button" >Назад</a>
                 </div> 
             </form>

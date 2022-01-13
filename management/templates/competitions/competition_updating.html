@@ -7,7 +7,6 @@
 {% block main %}
     <div class="card my-5">
         <div class="card-body">
-
             <form method="POST">
                 {% csrf_token %}
                 {% for i in form %}
@@ -21,12 +20,11 @@
                     {%elif i.field|get_widget_type == 'ModelMultipleChoiceField'%}
                     <label for="{{ i.auto_id }}" class="form-label">{{ i.label }}</label>
                     <div class="mb-3">
-                        <form>
+                        
                         <div class="input-group input-group-sm">
                             <span class="input-group-text"><i class="bi bi-search"></i></span>
                             <input type="text" class="form-control" id="search" placeholder="Найти" onchange="find('{{i.auto_id}}', this.value)">
                           </div>
-                        </form>
                     </div>
                     
                     {% render_field i class='form-control' %}
@@ -37,6 +35,10 @@
                     {%endif%}
                 </div>
                 {%endfor%}
+                <div class="my-3">
+                    <button type="submit" for="form" class="btn btn-primary">Подтвердить</button>
+                    <a href="{% url 'competition_management' %}" class="btn btn-secondary">Отмена</a>
+                </div>
                 <script>
                     function time_close() {
                         console.log(document.getElementsByClassName('form-control'))
@@ -61,11 +63,14 @@
                             }
                         }
                     }
+                    $(document).keypress(
+                    function(event){
+                        if (event.which == '13') {
+                        event.preventDefault();
+                        }
+                    });
                 </script>
-                <div class="my-3">
-                    <button type="submit" class="btn btn-primary">Подтвердить</button>
-                    <a href="{% url 'competition_management' %}" class="btn btn-secondary">Отмена</a>
-                </div>
+                
             </form>
         </div>
     </div>

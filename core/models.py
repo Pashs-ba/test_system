@@ -141,3 +141,13 @@ class StudentGroup(models.Model):
 
     def __str__(self):
         return self.name
+
+class VariantQuestionGenerator(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, unique=True, verbose_name='вопрос')
+    generator = models.FileField(verbose_name='Генератор')
+
+class VariantQuestion(models.Model):
+    data = models.JSONField()
+    ans = models.CharField(max_length=1024)
+    generator = models.ForeignKey(VariantQuestionGenerator, on_delete=models.CASCADE)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
