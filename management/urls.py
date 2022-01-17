@@ -29,5 +29,9 @@ urlpatterns = [
     path('group', group_management, name="group_managment"),
     path('group/create', new_group, name='new_group'),
     path('group/delete', group_delete, name='delete_group'),
-    path('group/change/<int:pk>', group_change, name='change_group')
+    path('group/change/<int:pk>', group_change, name='change_group'),
+
+    path('generator/question', quest_generator_page, name='question_generator_manage'),
+    path('generator/question/create', question_gen_create, name='question_gen_create'),
+    path('generator/question/<int:pk>', question_generator, name='question_generator')
 ]

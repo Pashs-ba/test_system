@@ -1,6 +1,7 @@
+from unicodedata import name
 from django.forms import ModelForm, DateTimeInput, FileField, FileInput, Textarea, TextInput, CheckboxInput
 from django import forms
-from .views import Competitions, Contests, Question, StudentGroup
+from .views import Competitions, Contests, Question, StudentGroup, VariantQuestionGenerator
 import datetime
 from django.conf import settings
 
@@ -68,5 +69,13 @@ class GroupForm(ModelForm):
     class Meta:
         model = StudentGroup
         fields ='__all__'
+
+class QuestionGeneratorForm(ModelForm):
+    class Meta:
+        model = VariantQuestionGenerator
+        fields = '__all__'
+        
+    # nums_var = forms.IntegerField(label='Количество вариантов', widget=forms.NumberInput(attrs={'min': '1'}))
+
         
     

@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from core.decorators import admin_only
-from .utils import create_user, add_tests, create_ans, upload_tests
+from .utils import create_user, add_tests, create_ans, upload_tests, generate_variants_question
 from core.models import *
 from django.db import transaction
 from django.contrib import messages
-from .forms import CompetitionForm, ContestCreationForm, ContestUpdateForm, QuestionCreationForm, GroupForm
+from .forms import CompetitionForm, ContestCreationForm, ContestUpdateForm, QuestionCreationForm, GroupForm, QuestionGeneratorForm
 from django.conf import settings
 import os.path
 import shutil
@@ -13,6 +13,7 @@ from django.core.paginator import Paginator
 from django.http import HttpResponse
 import ast
 import json
+from django.db.models import Count
 
 
 
@@ -322,3 +323,44 @@ def group_change(request, pk):
         return redirect('group_managment')
     else:
         return render(request, 'group/change_group.html', {'form': GroupForm(instance=StudentGroup.objects.get(pk=pk))})
+
+@admin_only
+def quest_generator_page(request):
+    return render(request, 'question_generator/management.html', {'generators': VariantQuestionGenerator.objects.all()})
+
+@admin_only
+def question_gen_create(request):
+    if request.method == 'POST':
+        model = QuestionGeneratorForm(request.POST)
+        
+        if model.is_valid():
+            model.save()
+            Thread(target=generate_variants_question, args=[model.var_count, model.pk]).start()
+            return redirect('question_generator_manage')
+    else:
+        return render(request, 'question_generator/create.html', {'form': QuestionGeneratorForm()})  
+
+@admin_only
+def question_generator(request, pk):
+    if request.method == 'POST':
+        model = QuestionGeneratorForm(request.POST, instance=VariantQuestionGenerator.objects.get(pk=pk))
+        if model.is_valid():
+            count = VariantQuestionGenerator.objects.annotate(variant_count=Count('variantquestion')).get(pk=pk).variant_count
+            model.save()
+            if not model.var_count:
+                variants = VariantQuestionGenerator.objects.get(pk=pk).variantquestion_set.all().order_by('user')
+                for i in variants:
+                    i.delete()
+            elif model.var_count > count:
+                Thread(target=generate_variants_question, args=[model.var_count-count, model.pk]).start()
+            elif model.var_count < count:
+                variants = VariantQuestionGenerator.objects.get(pk=pk).variantquestion_set.all().order_by('user')
+                to_del = count-models.var_count
+                for i in range(to_del):
+                    variants[i].delete()
+        return redirect('question_generator_manage')
+    else:
+        print(VariantQuestionGenerator.objects.annotate(variant_count=Count('variantquestion')).get(pk=pk).variant_count)
+        return render(request, 'question_generator/update.html', {'form': QuestionGeneratorForm(instance=VariantQuestionGenerator.objects.get(pk=pk)), 
+                                                                  'model': VariantQuestionGenerator.objects.get(pk=pk), 
+                                                                  'variants': VariantQuestionGenerator.objects.get(pk=pk).variantquestion_set.all().order_by('-user')})  

@@ -7,7 +7,8 @@ from .managers import UserManager
 def upload(instance, filename):
     # print(instance)
     return f'contests/{filename}'
-
+def content_file_name(instance, filename):
+    return f'variant/{filename}'
 
 class Users(AbstractBaseUser, PermissionsMixin):
     username = models.CharField('Username', unique=True, max_length=1024)
@@ -89,8 +90,8 @@ class Competitions(models.Model):
     is_unlimited = models.BooleanField(default=False, verbose_name='Нет сроков')
     start_time = models.DateTimeField(null=True, verbose_name='Дата начала', blank=True)
     end_time = models.DateTimeField(null=True, verbose_name='Дата конца', blank=True)
-    contests = models.ManyToManyField(Contests, null=True, blank=True, verbose_name='Задачи')
-    questions = models.ManyToManyField(Question, null=True, blank=True, verbose_name='Вопросы')
+    contests = models.ManyToManyField(Contests, blank=True, verbose_name='Задачи')
+    questions = models.ManyToManyField(Question, blank=True, verbose_name='Вопросы')
     is_visible_result = models.BooleanField(null=True, blank=True, verbose_name="Показывать результаты", default=True)
 
     class Meta:
@@ -143,11 +144,21 @@ class StudentGroup(models.Model):
         return self.name
 
 class VariantQuestionGenerator(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, unique=True, verbose_name='вопрос')
+    question = models.ForeignKey(Question, on_delete=models.CASCADE,verbose_name='вопрос')
     generator = models.FileField(verbose_name='Генератор')
+    var_count = models.IntegerField(null=True, verbose_name='Колличество вариантов')
+    def __str__(self):
+        return f'{self.question}'
 
 class VariantQuestion(models.Model):
     data = models.JSONField()
     ans = models.CharField(max_length=1024)
     generator = models.ForeignKey(VariantQuestionGenerator, on_delete=models.CASCADE)
-    user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE, null=True, blank=True)
+    file = models.FileField(null=True, upload_to=content_file_name, blank=True)
+
+    def __str__(self):
+        return f'{self.data} {self.ans}'
+    
+
+
