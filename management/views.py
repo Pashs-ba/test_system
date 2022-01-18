@@ -347,7 +347,7 @@ def question_generator(request, pk):
         if model.is_valid():
             count = VariantQuestionGenerator.objects.annotate(variant_count=Count('variantquestion')).get(pk=pk).variant_count
             model.save()
-            if not model.var_count:
+            if int(model.cleaned_data['var_count']) == 0:
                 variants = VariantQuestionGenerator.objects.get(pk=pk).variantquestion_set.all().order_by('user')
                 for i in variants:
                     i.delete()
@@ -355,7 +355,7 @@ def question_generator(request, pk):
                 Thread(target=generate_variants_question, args=[model.var_count-count, model.pk]).start()
             elif model.var_count < count:
                 variants = VariantQuestionGenerator.objects.get(pk=pk).variantquestion_set.all().order_by('user')
-                to_del = count-models.var_count
+                to_del = count-model.var_count
                 for i in range(to_del):
                     variants[i].delete()
         return redirect('question_generator_manage')
@@ -363,4 +363,4 @@ def question_generator(request, pk):
         print(VariantQuestionGenerator.objects.annotate(variant_count=Count('variantquestion')).get(pk=pk).variant_count)
         return render(request, 'question_generator/update.html', {'form': QuestionGeneratorForm(instance=VariantQuestionGenerator.objects.get(pk=pk)), 
                                                                   'model': VariantQuestionGenerator.objects.get(pk=pk), 
-                                                                  'variants': VariantQuestionGenerator.objects.get(pk=pk).variantquestion_set.all().order_by('-user')})  
+                                                                  'variants': VariantQuestionGenerator.objects.get(pk=pk).variantquestion_set.all().order_by('-user')})

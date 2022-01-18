@@ -3,20 +3,34 @@
 {% block title %} {{ question.name }} {% endblock %}
 {% block main %}
     <h2 class="display-2 text-center mb-4">{{ question.name }}</h2>
-
-    {% if question.image %}
+    {%if image%}
+    <div class="container d-flex justify-content-center">
+        <img src="/media/{{image}}" alt="some wrong" class="mw-100">
+    </div>
+    {% elif question.image %}
         <div class="container d-flex justify-content-center">
             <img src="/media/{{ question.image }}" alt="some wrong" class="mw-100">
         </div>
     {% endif %}
+    {%if text%}
+    <div class="container d-flex justify-content-center mt-4">
+        <p>{{ text|linebreaksbr}}</p>
+    </div>
+    {%else%}
     <div class="container d-flex justify-content-center mt-4">
         <p>{{ question.description|linebreaksbr}}</p>
     </div>
-    {%if question.file%}
+    {%endif%}
+    {%if file%}
+    <div class="container d-flex justify-content-center mt-4">
+        <a href="/media/{{file}}" role="button" class="btn btn-primary">Скачать файл</a>
+    </div>
+    {%elif question.file%}
     <div class="container d-flex justify-content-center mt-4">
         <a href="/media/{{question.file}}" role="button" class="btn btn-primary">Скачать файл</a>
     </div>
     {%endif%}
+
 
 
     <div class="container d-flex justify-content-center">

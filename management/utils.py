@@ -103,7 +103,9 @@ def generate_variants_question(num, model_id, path_to):
         process = Popen('media/{path_to}', stdout=PIPE, stderr=PIPE, stdin=PIPE)
         stdout, stderr = process.communicate()
         ans = ast.literal_eval(stdout)
-        model = VariantQuestion(data=ans['ans'], ans=ans['ans'], generator=VariantQuestionGenerator.objects.get(pk=model_id))
+        model = VariantQuestion(data=ans['data'], ans=ans['ans'], generator=VariantQuestionGenerator.objects.get(pk=model_id))
         if 'file' in ans.keys():
             model.file = ans['file']
+        if 'image' in ans.keys():
+            model.image = ans['image']
         model.save()

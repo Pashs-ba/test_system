@@ -152,10 +152,11 @@ class VariantQuestionGenerator(models.Model):
 
 class VariantQuestion(models.Model):
     data = models.JSONField()
-    ans = models.CharField(max_length=1024)
+    ans = models.JSONField()
     generator = models.ForeignKey(VariantQuestionGenerator, on_delete=models.CASCADE)
     user = models.ForeignKey(Users, on_delete=models.CASCADE, null=True, blank=True)
     file = models.FileField(null=True, upload_to=content_file_name, blank=True)
+    image = models.ImageField(null=True, upload_to=content_file_name,blank=True)
 
     def __str__(self):
         return f'{self.data} {self.ans}'
