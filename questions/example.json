@@ -1,6 +1,9 @@
 {
     "data": [1, 2],
-    С,
+    "ans": {
+        "type": 0,
+        "ans": 3
+    },
     "file": "some path",
     "image": "some path"
 }

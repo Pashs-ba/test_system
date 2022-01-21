@@ -144,7 +144,7 @@ class StudentGroup(models.Model):
         return self.name
 
 class VariantQuestionGenerator(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE,verbose_name='вопрос')
+    question = models.OneToOneField(Question, on_delete=models.CASCADE,verbose_name='вопрос')
     generator = models.FileField(verbose_name='Генератор')
     var_count = models.IntegerField(null=True, verbose_name='Колличество вариантов')
     def __str__(self):

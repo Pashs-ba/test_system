@@ -100,9 +100,12 @@ def upload_tests(file, path):
 
 def generate_variants_question(num, model_id, path_to):
     for i in range(num):
-        process = Popen('media/{path_to}', stdout=PIPE, stderr=PIPE, stdin=PIPE)
+        print(f'variant {i}')
+        process = Popen(f'media/{path_to}', stdout=PIPE, stderr=PIPE, stdin=PIPE)
+        process.wait()
         stdout, stderr = process.communicate()
-        ans = ast.literal_eval(stdout)
+        print(stdout.decode())
+        ans = ast.literal_eval(stdout.decode())
         model = VariantQuestion(data=ans['data'], ans=ans['ans'], generator=VariantQuestionGenerator.objects.get(pk=model_id))
         if 'file' in ans.keys():
             model.file = ans['file']

@@ -5,7 +5,7 @@
 {% block main %}
     <div class="card my-5">
         <div class="card-body px-5">
-            <form method="POST" id="form">
+            <form method="POST" enctype="multipart/form-data" id="form">
                 {% csrf_token %}
                 
                 {% for i in form.visible_fields %}

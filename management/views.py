@@ -329,18 +329,20 @@ def quest_generator_page(request):
     return render(request, 'question_generator/management.html', {'generators': VariantQuestionGenerator.objects.all()})
 
 @admin_only
+@transaction.atomic
 def question_gen_create(request):
     if request.method == 'POST':
-        model = QuestionGeneratorForm(request.POST)
-        
+        model = QuestionGeneratorForm(request.POST, request.FILES)
+        print(model.is_valid())
         if model.is_valid():
-            model.save()
-            Thread(target=generate_variants_question, args=[model.var_count, model.pk]).start()
+            model = model.save()
+            Thread(target=generate_variants_question, args=[model.var_count, model.pk, model.generator]).start()
             return redirect('question_generator_manage')
     else:
         return render(request, 'question_generator/create.html', {'form': QuestionGeneratorForm()})  
 
 @admin_only
+@transaction.atomic
 def question_generator(request, pk):
     if request.method == 'POST':
         model = QuestionGeneratorForm(request.POST, instance=VariantQuestionGenerator.objects.get(pk=pk))
@@ -352,7 +354,7 @@ def question_generator(request, pk):
                 for i in variants:
                     i.delete()
             elif model.var_count > count:
-                Thread(target=generate_variants_question, args=[model.var_count-count, model.pk]).start()
+                Thread(target=generate_variants_question, args=[model.var_count-count, model.pk, model.generator]).start()
             elif model.var_count < count:
                 variants = VariantQuestionGenerator.objects.get(pk=pk).variantquestion_set.all().order_by('user')
                 to_del = count-model.var_count
