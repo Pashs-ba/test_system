@@ -44,8 +44,8 @@ class Contests(models.Model):
     name = models.CharField(max_length=1024, verbose_name="Название", unique=True)
     description = models.TextField(null=True, verbose_name='Описание')
 
-    time_limit = models.IntegerField(default=1, verbose_name='Ограничение по времени, секунды')
-    memory_limit = models.IntegerField(default=256, verbose_name='Ограничение по памяти, MB')
+    time_limit = models.IntegerField(default=1000, verbose_name='Ограничение по времени, милисекунды')
+    memory_limit = models.IntegerField(default=256, verbose_name='Ограничение по памяти, КB')
 
     input = models.TextField(verbose_name='Формат ввода', null=True)
     output = models.TextField(verbose_name='Формат вывода', null=True)

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-
+{%load static %}
 {% block main %}
-    <script src="https://pagecdn.io/lib/ace/1.4.12/ace.js"></script>
+    <script src="{% static 'management/ace/ace.js' %}"></script>
     <h2 class="display-2 text-center">Отослать решение</h2>
     <form class="text-center form my-3" enctype="multipart/form-data" method="post">
         {% csrf_token %}

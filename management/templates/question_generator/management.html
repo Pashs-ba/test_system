@@ -2,6 +2,7 @@
 {% load static %}
 {% block title %}Contest management{% endblock %}
 {% block main %}
+{% load filters%}
 
     <h1 class='display-1 text-center'>Управление генераторами вопросов</h1>
     <div class="text-center">
@@ -28,9 +29,11 @@
                     {{gen.question.name}}
                 </th>
                 <th>
-                    
+                    {{gen.pk|count_variants}}
                 </th>
-                <th></th>
+                <th>
+                    {{gen.pk|occ_variants}}
+                </th>
                 <th>
                     <a href="{%url 'question_generator' gen.pk %}" class="btn btn-sm btn-primary">
                         <i class="bi bi-pencil-square"></i>

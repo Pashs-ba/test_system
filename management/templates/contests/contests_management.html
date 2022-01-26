@@ -29,8 +29,8 @@
             <tr>
 
                 <td>{{ contest.name }}</td>
-                <td> {{ contest.memory_limit }} MB</td>
-                <td>{{ contest.time_limit }} с</td>
+                <td> {{ contest.memory_limit }} КB</td>
+                <td>{{ contest.time_limit }} мс</td>
                 <td>{% if  contest.competitions_set.all %}{% for i in contest.competitions_set.all %}
                     {{ i }} {% endfor %}{% else %} - {% endif %}</td>
                 <td>
