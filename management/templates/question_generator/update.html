@@ -68,7 +68,7 @@
                     });
                 </script>
                 <div class="my-3">
-                    <button type='submit' class="btn btn-success" for="form">Создать генератор</button>
+                    <button type='submit' class="btn btn-success" for="form">Обновить генератор</button>
                     <a class="btn btn-primary" href="{% url 'question_generator_manage'%}" role="button" >Назад</a>
                 </div> 
             </form>
@@ -83,6 +83,7 @@
             <th scope='col'>Ответ</th>
             <th scope="col">Участник</th>
             <th scope="col">Просмотр</th>
+            <th scope="col"><div class="row row-cols-lg-auto g-3 justify-content-center align-items-center"><div class="col-12 d-flex align-items-center"><a type="button" onclick="make_del_link(this)" class="btn btn-danger btn-sm me-3">Удалить</a> <input type="checkbox" onclick="select_all(this)" class="form-check-input" id="all"></div></div></th>
           </tr>
         </thead>
         <tbody>
@@ -92,7 +93,27 @@
                 <th>{{i.ans}}</th>
                 <th>{{i.user.username}}</th>
                 <th>-</th>
+                <td class=""><div class="d-flex justify-content-center"><input type="checkbox" class="form-check-input delete_item" id="{{ i.pk }}"></div></td>
             </tr>
             {%endfor%}
         </tbody>
+        <script>
+            function select_all(el){
+                for(let i = 0; i<document.getElementsByClassName('delete_item').length; i++){
+                    document.getElementsByClassName('delete_item')[i].checked = el.checked
+                }
+            }
+            function make_del_link(el){
+                let ret = ''
+                for(let i = 0; i<document.getElementsByClassName('delete_item').length; i++){
+                    if (document.getElementsByClassName('delete_item')[i].checked){
+                        ret+=document.getElementsByClassName('delete_item')[i].id.toString()+' '
+                    }
+        
+                }
+                ret = ret.slice(0, -1)
+                console.log(ret)
+                el.href='{% url 'delete_variant' %}'+'?to_del='+ret
+            }
+            </script>
 {%endblock%}

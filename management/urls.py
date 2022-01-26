@@ -33,5 +33,7 @@ urlpatterns = [
 
     path('generator/question', quest_generator_page, name='question_generator_manage'),
     path('generator/question/create', question_gen_create, name='question_gen_create'),
-    path('generator/question/<int:pk>', question_generator, name='question_generator')
+    path('generator/question/<int:pk>', question_generator, name='question_generator'),
+    path('generator/question/delete/generator', generator_delete, name="generator_delete"),
+    path('generator/question/delete/variants', delete_variant_question, name="delete_variant"),
 ]

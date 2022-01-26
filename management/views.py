@@ -337,7 +337,7 @@ def generator_delete(request):
             a.delete()
         return redirect('question_generator_manage')
     else:
-        return render(request, 'group/group_delete.html', {'to_del': request.GET['to_del']})
+        return render(request, 'question_generator/delete.html', {'to_del': request.GET['to_del']})
 @admin_only
 @transaction.atomic
 def question_gen_create(request):
@@ -350,7 +350,7 @@ def question_gen_create(request):
             return redirect('question_generator_manage')
     else:
         
-        return render(request, 'question_generator/create.html', {'form': QuestionGeneratorForm(), "count": count, 'occ': occupied})  
+        return render(request, 'question_generator/create.html', {'form': QuestionGeneratorForm()})  
 
 @admin_only
 @transaction.atomic
@@ -360,7 +360,7 @@ def question_generator(request, pk):
         if model.is_valid():
             count = VariantQuestionGenerator.objects.annotate(variant_count=Count('variantquestion')).get(pk=pk).variant_count
             model = model.save()
-            if int(model.cleaned_data['var_count']) == 0:
+            if int(model.var_count) == 0:
                 variants = VariantQuestionGenerator.objects.get(pk=pk).variantquestion_set.all().order_by('user')
                 for i in variants:
                     i.delete()
@@ -377,3 +377,17 @@ def question_generator(request, pk):
         return render(request, 'question_generator/update.html', {'form': QuestionGeneratorForm(instance=VariantQuestionGenerator.objects.get(pk=pk)), 
                                                                   'model': VariantQuestionGenerator.objects.get(pk=pk), 
                                                                   'variants': VariantQuestionGenerator.objects.get(pk=pk).variantquestion_set.all().order_by('-user')})
+
+
+@admin_only
+@transaction.atomic
+def delete_variant_question(request):
+    if request.method == "POST":
+        for i in request.POST['to_del'].split(' '):
+            a = VariantQuestion.objects.get(pk=int(i))
+            a.generator.var_count -= 1
+            a.generator.save()
+            a.delete()
+        return redirect('question_generator_manage')
+    else:
+        return render(request, 'question_generator/delete_variant.html', {'to_del': request.GET['to_del']})
