@@ -133,7 +133,7 @@ def contest_delete(request):
             a.delete()
         return redirect('group_managment')
     else:
-        return render(request, 'contests/contests_deleting.html', {'to_del': request.GET['to_del']})
+        return render(request, 'contests/contest_deleting.html', {'to_del': request.GET['to_del']})
 
 
 @transaction.atomic
