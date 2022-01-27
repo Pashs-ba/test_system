@@ -1,5 +1,5 @@
 import os
-
+import platform
 from django.conf import settings
 from core.models import Solutions
 from core.utils import upload_file
@@ -35,7 +35,10 @@ def save_solution(request, lang, code):
 
 def check_solution(solution: Solutions):
     print('process run')
-    a = subprocess.Popen(['ChineseTester.exe', str(solution.pk)],
+    need = 'ChineseTester.exe'
+    if platform.system() == 'Linux':
+        need = 'ChineseTester'
+    a = subprocess.Popen([need, str(solution.pk)],
                          stdout=subprocess.PIPE,
                          stdin=subprocess.PIPE,
                          stderr=subprocess.PIPE)

@@ -1,0 +1,106 @@
+ID: 3
+
+Opening database : D:\projects\VS_2019\ChineseTester\db.sqlite3
+
+Geting ID and name from database
+File name: 2/1.py
+Contest ID: 21
+
+Geting limits from database
+Time limit: 1000
+Memory limit: 262144
+
+Rederecting input and output to pipe
+
+Creating process name: 
+Parameters: D:\projects\VS_2019\ChineseTester\resources\compilers\magicCPPCompiler.cmd D:\projects\VS_2019\ChineseTester\media\contests\checker_QbHsYvZ.cpp D:\projects\VS_2019\ChineseTester\resources\working_directory\checker\checker-3.exe
+
+Runing simple process
+
+Prepare geting test from database
+I'm ready
+
+
+
+
+Checking test #4
+Runing test #4Checking test #
+5
+Runing test #5
+
+Checking test #6
+Runing test #6Taking next testChecking test #
+7
+Runing test #8
+
+
+Checking test #10
+
+Runing test #10
+Checking test #12
+Rederecting input and output to pipeTaking next test
+
+
+Runing test #13
+Checking test #14
+
+Rederecting input and output to pipe
+Taking next test
+
+Runing test #14Creating process name: 
+
+Parameters: Taking next testpython D:\projects\VS_2019\ChineseTester\media\2\1.py
+
+
+Rederecting input and output to pipe
+Checking test #16Taking next test
+
+Runing test #16
+Creating process name: 
+
+Rederecting input and output to pipeRederecting input and output to pipe
+Taking next test
+Creating process name: 
+
+Parameters: python D:\projects\VS_2019\ChineseTester\media\2\1.py
+
+Parameters: Checking test #python D:\projects\VS_2019\ChineseTester\media\2\1.py18
+Runing test #18
+Rederecting input and output to pipeTaking next test
+
+
+
+
+
+Creating process name: Creating process name: 
+
+
+Parameters: Taking next test
+Parameters: python D:\projects\VS_2019\ChineseTester\media\2\1.py
+Rederecting input and output to pipeCreating process name: 
+Parameters: python D:\projects\VS_2019\ChineseTester\media\2\1.py
+
+ннннннннннннннннннннннннннннннннннннннннннннннннннннн
+Checking test #19
+
+Taking next test
+Runing test #19
+Rederecting input and output to pipe
+Creating process name: 
+Parameters: python D:\projects\VS_2019\ChineseTester\media\2\1.py
+
+
+!!!!!!!!! ERROR HAS OCCURRED !!!!!!!!!
+ERROR# process.0
+Can't start process 
+arguments are: python D:\projects\VS_2019\ChineseTester\media\2\1.py
+
+
+
+
+Rederecting input and output to pipeTaking next test
+
+
+Creating process name: 
+Parameters: python D:\projects\VS_2019\ChineseTester\media\2\1.py
+
