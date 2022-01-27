@@ -37,7 +37,7 @@ def check_solution(solution: Solutions):
     print('process run')
     need = 'ChineseTester.exe'
     if platform.system() == 'Linux':
-        need = 'ChineseTester'
+        need = '/home/pashs/ChineseTester'
     a = subprocess.Popen([need, str(solution.pk)],
                          stdout=subprocess.PIPE,
                          stdin=subprocess.PIPE,
