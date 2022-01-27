@@ -7,6 +7,7 @@ import random
 import zipfile
 import os
 import shutil
+import platform
 from subprocess import Popen, PIPE
 
 
@@ -54,7 +55,10 @@ def create_ans(pk: str, path_ideal: str):
     tests = Test.objects.filter(contest=Contests.objects.get(pk=pk))
     print('heh')
     for i in tests:
-        process = Popen(['python', path_ideal], stdout=PIPE, stderr=PIPE, stdin=PIPE)
+        if platform.system() == 'Linux':
+            process = Popen(['python3', path_ideal], stdout=PIPE, stderr=PIPE, stdin=PIPE)
+        else:
+            process = Popen(['python', path_ideal], stdout=PIPE, stderr=PIPE, stdin=PIPE)
         process.communicate(input=i.input.encode())
         process.wait()
         output, error = process.communicate()
