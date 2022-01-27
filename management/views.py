@@ -131,7 +131,7 @@ def contest_delete(request):
         for i in request.POST['to_del'].split(' '):
             a = Contests.objects.get(pk=int(i))
             a.delete()
-        return redirect('group_managment')
+        return redirect('contest_management')
     else:
         return render(request, 'contests/contest_deleting.html', {'to_del': request.GET['to_del']})
 
