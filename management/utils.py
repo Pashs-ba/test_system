@@ -45,7 +45,7 @@ def add_tests(name: str, path: str, pk: str):
             if i[-1] != '/':
                 with archive.open(i, 'r') as f:
                     a = f.read().decode()
-                    print(a)
+                    # print(a)
                     test = Test(contest=Contests.objects.get(pk=pk), input=a)
                     test.save()
     os.remove(os.path.join(path, name))
@@ -53,7 +53,7 @@ def add_tests(name: str, path: str, pk: str):
 
 def create_ans(pk: str, path_ideal: str):
     tests = Test.objects.filter(contest=Contests.objects.get(pk=pk))
-    print('heh')
+    # print('heh')
     for i in tests:
         if platform.system() == 'Linux':
             process = Popen(['python3', path_ideal], stdout=PIPE, stderr=PIPE, stdin=PIPE)
@@ -68,6 +68,7 @@ def create_ans(pk: str, path_ideal: str):
         else:
             i.is_error = False
             i.output = output.decode()
+            print(output)
         i.save()
 
 
