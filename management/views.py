@@ -184,6 +184,12 @@ def contest_page(request, pk):
             a.checker = request.FILES['new_checker']
             a.save()
             return redirect('contest_management')
+        elif request.POST.get('delete_tests'):
+            a = Contests.objects.get(pk=pk)
+            for i in a.test_set.all():
+                i.delete()
+            a.save()
+            return redirect('contest_management')
         else:
             form = ContestUpdateForm(request.POST, instance=Contests.objects.get(pk=pk))
             if form.is_valid():

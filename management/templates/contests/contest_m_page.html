@@ -7,6 +7,7 @@
     <h2 class="text-center my-3 display-2">Общая информация</h2>
     <div class="card my-5">
         <div class="card-body">
+
             <form method="POST" enctype='multipart/form-data'>
                 {% csrf_token %}
                 {% for i in form %}
@@ -152,6 +153,13 @@
                     </ul>
                 </nav>
             {% endif %}
+            <div class="text-center">
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="text" name="delete_tests" hidden value="heh">
+                    <button class="btn btn-lg btn-outline-danger">Удалить все тесты</button>
+                </form>
+            </div>
             <div class="my-3">
                 <form method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
