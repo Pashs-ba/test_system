@@ -85,7 +85,7 @@ def create_ans(pk: str, path_ideal: str):
         else:
             Popen(['g++' , '-o', os.path.join(settings.BASE_DIR, f'media/DONT_TOUCH{pk}'), path_ideal])
             for i in tests:
-                process = Popen([f"./{os.path.join(settings.BASE_DIR, f'media/DONT_TOUCH{pk}')}"], stdout=PIPE, stderr=PIPE, stdin=PIPE)
+                process = Popen([f".{os.path.join(settings.BASE_DIR, f'media/DONT_TOUCH{pk}')}"], stdout=PIPE, stderr=PIPE, stdin=PIPE)
                 process.communicate(input=i.input.encode())
                 process.wait()
                 output, error = process.communicate()
