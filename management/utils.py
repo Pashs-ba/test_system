@@ -9,7 +9,7 @@ import os
 import shutil
 import platform
 from subprocess import Popen, PIPE
-
+import time
 
 
 def create_user() -> Passwords:
@@ -51,6 +51,7 @@ def add_tests(name: str, path: str, pk: str):
 
 
 def create_ans(pk: str, path_ideal: str):
+    time.sleep(0.5)
     tests = Test.objects.filter(contest=Contests.objects.get(pk=pk))
     if '.py' in path_ideal:
         for i in tests:
@@ -85,6 +86,7 @@ def create_ans(pk: str, path_ideal: str):
         else:
             Popen(['g++' , '-o', os.path.join(settings.BASE_DIR, f'media/DONT_TOUCH{pk}'), path_ideal])
             print(os.listdir(os.path.join(settings.BASE_DIR, 'media')))
+            time.sleep(0.5)
             for i in tests:
                 print(os.listdir(os.path.join(settings.BASE_DIR, 'media')))
                 # process = Popen([f"{os.path.join(settings.BASE_DIR, f'media/DONT_TOUCH{pk}')}"], stdout=PIPE, stderr=PIPE, stdin=PIPE)
