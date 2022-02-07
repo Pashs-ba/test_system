@@ -84,7 +84,7 @@ def create_ans(pk: str, path_ideal: str):
                 i.save()
         else:
             Popen(['g++' , '-o', os.path.join(settings.BASE_DIR, f'media/DONT_TOUCH{pk}'), path_ideal])
-            os.listdir(os.path.join(settings.BASE_DIR, 'media'))
+            print(os.listdir(os.path.join(settings.BASE_DIR, 'media')))
             for i in tests:
                 process = Popen([f"{os.path.join(settings.BASE_DIR, f'media/DONT_TOUCH{pk}')}"], stdout=PIPE, stderr=PIPE, stdin=PIPE)
                 process.communicate(input=i.input.encode())
@@ -96,6 +96,7 @@ def create_ans(pk: str, path_ideal: str):
                     i.is_error = False
                     i.output = output.decode()
                 i.save()
+
 
 
 def get_tests(pk: str) -> list:
