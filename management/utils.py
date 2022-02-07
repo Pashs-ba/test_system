@@ -71,7 +71,8 @@ def create_ans(pk: str, path_ideal: str):
             i.save()
     elif '.cpp' in path_ideal:
         if platform.system() == 'Windows':
-            Popen(['cpp_compiler.cmd' , settings.PATH_TO_WIN_CPP, path_ideal, os.path.join(settings.BASE_DIR, f'media/DONT_TOUCH{pk}.exe')])
+            process = Popen(['cpp_compiler.cmd' , settings.PATH_TO_WIN_CPP, path_ideal, os.path.join(settings.BASE_DIR, f'media/DONT_TOUCH{pk}.exe')])
+            process.wait()
             for i in tests:
                 process = Popen([os.path.join(settings.BASE_DIR, f'media/DONT_TOUCH{pk}.exe')], stdout=PIPE, stderr=PIPE, stdin=PIPE)
                 process.communicate(input=i.input.encode())
@@ -84,9 +85,9 @@ def create_ans(pk: str, path_ideal: str):
                     i.output = output.decode()
                 i.save()
         else:
-            Popen(['g++' , '-o', os.path.join(settings.BASE_DIR, f'media/DONT_TOUCH{pk}'), path_ideal])
-            print(os.listdir(os.path.join(settings.BASE_DIR, 'media')))
-            time.sleep(0.5)
+            process = Popen(['g++' , '-o', os.path.join(settings.BASE_DIR, f'media/DONT_TOUCH{pk}'), path_ideal])
+            process.wait()
+            # print(os.listdir(os.path.join(settings.BASE_DIR, 'media')))
             for i in tests:
                 # print(os.listdir(os.path.join(settings.BASE_DIR, 'media')))
                 process = Popen([f"{os.path.join(settings.BASE_DIR, f'media/DONT_TOUCH{pk}')}"], stdout=PIPE, stderr=PIPE, stdin=PIPE)
