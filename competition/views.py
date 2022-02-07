@@ -101,3 +101,4 @@ def load_ans(request, pk):
                 'contest': contest
             })
         return render(request, 'load_ans.html', context)
+        

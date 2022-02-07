@@ -161,7 +161,6 @@ def create_contest(request):
 @transaction.atomic
 @admin_only
 def contest_page(request, pk):
-    print(Contests.objects.get(pk=pk).pk)
     if request.method == 'POST':
         if request.POST.get('new_tests'):
             name = Contests.objects.get(pk=pk).pk

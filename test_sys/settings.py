@@ -148,6 +148,7 @@ USERNAME_LENGTH = 2
 PASSWORD_LENGTH = 5
 DATETIME_FORMAT = "%d.%m.%Y %H:%M"
 
-ACCEPTABLE_FORMATS_IDEAL = ".py"
+ACCEPTABLE_FORMATS_IDEAL = ".py, .cpp"
 ACCEPTABLE_LANGUAGES = {'Python 3.9': ['python', '.py'],
-                        'MS C++ 17': ['c_cpp', '.cpp']}
+                        'MS C++ 19': ['c_cpp', '.cpp']}
+PATH_TO_WIN_CPP = "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\Tools\\VsDevCmd.bat"

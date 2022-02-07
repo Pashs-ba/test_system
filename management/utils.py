@@ -45,7 +45,6 @@ def add_tests(name: str, path: str, pk: str):
             if i[-1] != '/':
                 with archive.open(i, 'r') as f:
                     a = f.read().decode()
-                    # print(a)
                     test = Test(contest=Contests.objects.get(pk=pk), input=a)
                     test.save()
     os.remove(os.path.join(path, name))
@@ -53,23 +52,49 @@ def add_tests(name: str, path: str, pk: str):
 
 def create_ans(pk: str, path_ideal: str):
     tests = Test.objects.filter(contest=Contests.objects.get(pk=pk))
-    # print('heh')
-    for i in tests:
-        if platform.system() == 'Linux':
-            process = Popen(['python3', path_ideal], stdout=PIPE, stderr=PIPE, stdin=PIPE)
+    if '.py' in path_ideal:
+        for i in tests:
+            
+            if platform.system() == 'Linux':
+                process = Popen(['python3', path_ideal], stdout=PIPE, stderr=PIPE, stdin=PIPE)
+            else:
+                process = Popen(['python', path_ideal], stdout=PIPE, stderr=PIPE, stdin=PIPE)
+            process.communicate(input=i.input.encode())
+            process.wait()
+            output, error = process.communicate()
+            if error.decode() != '':
+                i.is_error = True
+            else:
+                i.is_error = False
+                i.output = output.decode()
+            i.save()
+    elif '.cpp' in path_ideal:
+        if platform.system() == 'Windows':
+            Popen(['cpp_compiler.cmd' , settings.PATH_TO_WIN_CPP, path_ideal, os.path.join(settings.BASE_DIR, f'media/DONT_TOUCH{pk}.exe')])
+            for i in tests:
+                process = Popen([os.path.join(settings.BASE_DIR, f'media/DONT_TOUCH{pk}.exe')], stdout=PIPE, stderr=PIPE, stdin=PIPE)
+                process.communicate(input=i.input.encode())
+                process.wait()
+                output, error = process.communicate()
+                if error.decode() != '':
+                    i.is_error = True
+                else:
+                    i.is_error = False
+                    i.output = output.decode()
+                i.save()
         else:
-            process = Popen(['python', path_ideal], stdout=PIPE, stderr=PIPE, stdin=PIPE)
-        process.communicate(input=i.input.encode())
-        process.wait()
-        output, error = process.communicate()
-        if error.decode() != '':
-            print(error.decode())
-            i.is_error = True
-        else:
-            i.is_error = False
-            i.output = output.decode()
-            print(output)
-        i.save()
+            Popen(['g++' , '-o', os.path.join(settings.BASE_DIR, f'media/DONT_TOUCH{pk}'), path_ideal])
+            for i in tests:
+                process = Popen([os.path.join(settings.BASE_DIR, f'media/DONT_TOUCH{pk}')], stdout=PIPE, stderr=PIPE, stdin=PIPE)
+                process.communicate(input=i.input.encode())
+                process.wait()
+                output, error = process.communicate()
+                if error.decode() != '':
+                    i.is_error = True
+                else:
+                    i.is_error = False
+                    i.output = output.decode()
+                i.save()
 
 
 def get_tests(pk: str) -> list:
@@ -105,11 +130,9 @@ def upload_tests(file, path):
 
 def generate_variants_question(num, model_id, path_to):
     for i in range(num):
-        print(f'variant {i}')
         process = Popen(f'media/{path_to}', stdout=PIPE, stderr=PIPE, stdin=PIPE)
         process.wait()
         stdout, stderr = process.communicate()
-        print(stdout.decode())
         ans = ast.literal_eval(stdout.decode())
         model = VariantQuestion(data=ans['data'], ans=ans['ans'], generator=VariantQuestionGenerator.objects.get(pk=model_id))
         if 'file' in ans.keys():

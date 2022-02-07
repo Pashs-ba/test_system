@@ -20,6 +20,7 @@ def get_next_name(path: str):
     return str(max+1)
 
 
+
 def save_solution(request, lang, code):
     if not os.path.exists(settings.MEDIA_ROOT+f'{request.user.pk}/'):
         os.mkdir(settings.MEDIA_ROOT+f'{request.user.pk}/')
