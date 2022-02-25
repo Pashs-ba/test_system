@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Load from cf{% endblock %}
+{%block main%}
+<div class="card my-5">
+    <div class="card-body">
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+             <div class="mb-3">
+                 {% csrf_token %}
+                 <label for="user_count" class="form-label">Загрузите дамп с codeforces для линукса</label>
+                 <input type="file" class="form-control" name="file">
+             </div>
+            <button type="submit" class="btn btn-success">Подтвердить</button>
+            <a href="{% url 'contest_management' %}" class="btn btn-danger">Отмена</a>
+        </form>
+    </div>
+</div>
+{%endblock%}

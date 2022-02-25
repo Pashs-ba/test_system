@@ -2,10 +2,11 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
+    path('', management_page, name='management-page'),
+    
+
     path('user_panel', user_panel, name='user-management'),
     path('user_panel/change/<int:pk>', user_change, name='user_change'),
-    path('', management_page, name='management-page'),
-
     path('user/delete', delete_user, name='delete-user'),
     path('generate_users', user_generating, name='generate-users'),
 
@@ -19,6 +20,7 @@ urlpatterns = [
     path('contest_creating', create_contest, name='contest_creating'),
     path('contest/<int:pk>', contest_page, name='contest_m_page'),
     path('contest/delete_test/<int:pk>', delete_test, name='delete_test'),
+    path('contest/mike', load_from_mike, name="fucking_mike"),
 
     path('question', questions_management, name='question_management'),
     path('question/create', question_create, name='question_creating'),

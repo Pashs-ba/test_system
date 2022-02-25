@@ -4,7 +4,7 @@ from .utils import create_user, add_tests, create_ans, upload_tests, generate_va
 from core.models import *
 from django.db import transaction
 from django.contrib import messages
-from .forms import CompetitionForm, ContestCreationForm, ContestUpdateForm, QuestionCreationForm, GroupForm, QuestionGeneratorForm
+from .forms import CompetitionForm, ContestCreationForm, ContestUpdateForm, QuestionCreationForm, GroupForm, QuestionGeneratorForm, MikeForm
 from django.conf import settings
 import os.path
 import shutil
@@ -14,7 +14,8 @@ from django.http import HttpResponse
 import ast
 import json
 from django.db.models import Count
-
+from core.utils import upload_file
+from zipfile import ZipFile
 
 
 @admin_only
@@ -396,3 +397,24 @@ def delete_variant_question(request):
         return redirect('question_generator_manage')
     else:
         return render(request, 'question_generator/delete_variant.html', {'to_del': request.GET['to_del']})
+
+@admin_only
+@transaction.atomic
+def load_from_mike(request):
+    if request.method == 'POST':
+        print(request.FILES['file'])
+        upload_file(request.FILES['file'], os.path.join(settings.BASE_DIR, 'media/mike'), 'mike.zip')
+        with ZipFile.open('/media/mike/mike.zip', 'r') as archive:
+            with archive.open('/statements/russian/problem-properties.json', 'r') as f:
+                data = json.loads(f.read())
+            new = Contests(name=data['name'], 
+                           description=data['legend'].replace('\n\n', '\n'), 
+                           time_limit=data['timeLimit'],
+                           memory_limit=data['memoryLImit'],
+                           input=data['input'].replace('\n\n', '\n'),
+                           output=data['output'].replace('\n\n', '\n'))
+               
+            new.save()
+        return redirect('contest_management')
+    else:
+        return render(request, 'contests/load_from_mike.html')
