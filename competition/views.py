@@ -20,19 +20,37 @@ def sort_by_sum(tmp):
 
     return count
 
+def simulator_start(request, pk):
+    return render(request, 'simulator/start_page.html', context={'pk': pk})
+
+def blank_page(request, pk):
+    return render(request, 'simulator/blank.html', {'pk': pk})
+
+def instruction(request, pk):
+    return render(request, 'simulator/instruction.html', {'pk': pk})
+
+def simulator(request, pk):
+    competition = Competitions.objects.get(pk=pk)
+    print(competition.questions.all)
+    
+    return render(request, 'simulator/main.html', {'competition': competition})
+
 def competition_page(request, pk):
     competition = Competitions.objects.get(pk=pk)
-    solutions = {}
-    for i in Solutions.objects.filter(user=request.user, contest__in=competition.contests.all()).order_by('date'):
-        solutions[i.contest.pk] = i.result
-    context = {
-        'competition': competition,
-        'solutions': solutions,
-        'bad': ['TL', 'ML', 'WA', 'CE', 'PE'],
-    }
-    # TODO fix ok solution
-    context.update({'status': competition_status(competition)})
-    return render(request, 'competition.html', context=context)
+    if competition.is_simulator:
+        return redirect('simulator_start', pk)
+    else:
+        solutions = {}
+        for i in Solutions.objects.filter(user=request.user, contest__in=competition.contests.all()).order_by('date'):
+            solutions[i.contest.pk] = i.result
+        context = {
+            'competition': competition,
+            'solutions': solutions,
+            'bad': ['TL', 'ML', 'WA', 'CE', 'PE'],
+        }
+        # TODO fix ok solution
+        context.update({'status': competition_status(competition)})
+        return render(request, 'competition.html', context=context)
 
 
 def result(request, pk):

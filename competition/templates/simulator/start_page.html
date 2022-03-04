@@ -1,0 +1,18 @@
+{% extends 'simulator/base_simulator.html' %}
+
+{%block main%}
+
+
+<div class="m-5">
+    <div style="height: 20%">
+        <h2>Демонстрационная версия станции КЕГЭ</h2>
+        <p>Предлагаемая демонстрационная версия позволяет ознакомиться с основными приемами работы
+            с программным обеспечением участника экзамена по Информатике и ИКТ в компьютерной форме (КЕГЭ).
+        </p>
+    </div>
+    
+    <div class="d-flex justify-content-center align-items-center" style="height: 50%">
+        <a href="{%url 'blank' pk%} " class="btn btn btn-success btn-lg">Начать экзамен</a>
+    </div>
+</div>
+{%endblock%}

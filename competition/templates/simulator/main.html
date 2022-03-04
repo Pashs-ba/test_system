@@ -1,0 +1,125 @@
+
+{% extends 'simulator/base_simulator.html' %}
+{%load static%}
+{%load comptition_filter%}
+{%block main%}
+<div style="display: flex; flex-direction: column; height: 100vh">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #22365b; height: 10%">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Navbar</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item me-4">
+                <p class="fs-3 fw-light align-middle"style="color: white; margin:0">КИМ № 0250000001</p>
+              </li>
+              <li class="nav-item">
+                <p class="fs-3 fw-light align-middle"style="color: white; margin:0">БР № 1111111111111</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    <div class="row" style="max-width: 100%; height: 90%">
+
+        <div class="col-1 d-flex flex-column" style="background-color: #e7edf9; min-height: 90%">
+            <div class="text-secondary text-center ps-1 pe-1">Дано ответов</div>
+            <div class="fs-3 fw-bolder text-center" style="color: #22365b"> <span id="done">0<span>/{{competition.questions.all|length}}</div>
+            <div class="text-center mt-3">
+                <button class="btn p-3" style="background-color: #22365b" onClick="up()"><i class="bi bi-arrow-up" style="color: white"></i></button>
+            </div>
+            <div class="d-flex flex-column mt-3" style="max-height: 55vh; overflow: auto;" id="quest_all">
+                <div class="text-center">
+                    <button class="btn btn-light mt-3 pt-1 pb-1 selected" style="min-width: 50px" id="b_0">i</button>
+                </div>
+                {%for i in competition.questions.all|enumer%}
+                    <div class="text-center">
+                        <button class="btn btn-light mt-3 pt-1 pb-1" style="min-width: 50px" id="b_{{i.0}}">{{i.0}}</button>
+                    </div>
+                    
+                {%endfor%}
+            </div>
+            <div class="text-center mt-3">
+                <button class="btn p-3" style="background-color: #22365b" onClick="down()"><i class="bi bi-arrow-down" style="color: white" ></i></button>
+            </div>
+        </div>
+        <div class="col-11" style="max-height: 100%;">
+            <div class="" style="display: flex;  min-height:99%; max-height: 99%; max-width: 100%; align-items: stretch; justify-content: space-between">
+                <div class="d-flex align-items-center justify-content-center" style="">
+                    <div>
+                        <a href="#"onClick="back()"><img src="{%static 'competition/left.png'%}" alt=""></a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="d-flex justify-content-start" id="0" style="min-width: 70%">
+                    <img src="{%static 'competition/inst.png'%}" alt="" style="max-width: 100%">
+                </div>
+                {%for i in competition.questions.all|enumer%}
+                <div class="d-flex flex-column justify-content-start p-3" id="{{i.0}}" style="display: none !important; min-width: 70%">
+                    <h2>{{i.1.name}}</h2>
+                    {%if i.1.image%}
+                        <img src="/media/{{i.1.image}}" style="max-width: 70%">
+                    {%endif%}
+                    <p>{{i.1.description}}</p>
+                </div>
+                {%endfor%}
+                <div class="d-flex align-items-center justify-content-center" >
+                    <div>
+                        <a href="#"onClick="next()"> <img src="{%static 'competition/right.png'%}" alt=""></a>
+                    </div>
+                </div>
+                
+            </div>
+    </div>
+</div>
+<style>
+    .selected{
+        background-color: #22365b;
+        color: white;
+    }
+    .selected:hover{
+        background-color: #22365b;
+        color: white;
+    }
+    .selected:focus{
+        background-color: #22365b;
+        color: white;
+    }
+    
+</style>
+<script>
+    var count = 0
+    let max_count = {{competition.questions.all|length}}
+    function up(){
+        document.getElementById('quest_all').scrollBy(0, -30)
+    }
+    function down(){
+        document.getElementById('quest_all').scrollBy(0, 30)
+    }
+    function next(){
+        document.getElementById(count.toString()).style.setProperty('display', 'none', 'important');
+        document.getElementsByClassName('selected')[0].classList.remove('selected')
+        {% comment %} console.log(document.getElementById(count.toString())) {% endcomment %}
+        if (count<max_count){
+            count++;
+        }
+        document.getElementById('b_'+count).classList.add('selected')
+        document.getElementById(count.toString()).style.setProperty('display', 'flex', 'important');
+
+    }
+    function back(){
+        document.getElementById(count.toString()).style.setProperty('display', 'none', 'important');
+        document.getElementsByClassName('selected')[0].classList.remove('selected')
+        {% comment %} console.log(document.getElementById(count.toString())) {% endcomment %}
+        if (count>=1){
+            count--;
+        }
+        document.getElementById('b_'+count).classList.add('selected')
+        document.getElementById(count.toString()).style.setProperty('display', 'flex', 'important');
+
+    }
+</script>
+{%endblock%}

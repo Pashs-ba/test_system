@@ -1,0 +1,43 @@
+{% extends 'simulator/base_simulator.html' %}
+{%load static%}
+{%block main%}
+<div class="m-3" style="">
+    <h1>Единый государственный экзамен по информатике и ИКТ</h1>
+    <div class=" d-flex m-3 justify-content-center row">
+        <div class="col-3 me-5" style="max-height: 70vh">
+            Введите номер вашего бланка регистрации
+            <div class="d-flex mt-2 row">
+                <div class="col-2">
+                    <input type="text" id="f" class="form-control" maxlength="1" style="width: 100%">
+                </div>
+                <div class="col-5">
+                    <input type="text" id="s" class="form-control" maxlength="6" style="width: 100%">
+                </div>
+                <div class="col-5">
+                    <input type="text" id="t" class="form-control" maxlength="6" style="width: 100%">
+                </div>
+            </div>
+            <div class="form-text">В режиме имитации введите номер бланка, приведенного справа, или любую другую цифровую комбинацию. После ввода номера бланка, включающего 13 цифр, будет доступна кнопка «Далее».</div>
+        </div>
+        <div class="col-3" style="max-height: 70vh">
+            В этом месте бланка регистрации указан номер, который Вам необходимо внести в систему.
+            <img src="{%static 'competition/blank.png'%}" alt="" class="mt-2" style="max-height: 50%">
+        </div>
+    </div>
+    <div class="text-center">
+        <a href="{%url 'instruction' pk%}" class="btn btn-lg btn-primary" hidden id="next">Далее</a>
+    </div>
+</div>
+
+<script>
+    function check(){
+        if (document.getElementById("f").value.length == 1 && document.getElementById("s").value.length == 6 && document.getElementById("t").value.length == 6){
+            console.log('yes')
+            
+            document.getElementById('next').hidden = false;
+        }
+        return false
+    }
+    let s = setInterval(check, 10)
+</script>
+{%endblock%}

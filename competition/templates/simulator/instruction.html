@@ -1,0 +1,48 @@
+{% extends 'simulator/base_simulator.html' %}
+{%load static%}
+{%block main%}
+<div class="m-3" style="">
+    <h1>Инструкция</h1>
+    <div class="row mt-5" style="max-height: 70vh">
+        <div class="col-1 d-flex align-items-center justify-content-center">
+            <div>
+                <a href="#"onClick="back()"><img src="{%static 'competition/left.png'%}" alt=""></a>
+                
+            </div>
+            
+        </div>
+        <div class="col-10 d-flex justify-content-center" style="max-height: 70vh">
+            <img src="/static/competition/instruction/1.png" style="max-width: 60%" id="need">
+        </div>
+        <div class="col-1 d-flex align-items-center justify-content-center">
+            <div>
+                <a href="#"onClick="next()"> <img src="{%static 'competition/right.png'%}" alt=""></a>
+            </div>
+        </div>
+        
+    </div>
+    
+</div>
+<div class="text-center mt-5">
+    <a href="{%url 'main' pk%}" class="btn btn-lg btn-primary" hidden id="next">Далее</a>
+</div>
+<script>
+    var now = 1;
+    function next(){
+        if (now<8){
+            now+=1;
+        }
+        document.getElementById("need").src = "/static/competition/instruction/"+now+".png";
+        if (now==8){
+            document.getElementById('next').hidden = false;
+        }
+    }
+    function back(){
+        if (now>1){
+            now--;
+        }
+        document.getElementById("need").src = "/static/competition/instruction/"+now+".png";
+    }
+    
+</script>
+{%endblock%}
