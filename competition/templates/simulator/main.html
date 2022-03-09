@@ -3,10 +3,11 @@
 {%load static%}
 {%load comptition_filter%}
 {%block main%}
+{% csrf_token %}
 <div style="display: flex; flex-direction: column; height: 100vh">
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #22365b; height: 10%">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Navbar</a>
+          <div class="navbar-brand pe-3 ps-3" style="border: 1px solid #087475; border-radius: 5px; color: #087475"><i class="bi bi-hourglass-split"></i><span id="time"></span></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -26,17 +27,17 @@
 
         <div class="col-1 d-flex flex-column" style="background-color: #e7edf9; min-height: 90%">
             <div class="text-secondary text-center ps-1 pe-1">Дано ответов</div>
-            <div class="fs-3 fw-bolder text-center" style="color: #22365b"> <span id="done">0<span>/{{competition.questions.all|length}}</div>
+            <div class="fs-3 fw-bolder text-center" style="color: #22365b"> <span id="done">{{competition|count_ans:request.user}}</span>/{{competition.questions.all|length}}</div>
             <div class="text-center mt-3">
                 <button class="btn p-3" style="background-color: #22365b" onClick="up()"><i class="bi bi-arrow-up" style="color: white"></i></button>
             </div>
             <div class="d-flex flex-column mt-3" style="max-height: 55vh; overflow: auto;" id="quest_all">
                 <div class="text-center">
-                    <button class="btn btn-light mt-3 pt-1 pb-1 selected" style="min-width: 50px" id="b_0">i</button>
+                    <button class="btn btn-light mt-3 pt-1 pb-1 selected" style="min-width: 50px" id="b_0" onClick="select(this, 0)">i</button>
                 </div>
                 {%for i in competition.questions.all|enumer%}
                     <div class="text-center">
-                        <button class="btn btn-light mt-3 pt-1 pb-1" style="min-width: 50px" id="b_{{i.0}}">{{i.0}}</button>
+                        <button class="btn btn-light mt-3 pt-1 pb-1" style="min-width: 50px" id="b_{{i.0}}" onClick="select(this, {{i.0}})">{{i.0}}</button>
                     </div>
                     
                 {%endfor%}
@@ -46,7 +47,7 @@
             </div>
         </div>
         <div class="col-11" style="max-height: 100%;">
-            <div class="" style="display: flex;  min-height:99%; max-height: 99%; max-width: 100%; align-items: stretch; justify-content: space-between">
+            <div class="" style="display: flex;  min-height:90%; max-height: 90%; max-width: 100%; align-items: stretch; justify-content: space-between">
                 <div class="d-flex align-items-center justify-content-center" style="">
                     <div>
                         <a href="#"onClick="back()"><img src="{%static 'competition/left.png'%}" alt=""></a>
@@ -73,8 +74,29 @@
                 </div>
                 
             </div>
+            <div class="mt-1" style="min-height: 9%; border-top: 5px solid #dee2e6 " id="a_0"></div>
+            {%for i in competition.questions.all|enumer%}
+            <div class="mt-1 p-2 row d-flex" style="min-height: 9%; border-top: 5px solid #dee2e6; display: none !important" id="a_{{i.0}}">
+                <div class="col-9 d-flex align-items-center">
+                    {%if i.1.file%}
+                        <a href="/media/{{i.1.file}}" style="text-decoration: none; color: black;" class="fs-4"> <i class="bi bi-file-earmark-arrow-down" style=""></i> Скачать файл</a>
+                    {%endif%}
+                </div>
+                <div class="col-3 d-flex align-items-center">
+                    
+                        <div class="input-group">
+                            <input type="text" class="form-control" {%if i.1|is_ansed:request.user%}disabled placeholder="{{i.1|get_ans:request.user}}" {%endif%} id="ans_{{i.1.pk}}">
+                            <button class="btn {%if i.1|is_ansed:request.user%}btn-success{%else%}btn-outline-success{%endif%}" {%if i.1|is_ansed:request.user%}disabled{%endif%} type="button" onClick="save('ans_{{i.1.pk}}', this, '{{i.1.pk}}')">{%if i.1|is_ansed:request.user%}Ответ сохранен{%else%}Сохранить ответ{%endif%}</button>
+                        </div>
+                    
+                    
+                </div>
+                
+            </div>
+            {%endfor%}
+        </div>
+    
     </div>
-</div>
 <style>
     .selected{
         background-color: #22365b;
@@ -91,6 +113,38 @@
     
 </style>
 <script>
+    console.log(document.getElementById('ans_3').value)
+    function save(form_id, el, ans_id){
+        console.log(document.getElementsByName('csrfmiddlewaretoken')[0].value)
+        $.ajax({
+            'url': "/api/save_ans/"+ans_id.toString(),
+            'method': 'post',
+            'data':{'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value,
+                    'ans': document.getElementById(form_id).value},
+            success: function (data) {
+                   el.innerHTML = 'Ответ сохранен'
+                   el.classList = ['btn btn-success']
+                   el.disabled = true
+                   document.getElementById(form_id).disabled = true
+                   document.getElementById('done').innerHTML = parseInt(document.getElementById('done').innerHTML)+1
+                }
+        })
+    } 
+    function cur_time(){
+        var start = (new Date('{{competition.end_time|date:'Y-m-d G:i:s'}}') - Date.now())/1000;
+        var min = Math.floor(start/60);
+        let hour = Math.floor(min/60);
+        min = min%60
+        min = min.toString()
+        if (min.length == 1){
+            min = '0'+min
+        }
+        console.log(hour, min)
+
+        document.getElementById('time').innerHTML=hour.toString()+':'+min
+    }
+    cur_time()
+    setInterval(cur_time, 6000)
     var count = 0
     let max_count = {{competition.questions.all|length}}
     function up(){
@@ -101,25 +155,42 @@
     }
     function next(){
         document.getElementById(count.toString()).style.setProperty('display', 'none', 'important');
+        document.getElementById('a_'+count.toString()).style.setProperty('display', 'none', 'important');
         document.getElementsByClassName('selected')[0].classList.remove('selected')
         {% comment %} console.log(document.getElementById(count.toString())) {% endcomment %}
         if (count<max_count){
             count++;
         }
-        document.getElementById('b_'+count).classList.add('selected')
+        document.getElementById('b_'+count.toString()).classList.add('selected')
+
+        document.getElementById('quest_all').scrollBy(0, 41.6)
         document.getElementById(count.toString()).style.setProperty('display', 'flex', 'important');
+        document.getElementById('a_'+count.toString()).style.setProperty('display', 'flex', 'important');
 
     }
     function back(){
         document.getElementById(count.toString()).style.setProperty('display', 'none', 'important');
         document.getElementsByClassName('selected')[0].classList.remove('selected')
+        document.getElementById('a_'+count.toString()).style.setProperty('display', 'none', 'important');
         {% comment %} console.log(document.getElementById(count.toString())) {% endcomment %}
         if (count>=1){
             count--;
         }
-        document.getElementById('b_'+count).classList.add('selected')
+        document.getElementById('b_'+count.toString()).classList.add('selected')
+        document.getElementById('quest_all').scrollBy(0, -41.6)
+        document.getElementById('a_'+count.toString()).style.setProperty('display', 'flex', 'important');
         document.getElementById(count.toString()).style.setProperty('display', 'flex', 'important');
 
+    }
+    function select(el, id){
+        
+        document.getElementById(count.toString()).style.setProperty('display', 'none', 'important');
+        document.getElementById('a_'+count.toString()).style.setProperty('display', 'none', 'important');
+        document.getElementsByClassName('selected')[0].classList.remove('selected')
+        count = id;
+        document.getElementById(count.toString()).style.setProperty('display', 'flex', 'important');
+        document.getElementById('a_'+count.toString()).style.setProperty('display', 'flex', 'important');
+        el.classList.add('selected')
     }
 </script>
 {%endblock%}

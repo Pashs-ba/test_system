@@ -12,7 +12,29 @@
     </div>
     
     <div class="d-flex justify-content-center align-items-center" style="height: 50%">
-        <a href="{%url 'blank' pk%} " class="btn btn btn-success btn-lg">Начать экзамен</a>
+        {%if status == 'ИДЕТ'%}
+            <a href="{%url 'blank' pk%} " class="btn btn btn-success btn-lg">Начать экзамен</a>
+        {%else%}
+            <a href="" class="btn btn-success btn-lg disabled">Начать экзамен</a>
+        {%endif%}
     </div>
 </div>
+<script>
+    function aa() {
+        $.ajax({
+            url: '{% url 'is_open' pk %}',
+            data: {},
+            success: function (data) {
+                if (data['open']) {
+                    document.location.reload();
+                }
+                console.log(data)
+            },
+            method: 'get'
+        })
+
+    }
+
+    setInterval(aa, 5000)
+</script>
 {%endblock%}

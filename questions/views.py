@@ -22,7 +22,7 @@ def question(request, pk, ret):
             if variant.ans['type'] == 0:
                 QuestionAns(user=user,
                                 question=question,
-                                result=str(variant.ans['ans']).lower() == request.POST['ans'].lower()).save()
+                                 ).save()
 
         else:
             if question.type == '0':

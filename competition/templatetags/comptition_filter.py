@@ -1,5 +1,5 @@
 from django.template import Library
-from core.models import QuestionAns
+from core.models import QuestionAns, Question
 
 
 register = Library()
@@ -21,3 +21,18 @@ def check_ans_id(user, question):
 def get_vaule(dict, key):
     return dict[key]
 
+@register.filter
+def is_ansed(question: Question, user):
+    return bool(QuestionAns.objects.filter(user=user, question=question))
+
+@register.filter
+def get_ans(question: Question, user):
+    print(QuestionAns.objects.filter(user=user, question=question)[0].ans)
+    return QuestionAns.objects.filter(user=user, question=question)[0].ans
+
+@register.filter
+def count_ans(competition, user):
+    c = 0
+    for i in competition.questions.all():
+        c+= len(QuestionAns.objects.filter(user=user, question=i))
+    return c

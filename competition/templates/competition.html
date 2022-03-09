@@ -96,7 +96,6 @@
     {% else %}
         <h3 class="display-3 my-3 text-center">{{ status }}</h3>
     {% endif %}
-    {% if status == 'НЕ НАЧАЛОСЬ' %}
         <script>
             function aa() {
                 $.ajax({
@@ -115,5 +114,5 @@
 
             setInterval(aa, 5000)
         </script>
-    {% endif %}
+
 {% endblock %}

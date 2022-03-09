@@ -125,6 +125,7 @@ class QuestionAns(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now=True)
     number_of_attempt = models.IntegerField(default=1)
+    ans = models.CharField(null=True, max_length=1024)
     result = models.BooleanField()
 
 

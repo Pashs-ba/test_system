@@ -21,7 +21,7 @@ def sort_by_sum(tmp):
     return count
 
 def simulator_start(request, pk):
-    return render(request, 'simulator/start_page.html', context={'pk': pk})
+    return render(request, 'simulator/start_page.html', context={'pk': pk, 'status': competition_status(Competitions.objects.get(pk=pk))})
 
 def blank_page(request, pk):
     return render(request, 'simulator/blank.html', {'pk': pk})
@@ -31,7 +31,6 @@ def instruction(request, pk):
 
 def simulator(request, pk):
     competition = Competitions.objects.get(pk=pk)
-    print(competition.questions.all)
     
     return render(request, 'simulator/main.html', {'competition': competition})
 
@@ -64,7 +63,6 @@ def result(request, pk):
             for k in competition.questions.all():
                 print(QuestionAns.objects.filter(user=j, question=k))
                 if QuestionAns.objects.filter(user=j, question=k):
-
                     if QuestionAns.objects.filter(user=j, question=k)[len(QuestionAns.objects.filter(user=j, question=k))-1].result:
                         user_result.append('+')
                     else:
