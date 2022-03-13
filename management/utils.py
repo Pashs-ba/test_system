@@ -12,7 +12,7 @@ from subprocess import Popen, PIPE
 import time
 from django.db import transaction
 
-@transaction.atomic
+
 def create_user(user_num: int) -> Passwords:
     """
     Create random user
