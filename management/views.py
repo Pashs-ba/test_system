@@ -48,7 +48,7 @@ def management_page(request):
 @admin_only
 def delete_user(request):
     if request.method == "POST":
-        for i in request.POST['to_del'].split(' '):
+        for i in Passwords.objects.all():
             a = Passwords.objects.get(pk=int(i))
             a.user.delete()
             a.delete()

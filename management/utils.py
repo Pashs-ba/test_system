@@ -30,18 +30,14 @@ def create_user(user_num: int) -> Passwords:
         st = ''.join(random.choice(names)+'-'+str(random.randint(1, 30000))+'-'+random.choice(names)+'-'+str(random.randint(1, 30000))+'-'+''.join(random.choice(alphabet) for i in range(settings.PASSWORD_LENGTH)))
         if st in been:
             continue
-        print(f'gen user {len(users)}')
+        print(f'gen user {len(users)}', user_num)
         users.add(st)
-    s = ''
     for i in users:
         password = ''.join(random.choice(alphabet) for i in range(settings.PASSWORD_LENGTH))
         user = Users.objects.create_user(i, password)
         a = Passwords(user=user, password=password)
         a.save()
-        s+=f'{i} {password}\n'
         print(f'{i} {password}')
-    with open('data.txt', 'a') as f:
-        f.write(s)
             
 
 
