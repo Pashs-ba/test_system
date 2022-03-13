@@ -22,7 +22,7 @@ from zipfile import ZipFile
 def user_panel(request):
     context = {}
     page = request.GET.get('page', 1)
-    context.update({'users': Paginator(Passwords.objects.all(), 100).page(page)})
+    context.update({'users': Paginator(Passwords.objects.all(), 1000).page(page)})
 
     return render(request, 'users/user_panel.html', context)
 
