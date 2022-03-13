@@ -22,7 +22,7 @@ def create_user() -> Passwords:
     password = ''.join(random.choice(alphabet) for i in range(settings.PASSWORD_LENGTH))
     names = ['Tau', 'Mu', 'Ro', 'Alfa', 'Beta', 'Gamma', 'Omega', 'Epsilon', 'Eta', 'Nu', 'Pi', 'Dzeta', 'Psi']
     while True:
-        name = ''.join(random.choice(names)+'-'+random.choice(names)+'-'+str(random.randint(1, 300)))
+        name = ''.join(random.choice(names)+'-'+str(random.randint(1, 3000))+random.choice(names)+'-'+str(random.randint(1, 3000)))
         # Generating unique names
         if not Users.objects.filter(username=name):
             user = Users.objects.create_user(name, password)
