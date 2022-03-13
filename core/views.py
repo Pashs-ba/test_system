@@ -42,7 +42,7 @@ def homepage(request):
                 for quest in range(len(qa)):
                     a = QuestionAns.objects.filter(user=al[user], question=qa[quest])
                     if a:
-                        if a.result:
+                        if a[0].result:
                             ws.write(user, quest, '+')
                         else:
                             ws.write(user, quest, '-')
