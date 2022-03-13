@@ -62,8 +62,7 @@ def user_generating(request):
         print(request.POST)
         if request.POST['num']:
             users = []
-            for i in range(int(request.POST['num'])):
-                users.append(create_user())
+            users = create_user(request.POST['num'])
             context.update({'users': users})
 
             messages.info(request, f'Successful created {request.POST["num"]} users')
