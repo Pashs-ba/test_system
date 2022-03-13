@@ -127,6 +127,9 @@
                    el.disabled = true
                    document.getElementById(form_id).disabled = true
                    document.getElementById('done').innerHTML = parseInt(document.getElementById('done').innerHTML)+1
+                   document.getElementById(ans_id.replace("ans", "b")).style.boder = "1px solid #22365b"
+                   document.getElementById(ans_id.replace("ans", "b")).style.background-color = "#e7edf9"
+
                 }
         })
     } 

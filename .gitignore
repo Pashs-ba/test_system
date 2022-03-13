@@ -1,4 +1,3 @@
-# Project exclude paths
 /venv/
 db.sqlite3
 /*/migrations
@@ -9,3 +8,4 @@ media/
 __pycache__
 Resources
 data.yaml
+
