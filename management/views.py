@@ -21,7 +21,8 @@ from zipfile import ZipFile
 @admin_only
 def user_panel(request):
     context = {}
-    context.update({'users': Passwords.objects.all()})
+    page = request.GET.get('page', 1)
+    context.update({'users': Paginator(Passwords.objects.all(), 100).page(page)})
 
     return render(request, 'users/user_panel.html', context)
 

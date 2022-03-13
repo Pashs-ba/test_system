@@ -1,5 +1,7 @@
 from email.headerregistry import Group
 from django.shortcuts import render, redirect
+
+from test_sys.settings import BASE_DIR
 from .forms import *
 from django.contrib import messages
 from .utils import *
@@ -9,9 +11,9 @@ from .models import Competitions, StudentGroup, QuestionAns, Solutions
 import datetime
 import pytz
 from django.utils import timezone
-import xlrd
-import xlwt
 utc = pytz.UTC
+import openpyxl
+from django.conf import settings
 
 def sort_by_sum(tmp):
     count = 0
@@ -34,20 +36,22 @@ def homepage(request):
         if request.GET.get('competiton', None):
             comp = Competitions.objects.get(pk=request.GET.get('competiton', None))
             group = StudentGroup.objects.get(competitions=comp)
-            wb = xlwt.Workbook()
-            ws = wb.add_sheet('Result')
+            wb = openpyxl.Workbook()
+            ws = wb.create_sheet("result")
             al = group.users.all()
             qa = comp.questions.all()
             for user in range(len(al)):
+                ws.cell(row=user+2, column=1).value = al[user].username
                 for quest in range(len(qa)):
+                    ws.cell(row=1, column=quest+2).value = quest
                     a = QuestionAns.objects.filter(user=al[user], question=qa[quest])
                     if a:
                         if a[0].result:
-                            ws.write(user, quest, '+')
+                            ws.cell(row=user+2, column=quest+2, value="+")
                         else:
-                            ws.write(user, quest, '-')
-            wb.save('/home/pashs/test_system/media/some.xlsx')
-            return redirect('/media/some.xlsx')
+                            ws.cell(row=user+2, column=quest+2, value="-")
+            wb.save(str(BASE_DIR / 'media/ans.xlsx'))
+            return redirect('/media/ans.xlsx')
         context.update({'competitions': Competitions.objects.all()})
     return render(request, 'homepage.html', context)
 
