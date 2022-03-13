@@ -154,3 +154,4 @@ ACCEPTABLE_FORMATS_IDEAL = ".py, .cpp"
 ACCEPTABLE_LANGUAGES = {'Python 3.9': ['python', '.py'],
                         'MS C++ 19': ['c_cpp', '.cpp']}
 PATH_TO_WIN_CPP = "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\Tools\\VsDevCmd.bat"
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
