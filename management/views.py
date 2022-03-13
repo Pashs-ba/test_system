@@ -22,10 +22,7 @@ from zipfile import ZipFile
 def user_panel(request):
     context = {}
     context.update({'users': Passwords.objects.all()})
-    s = ''
-    for i in Passwords.objects.all():
-        s+=f'{i.user.username} {i.password}\n'
-    context.update({'s': s})
+
     return render(request, 'users/user_panel.html', context)
 
 
@@ -48,7 +45,7 @@ def management_page(request):
 @admin_only
 def delete_user(request):
     if request.method == "POST":
-        for i in Passwords.objects.all():
+        for i in request.POST['to_del'].split(' '):
             a = Passwords.objects.get(pk=int(i))
             a.user.delete()
             a.delete()
