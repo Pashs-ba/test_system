@@ -10,25 +10,40 @@ import shutil
 import platform
 from subprocess import Popen, PIPE
 import time
+from django.db import transaction
 
-
-def create_user() -> Passwords:
+@transaction.atomic
+def create_user(user_num: int) -> Passwords:
     """
     Create random user
 
     :return: login and password of user
     """
     alphabet = string.ascii_letters + string.digits
-    password = ''.join(random.choice(alphabet) for i in range(settings.PASSWORD_LENGTH))
+    
     names = ['Tau', 'Mu', 'Ro', 'Alfa', 'Beta', 'Gamma', 'Omega', 'Epsilon', 'Eta', 'Nu', 'Pi', 'Dzeta', 'Psi']
-    while True:
-        name = ''.join(random.choice(names)+'-'+str(random.randint(1, 3000))+random.choice(names)+'-'+str(random.randint(1, 3000)))
-        # Generating unique names
-        if not Users.objects.filter(username=name):
-            user = Users.objects.create_user(name, password)
-            a = Passwords(user=user, password=password)
-            a.save()
-            return a
+    been = set()
+    users = set()
+    for i in Users.objects.all():
+        been.add(i.username)
+    ans = []
+    while len(users)<int(user_num):
+        st = ''.join(random.choice(names)+'-'+str(random.randint(1, 3000))+'-'+random.choice(names)+'-'+str(random.randint(1, 3000)))
+        if st in been:
+            continue
+        users.add(st)
+    s = ''
+    for i in users:
+        password = ''.join(random.choice(alphabet) for i in range(settings.PASSWORD_LENGTH))
+        user = Users.objects.create_user(i, password)
+        a = Passwords(user=user, password=password)
+        a.save()
+        ans.append(a)
+        s+=f'{i} {password}\n'
+    with open('data.txt', 'a') as f:
+        f.write(s)
+    return a
+            
 
 
 def add_tests(name: str, path: str, pk: str):
