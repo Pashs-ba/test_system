@@ -22,7 +22,10 @@ from zipfile import ZipFile
 def user_panel(request):
     context = {}
     context.update({'users': Passwords.objects.all()})
-
+    s = ''
+    for i in Passwords.objects.all():
+        s+=f'{i.user.username} {i.password}\n'
+    context.update({'s': s})
     return render(request, 'users/user_panel.html', context)
 
 
