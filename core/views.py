@@ -47,7 +47,7 @@ def homepage(request):
                         else:
                             ws.write(user, quest, '-')
             wb.save('/home/pashs/test_system/media/some.xlsx')
-            redirect('/media/some.xlsx')
+            return redirect('/media/some.xlsx')
         context.update({'competitions': Competitions.objects.all()})
     return render(request, 'homepage.html', context)
 
