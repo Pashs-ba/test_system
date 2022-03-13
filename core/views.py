@@ -37,9 +37,10 @@ def homepage(request):
             wb = xlwt.Workbook()
             ws = wb.add_sheet('Result')
             al = group.users.all()
+            qa = comp.questions.all()
             for user in range(len(al)):
-                for quest in range(len(comp.questions)):
-                    a = QuestionAns.objects.filter(user=al[user], question=comp.questions[quest])
+                for quest in range(len(qa)):
+                    a = QuestionAns.objects.filter(user=al[user], question=qa[quest])
                     if a:
                         ws.write(user, quest)
             ws.save('/home/pashs/')
