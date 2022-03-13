@@ -25,7 +25,6 @@ def homepage(request):
     context = {}
     if not request.user.is_staff:
         status = {}
-        print(StudentGroup.objects.filter(users=request.user), Competitions.objects.filter(studentgroup__users=request.user))
         for i in Competitions.objects.filter(studentgroup__users=request.user):
             status.update({i.pk: competition_status(i)})
         context.update({'status': status})
