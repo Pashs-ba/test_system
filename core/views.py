@@ -42,8 +42,12 @@ def homepage(request):
                 for quest in range(len(qa)):
                     a = QuestionAns.objects.filter(user=al[user], question=qa[quest])
                     if a:
-                        ws.write(user, quest)
-            ws.save('/home/pashs/')
+                        if a.result:
+                            ws.write(user, quest, '+')
+                        else:
+                            ws.write(user, quest, '-')
+            wb.save('/home/pashs/test_sys/media/some.xlsx')
+            redirect('/media/some.xlsx')
         context.update({'competitions': Competitions.objects.all()})
     return render(request, 'homepage.html', context)
 
