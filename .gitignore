@@ -8,3 +8,5 @@ media/
 .idea/
 __pycache__
 Resources
+data.yaml
+test_sys/settings.py
