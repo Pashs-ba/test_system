@@ -30,6 +30,7 @@ def create_user(user_num: int) -> Passwords:
         st = ''.join(random.choice(names)+'-'+str(random.randint(1, 3000))+'-'+random.choice(names)+'-'+str(random.randint(1, 3000)))
         if st in been:
             continue
+        print(f'gen user {len(users)}')
         users.add(st)
     s = ''
     for i in users:
