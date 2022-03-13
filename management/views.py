@@ -59,12 +59,9 @@ def delete_user(request):
 def user_generating(request):
     context = {}
     if request.method == "POST":
-        print(request.POST)
         if request.POST['num']:
-            users = []
-            users = create_user(request.POST['num'])
-            context.update({'users': users})
-
+            Thread(target=create_user,
+                   args=(request.POST['num'],)).start()
             messages.info(request, f'Successful created {request.POST["num"]} users')
             return redirect('user-management')
     else:
