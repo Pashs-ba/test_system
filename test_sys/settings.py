@@ -90,12 +90,14 @@ WSGI_APPLICATION = 'test_sys.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'test_sys',
+        'USER': 'sys_user',
+        'PASSWORD': '1209root',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
-
-
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
