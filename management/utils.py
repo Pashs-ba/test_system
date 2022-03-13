@@ -26,7 +26,6 @@ def create_user(user_num: int) -> Passwords:
     users = set()
     for i in Users.objects.all():
         been.add(i.username)
-    ans = []
     while len(users)<int(user_num):
         st = ''.join(random.choice(names)+'-'+str(random.randint(1, 3000))+'-'+random.choice(names)+'-'+str(random.randint(1, 3000)))
         if st in been:
@@ -38,11 +37,9 @@ def create_user(user_num: int) -> Passwords:
         user = Users.objects.create_user(i, password)
         a = Passwords(user=user, password=password)
         a.save()
-        ans.append(a)
         s+=f'{i} {password}\n'
     with open('data.txt', 'a') as f:
         f.write(s)
-    return a
             
 
 
