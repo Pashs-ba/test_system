@@ -1,3 +1,4 @@
+from email.headerregistry import Group
 from django.shortcuts import render, redirect
 from .forms import *
 from django.contrib import messages
@@ -8,7 +9,8 @@ from .models import Competitions, StudentGroup, QuestionAns, Solutions
 import datetime
 import pytz
 from django.utils import timezone
-
+import xlrd
+import xlwt
 utc = pytz.UTC
 
 def sort_by_sum(tmp):
@@ -30,45 +32,17 @@ def homepage(request):
         context.update({'status': status})
     else:
         if request.GET.get('competiton', None):
-            competition = Competitions.objects.get(pk=request.GET.get('competiton', None))
-            groups = StudentGroup.objects.filter(competitions=competition)
-            result = {}
-            for i in groups:
-                group_table = {}
-                for j in i.users.all():
-                    user_result = []
-                    for k in competition.questions.all():
-                        # print(QuestionAns.objects.filter(user=j, question=k))
-                        if QuestionAns.objects.filter(user=j, question=k):
-
-                            if QuestionAns.objects.filter(user=j, question=k)[len(QuestionAns.objects.filter(user=j, question=k))-1].result:
-                                user_result.append('+')
-                            else:
-                                user_result.append('-')
-                        else:
-                            user_result.append('')
-                    for k in competition.contests.all():
-                        if Solutions.objects.filter(user=j, contest=k):
-                            bad_reslut = True
-                            for q in Solutions.objects.filter(user=j, contest=k):
-                                if q.result == 'OK':
-                                    bad_reslut = False
-                                    break
-                            if bad_reslut:
-                                user_result.append('-')
-                            else:
-                                user_result.append('+')
-                        else:
-                            user_result.append('')
-                    group_table[j.username] = user_result
-                group_table = {k: v for k, v in sorted(group_table.items(), key=lambda item: sort_by_sum(item[1]), reverse=True)}
-
-                result[i.name] = group_table
-            context.update({
-                'result': result,
-                'bad': ['TL', 'ML', 'WA', 'CE'],
-                'competition': competition
-            })
+            comp = Competitions.objects.get(pk=request.GET.get('competiton', None))
+            group = StudentGroup.objects.get(competitions=comp)
+            wb = xlwt.Workbook()
+            ws = wb.add_sheet('Result')
+            al = group.users.all()
+            for user in range(al):
+                for quest in range(comp.questions):
+                    a = QuestionAns.objects.filter(user=al[user], question=comp.questions[quest])
+                    if a:
+                        ws.write(user, quest)
+            ws.save('/home/pashs/')
         context.update({'competitions': Competitions.objects.all()})
     return render(request, 'homepage.html', context)
 
