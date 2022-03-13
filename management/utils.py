@@ -12,7 +12,7 @@ from subprocess import Popen, PIPE
 import time
 from django.db import transaction
 
-@transaction.atomic
+
 def create_user(user_num: int) -> Passwords:
     """
     Create random user
@@ -27,7 +27,7 @@ def create_user(user_num: int) -> Passwords:
     for i in Users.objects.all():
         been.add(i.username)
     while len(users)<int(user_num):
-        st = ''.join(random.choice(names)+'-'+str(random.randint(1, 3000))+'-'+random.choice(names)+'-'+str(random.randint(1, 3000)))
+        st = ''.join(random.choice(names)+'-'+str(random.randint(1, 30000))+'-'+random.choice(names)+'-'+str(random.randint(1, 30000))+'-'+''.join(random.choice(alphabet) for i in range(settings.PASSWORD_LENGTH)))
         if st in been:
             continue
         print(f'gen user {len(users)}')
@@ -39,6 +39,7 @@ def create_user(user_num: int) -> Passwords:
         a = Passwords(user=user, password=password)
         a.save()
         s+=f'{i} {password}\n'
+        print(f'{i} {password}')
     with open('data.txt', 'a') as f:
         f.write(s)
             
