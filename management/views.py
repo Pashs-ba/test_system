@@ -54,7 +54,7 @@ def delete_user(request):
         return render(request, 'users/user_delete.html', {'to_del': request.GET['to_del']})
 
 
-@transaction.atomic
+
 @admin_only
 def user_generating(request):
     context = {}
