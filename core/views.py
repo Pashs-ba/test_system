@@ -37,8 +37,8 @@ def homepage(request):
             wb = xlwt.Workbook()
             ws = wb.add_sheet('Result')
             al = group.users.all()
-            for user in range(al):
-                for quest in range(comp.questions):
+            for user in range(len(al)):
+                for quest in range(len(comp.questions)):
                     a = QuestionAns.objects.filter(user=al[user], question=comp.questions[quest])
                     if a:
                         ws.write(user, quest)
