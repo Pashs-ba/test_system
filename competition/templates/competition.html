@@ -7,6 +7,7 @@
     <h2 class="display-2 text-center">{{ competition.name }}</h2>
     {% if status == 'ОТКРЫТО' or status == 'ИДЕТ' %}
         <div class="text-center">
+            <p>У вас есть одна попытка для каждого задания</p>
             {%if competition.contests.all%}<a class="btn btn-primary my-4  btn-lg btn-block col-auto" href="{% url 'load_ans' competition.pk %}">Загрузить
                 решение</a>{%endif%}
             {%if competition.is_visible_result%}
