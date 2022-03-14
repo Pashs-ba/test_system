@@ -14,6 +14,7 @@ from django.utils import timezone
 utc = pytz.UTC
 import openpyxl
 from django.conf import settings
+from django.contrib.auth import logout
 
 def sort_by_sum(tmp):
     count = 0
@@ -69,3 +70,7 @@ def login_user(request):
             return render(request, 'login.html')
     else:
         return render(request, 'login.html')
+
+def logout_user(request):
+    logout(request)
+    return redirect('login')
