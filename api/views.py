@@ -23,7 +23,11 @@ def is_open(request, pk):
     else:
         return JsonResponse({'open': False})
 
-
+def is_close(request, pk):
+    if competition_status(Competitions.objects.get(pk=pk)) == 'ЗАКОНЧИЛОСЬ':
+        return JsonResponse({'open': True})
+    else:
+        return JsonResponse({'open': False})
 @require_http_methods(["POST"])
 def get_status(request):
     pk = request.POST['pk']

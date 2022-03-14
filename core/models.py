@@ -128,6 +128,9 @@ class QuestionAns(models.Model):
     ans = models.CharField(null=True, max_length=1024)
     result = models.BooleanField()
 
+    def __str__(self):
+        return f'{self.user} {self.question}'
+
 
 class Test(models.Model):
     contest = models.ForeignKey(Contests, on_delete=models.CASCADE)
