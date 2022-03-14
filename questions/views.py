@@ -28,8 +28,8 @@ def question(request, pk, ret):
             if question.type == '0':
                 QuestionAns(user=user,
                             question=question,
-                            ans = ans['ans'].lower(),
-                            result=ans['ans'].lower() == request.POST['ans'].lower()).save()
+                            ans = ans['ans'],
+                            result=ans['ans'] == request.POST['ans']).save()
             elif question.type == '1':
                 for i in ans['ans']:
                     if ans['ans'][i][1]:
