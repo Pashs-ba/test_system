@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{%load comptition_filter%}
+{% block title %}Loading{% endblock %}
+{% block main %}
+<div class="d-flex justify-content-center align-items-center text-center" style="min-height: 80vh"><h1 class="display-2">Скоро сгенерится, надо немного подождать</h1></div>
+<script>
+    function aa() {
+        $.ajax({
+            url: '{% url 'is_exist' id %}',
+            data: {},
+            success: function (data) {
+                if (data['exist']) {
+                    window.location.replace("/media/{{id}}.xlsx");
+                    clearInterval(a);
+                    
+                }
+                console.log(data)
+            },
+            method: 'get'
+        })
+
+    }
+
+    a = setInterval(aa, 5000)
+</script>
+
+{%endblock%}

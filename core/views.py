@@ -1,4 +1,5 @@
 from email.headerregistry import Group
+from multiprocessing import context
 from django.shortcuts import render, redirect
 
 from test_sys.settings import BASE_DIR
@@ -15,6 +16,8 @@ utc = pytz.UTC
 import openpyxl
 from django.conf import settings
 from django.contrib.auth import logout
+from threading import Thread
+from core.decorators import admin_only
 
 def sort_by_sum(tmp):
     count = 0
@@ -35,28 +38,16 @@ def homepage(request):
         context.update({'status': status})
     else:
         if request.GET.get('competiton', None):
-            comp = Competitions.objects.get(pk=request.GET.get('competiton', None))
-            group = StudentGroup.objects.get(competitions=comp)
-            wb = openpyxl.Workbook()
-            ws = wb.create_sheet("result")
-            al = group.users.all()
-            qa = comp.questions.all()
-            for user in range(len(al)):
-                ws.cell(row=user+2, column=1).value = al[user].username
-                for quest in range(len(qa)):
-                    ws.cell(row=1, column=quest+2).value = quest
-                    a = QuestionAns.objects.filter(user=al[user].pk, question=qa[quest].pk)
-                    ws.cell(row=user+2, column=quest+2, value="0")
-                    if a:
-                        # print(a)
-                        if a[0].result:
-                            ws.cell(row=user+2, column=quest+2, value="+")
-                        else:
-                            ws.cell(row=user+2, column=quest+2, value="-")
-            wb.save(str(BASE_DIR / 'media/ans.xlsx'))
-            return redirect('/media/ans.xlsx')
+            return redirect('load_result', request.GET.get('competiton', None))
         context.update({'competitions': Competitions.objects.all()})
     return render(request, 'homepage.html', context)
+
+
+@admin_only
+def load_result(request, competition):
+    a = str(datetime.datetime.now().time()).replace('.', '').replace(':', '')
+    Thread(target=make_xl, args=(request, competition, a)).start()
+    return render(request, 'wait.html', context={'id': a})
 
 
 def login_user(request):
