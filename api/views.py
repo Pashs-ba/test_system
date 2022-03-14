@@ -5,7 +5,8 @@ from django.views.decorators.http import require_http_methods
 from core.utils import competition_status
 from core.models import Question, QuestionAns, Test, Competitions, Contests, Solutions
 import ast
-
+from django.conf import settings
+import os
 
 @admin_only
 @require_http_methods(["POST"])
@@ -43,10 +44,9 @@ def set_ans(request, q_pk):
                                result=ast.literal_eval(Question.objects.get(pk=q_pk).question)['ans'].lower() == request.POST['ans'].lower()).save()
     return HttpResponse('OK')
 
-
-
-
-
+def is_exist(request, c_pk):
+    return JsonResponse({'exist': os.path.isfile(settings.BASE_DIR/f'media/{c_pk}.xlsx')})
+        
 
 
 
