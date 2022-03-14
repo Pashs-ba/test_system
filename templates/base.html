@@ -40,9 +40,13 @@
                 {% endif %}
             </div>
         </div>
+        {%if request.user.is_authenticated%}
         <div class="d-flex">
-            <a class="btn btn-secondary" href="{% url "logout"%}">Выйти</a>
+            <div class="text-light d-flex align-items-center">{{request.user.username}}</div>
+            
+            <a class="btn btn-secondary ms-3" href="{% url "logout"%}">Выйти</a>
           </div>
+        {%endif%}
     </div>
 </nav>
 <div class="container my-4">
