@@ -80,7 +80,7 @@ def question(request, pk, ret):
                 'question': question,
                 'answers': answers
             }
-            if QuestionAns.objects.filter(question=question):
+            if QuestionAns.objects.filter(question=question, user=request.user):
                 context.update({'need': True})
         return render(request, 'question_page.html', context)
 
