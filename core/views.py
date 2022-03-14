@@ -48,7 +48,7 @@ def homepage(request):
                     a = QuestionAns.objects.filter(user=al[user].pk, question=qa[quest].pk)
                     ws.cell(row=user+2, column=quest+2, value="0")
                     if a:
-                        print(a)
+                        # print(a)
                         if a[0].result:
                             ws.cell(row=user+2, column=quest+2, value="+")
                         else:
