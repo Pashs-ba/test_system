@@ -27,7 +27,7 @@ def make_xl(request, competition, id):
     wb = openpyxl.Workbook()
     ws = wb.create_sheet("result")
     al = group.users.all().order_by('username')
-    qa = comp.questions.all()
+    qa = comp.questions.all().order_by('name')
     for user in range(len(al)):
         ws.cell(row=user+2, column=1).value = al[user].username
         for quest in range(len(qa)):
