@@ -26,11 +26,12 @@ def make_xl(request, competition, id):
     group = StudentGroup.objects.get(competitions=comp)
     wb = openpyxl.Workbook()
     ws = wb.create_sheet("result")
-    al = group.users.all()
+    al = group.users.all().order_by('username')
     qa = comp.questions.all()
     for user in range(len(al)):
         ws.cell(row=user+2, column=1).value = al[user].username
         for quest in range(len(qa)):
+            print(qa[quest].name)
             ws.cell(row=1, column=quest+2).value = qa[quest].name
             a = QuestionAns.objects.filter(user=al[user].pk, question=qa[quest].pk)
             ws.cell(row=user+2, column=quest+2, value="0")

@@ -22,7 +22,7 @@ from zipfile import ZipFile
 def user_panel(request):
     context = {}
     page = request.GET.get('page', 1)
-    context.update({'users': Paginator(Passwords.objects.all(), 1000).page(page)})
+    context.update({'users': Paginator(Passwords.objects.all().order_by('user__username'), 1000).page(page)})
     if request.method == 'POST':
         with open(settings.BASE_DIR/'media/user.txt', 'a') as f:
             for i in Passwords.objects.all():
