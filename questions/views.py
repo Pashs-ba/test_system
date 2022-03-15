@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 import ast
 from django.db import transaction
-from .utils import get_variant
+from .utils import get_variant, variant
 
 
 @login_required
@@ -17,38 +17,33 @@ def question(request, pk, ret):
     if request.method == 'POST':
         ans = json.loads(question.question)
         if VariantQuestionGenerator.objects.filter(question=question.pk):
-            variant = get_variant(request, question)
-            print(variant.ans)
-            if variant.ans['type'] == 0:
-                QuestionAns(user=user,
-                                question=question,
-                                 ).save()
-
+            variant(request, user, question)
         else:
             if question.type == '0':
-                QuestionAns(user=user,
-                            question=question,
-                            ans = ans['ans'],
-                            result=ans['ans'] == request.POST['ans']).save()
+                qans = QuestionAns.objects.get_or_create(user=user,
+                            question=question)
+                qans[0].ans = request.POST['ans']
+                qans[0].result=ans['ans'] == request.POST['ans']
             elif question.type == '1':
                 for i in ans['ans']:
                     if ans['ans'][i][1]:
-                        QuestionAns(user=user,
-                                    question=question,
-                                    result=request.POST['ans'] == i).save()
+                        qans = QuestionAns.objects.get_or_create(user=user,
+                                    question=question)
+                        qans[0].result=request.POST['ans'] == i
             elif question.type == '2':
                 for i in ans['ans']:
                     if ans['ans'][i][1] and not request.POST.get(i):
-                        print('some')
-                        QuestionAns(user=user,
-                                    question=question,
-                                    result=False).save()
+                        qans = QuestionAns.objects.get_or_create(user=user,
+                                    question=question)
+                        qans[0].result=False
                         break
                 else:
-                    print('eles')
-                    QuestionAns(user=user,
-                                question=question,
-                                result=True).save()
+                    qans = QuestionAns.objects.get_or_create(user=user,
+                                question=question)
+                    qans[0].result=True
+            if not (qans[1]):
+                qans[0].number_of_attempt+=1
+            qans[0].save()
         messages.success(request, 'Ответ записан')
         return redirect('competition_page', ret)
     else:
@@ -65,6 +60,7 @@ def question(request, pk, ret):
                 'question': question,
                 'answers': [],
                 'text': text,
+                
             }
             if variant.file:
                 context['file'] = variant.file
@@ -72,13 +68,16 @@ def question(request, pk, ret):
                 context['image'] = variant.image
             return render(request, 'question_page.html', context)
         else:
+
             answers = []
             if json.loads(question.question)['type'] != 0:
                 for i in json.loads(question.question)['ans']:
                     answers.append([json.loads(question.question)['ans'][i][0], i])
             context = {
                 'question': question,
-                'answers': answers
+                'answers': answers,
+                'competition': Competitions.objects.get(pk=ret),
+                'ans': QuestionAns.objects.filter(question=question, user=request.user.pk)
             }
             if QuestionAns.objects.filter(question=question, user=request.user):
                 context.update({'need': True})

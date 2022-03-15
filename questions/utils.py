@@ -1,4 +1,4 @@
-from core.models import VariantQuestionGenerator, VariantQuestion
+from core.models import VariantQuestionGenerator, VariantQuestion, QuestionAns
 
 
 def get_variant(request, question):
@@ -10,3 +10,10 @@ def get_variant(request, question):
         return variant
     else:
         return 0
+def variant(request, user, question):
+    variant = get_variant(request, question)
+    print(variant.ans)
+    if variant.ans['type'] == 0:
+        QuestionAns(user=user,
+                        question=question,
+                            ).save()
