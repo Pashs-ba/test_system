@@ -43,6 +43,7 @@ def competition_page(request, pk):
         for i in Solutions.objects.filter(user=request.user, contest__in=competition.contests.all()).order_by('date'):
             solutions[i.contest.pk] = i.result
         context = {
+            'questions': competition.questions.all().order_by('name'),
             'competition': competition,
             'solutions': solutions,
             'bad': ['TL', 'ML', 'WA', 'CE', 'PE'],
