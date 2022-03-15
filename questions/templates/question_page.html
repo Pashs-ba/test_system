@@ -2,6 +2,7 @@
 {% load static %}
 {% block title %} {{ question.name }} {% endblock %}
 {% block main %}
+{%if status == "ИДЕТ"%}
     <h2 class="display-2 text-center mb-4">{{ question.name }}</h2>
     {%if image%}
     <div class="container d-flex justify-content-center">
@@ -57,4 +58,27 @@
             </div>
         </form>
     </div>
+    <script>
+        function aa() {
+            $.ajax({
+                url: '{% url 'is_close' competition.pk %}',
+                data: {},
+                success: function (data) {
+                    if (data['open']) {
+                        document.location.reload();
+                    }
+                    console.log(data)
+                },
+                method: 'get'
+            })
+
+        }
+
+        setInterval(aa, 5000)
+    </script>
+    {%else%}
+    <script>
+        document.location.replace('/')
+    </script>
+    {%endif%}
 {% endblock %}
