@@ -26,8 +26,9 @@ def question(request, pk, ret):
                 print(request.POST['ans'], type(request.POST['ans']))
                 print(request.POST['ans'] == ans['ans'])
                 qans[0].ans = request.POST['ans']
-                qans[0].result=ans['ans'] == request.POST['ans']
+                qans[0].result=request.POST['ans']==ans['ans']
                 qans[0].save()
+                print(qans[0].result)
             elif question.type == '1':
                 for i in ans['ans']:
                     if ans['ans'][i][1]:
