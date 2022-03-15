@@ -31,15 +31,19 @@ def make_xl(request, competition, id):
     for user in range(len(al)):
         ws.cell(row=user+2, column=1).value = al[user].username
         for quest in range(len(qa)):
-            print(qa[quest].name)
+            # print(qa[quest].name)
             ws.cell(row=1, column=quest+2).value = qa[quest].name
             a = QuestionAns.objects.filter(user=al[user].pk, question=qa[quest].pk)
             ws.cell(row=user+2, column=quest+2, value="0")
             if a:
                 if a[0].result:
-                    ws.cell(row=user+2, column=quest+2, value="+")
+                    if a[0].time:
+                        delta = a[0].time-comp.start_time
+                        ws.cell(row=user+2, column=quest+2, value=f"+ {delta.total_seconds()//60}")
                 else:
-                    ws.cell(row=user+2, column=quest+2, value="-")
+                    if a[0].time:
+                        delta = a[0].time-comp.start_time
+                        ws.cell(row=user+2, column=quest+2, value=f"- {delta.total_seconds()//60}")
     wb.save(str(settings.BASE_DIR / f'media/{id}.xlsx'))
 
 
