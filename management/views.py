@@ -22,7 +22,7 @@ from zipfile import ZipFile
 def user_panel(request):
     context = {}
     page = request.GET.get('page', 1)
-    context.update({'users': Paginator(Passwords.objects.all(), 1000).page(page)})
+    context.update({'users': Paginator(Passwords.objects.all().order_by('user__username'), 1000).page(page)})
     if request.method == 'POST':
         with open(settings.BASE_DIR/'media/user.txt', 'a') as f:
             for i in Passwords.objects.all():
@@ -77,7 +77,7 @@ def user_generating(request):
 @admin_only
 def competition_management(request):
     contest = {}
-    contest.update({'competitions': Competitions.objects.all()})
+    contest.update({'competitions': Competitions.objects.all().order_by('name')})
     return render(request, 'competitions/competition_management.html', contest)
 
 
@@ -123,7 +123,7 @@ def update_competition(request, pk):
 
 @admin_only
 def contest_management(request):
-    return render(request, 'contests/contests_management.html', {'contests': Contests.objects.all()})
+    return render(request, 'contests/contests_management.html', {'contests': Contests.objects.all().order_by('name')})
 
 
 @transaction.atomic
@@ -227,7 +227,7 @@ def delete_test(request, pk):
 
 @admin_only
 def questions_management(request):
-    return render(request, 'questions/questions_management.html', {'questions': Question.objects.all()})
+    return render(request, 'questions/questions_management.html', {'questions': Question.objects.all().order_by('name')})
 
 
 @admin_only
@@ -296,7 +296,7 @@ def question_example(request, pk):
 
 @admin_only
 def group_management(request):
-    return render(request, 'group/group_manage.html', {'groups': StudentGroup.objects.all()})
+    return render(request, 'group/group_manage.html', {'groups': StudentGroup.objects.all().order_by('name')})
 
 @admin_only
 def new_group(request):
@@ -333,7 +333,7 @@ def group_change(request, pk):
 
 @admin_only
 def quest_generator_page(request):
-    return render(request, 'question_generator/management.html', {'generators': VariantQuestionGenerator.objects.all()})
+    return render(request, 'question_generator/management.html', {'generators': VariantQuestionGenerator.objects.all().order_by('name')})
 
 
 @admin_only
