@@ -82,7 +82,7 @@
                       <div class="card" >
                         <div class="card-body">
                           <h5 class="card-title">{{ competiton.name }}</h5>
-                          <p class="card-text">{{ competiton.description }}</p>
+                          <p class="card-text">{{ competiton.description|linebreaksbr }}</p>
                           <p class="card-text" id="status">Статус: {% for i, j in status.items %}{% if i == competiton.pk %}{{ j }}{% endif %}{% endfor %}</p>
                             <a href="{% url 'competition_page' competiton.pk %}" class="btn btn-primary text-center">Перейти</a>
                         </div>
