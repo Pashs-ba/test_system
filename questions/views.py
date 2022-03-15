@@ -24,6 +24,7 @@ def question(request, pk, ret):
                             question=question)
                 print(ans['ans'], type(ans['ans']))
                 print(request.POST['ans'], type(request.POST['ans']))
+                print(request.POST['ans'], ans['ans'])
                 qans[0].ans = request.POST['ans']
                 qans[0].result=ans['ans'] == request.POST['ans']
             elif question.type == '1':
