@@ -22,6 +22,8 @@ def question(request, pk, ret):
             if question.type == '0':
                 qans = QuestionAns.objects.get_or_create(user=user,
                             question=question)
+                print(ans['ans'], type(ans['ans']))
+                print(request.POST['ans'], type(request.POST['ans']))
                 qans[0].ans = request.POST['ans']
                 qans[0].result=ans['ans'] == request.POST['ans']
             elif question.type == '1':
