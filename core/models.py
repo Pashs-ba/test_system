@@ -126,10 +126,11 @@ class QuestionAns(models.Model):
     date = models.DateTimeField(auto_now=True)
     number_of_attempt = models.IntegerField(default=1)
     ans = models.CharField(null=True, max_length=1024)
-    result = models.BooleanField()
+    result = models.BooleanField(null=True)
+    time = models.DateTimeField(null=True, auto_now=True)
 
     def __str__(self):
-        return f'{self.user} {self.question}'
+        return f'{self.user} {self.question} {self.time}'
 
 
 class Test(models.Model):
