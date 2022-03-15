@@ -6,6 +6,7 @@ from django.contrib import messages
 import ast
 from django.db import transaction
 from .utils import get_variant, variant
+from core.utils import competition_status
 
 
 @login_required
@@ -86,6 +87,7 @@ def question(request, pk, ret):
             }
             if QuestionAns.objects.filter(question=question, user=request.user):
                 context.update({'need': True})
+            context.update({'status': competition_status(Competitions.objects.get(pk=ret))})
         return render(request, 'question_page.html', context)
 
 # Create your views here.
