@@ -59,7 +59,7 @@
         </form>
     </div>
     <script>
-        function aa() {
+       {%comment%} function aa() {
             $.ajax({
                 url: '{% url 'is_close' competition.pk %}',
                 data: {},
@@ -74,7 +74,7 @@
 
         }
 
-        setInterval(aa, 5000)
+        setInterval(aa, 5000){%endcomment%}
     </script>
     {%else%}
     <script>

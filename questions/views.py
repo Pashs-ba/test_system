@@ -23,13 +23,13 @@ def question(request, pk, ret):
             if question.type == '0':
                 qans = QuestionAns.objects.get_or_create(user=user,
                             question=question)
-                print(ans['ans'], type(ans['ans']))
-                print(request.POST['ans'], type(request.POST['ans']))
-                print(request.POST['ans'] == ans['ans'])
+   #             print(ans['ans'], type(ans['ans']))
+  #              print(request.POST['ans'], type(request.POST['ans']))
+ #               print(request.POST['ans'] == ans['ans'])
                 qans[0].ans = request.POST['ans']
                 qans[0].result=request.POST['ans']==ans['ans']
                 qans[0].save()
-                print(qans[0].result)
+#                print(qans[0].result)
             elif question.type == '1':
                 for i in ans['ans']:
                     if ans['ans'][i][1]:
@@ -53,7 +53,7 @@ def question(request, pk, ret):
         messages.success(request, 'Ответ записан')
         return redirect('competition_page', ret)
     else:
-        print(VariantQuestionGenerator.objects.filter(question=question.pk))
+    #    print(VariantQuestionGenerator.objects.filter(question=question.pk))
         text = ''
         if VariantQuestionGenerator.objects.filter(question=question.pk):
             variant = get_variant(request, question)

@@ -110,7 +110,7 @@
         <h3 class="display-3 my-3 text-center">{{ status }}</h3>
     {% endif %}
     {% if status == 'НЕ НАЧАЛОСЬ' %}
-        <script>
+	{%comment%}        <script>
             function aa() {
                 $.ajax({
                     url: '{% url 'is_open' competition.pk %}',
@@ -126,11 +126,11 @@
 
             }
 
-            setInterval(aa, 5000)
+            setInterval(aa, 5000){%endcomment%}
         </script>
     {%elif status == 'ИДЕТ'%}
     <script>
-        function aa() {
+{%comment%}        function aa() {
             $.ajax({
                 url: '{% url 'is_close' competition.pk %}',
                 data: {},
@@ -145,7 +145,7 @@
 
         }
 
-        setInterval(aa, 5000)
+        setInterval(aa, 5000){%endcomment%}
     </script>
     {%endif%}
 
