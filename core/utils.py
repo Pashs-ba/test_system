@@ -23,6 +23,7 @@ def upload_file(file: InMemoryUploadedFile, path, name):
             f.write(i)
 
 def make_xl(request, competition, id):
+    raise ValueError()
     comp = Competitions.objects.get(pk=competition)
     group = StudentGroup.objects.get(competitions=comp)
     al = group.users.all().order_by('username')
