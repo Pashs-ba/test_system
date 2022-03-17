@@ -34,7 +34,6 @@ def make_xl(request, competition, id):
         for quest in range(len(qa)): 
             f.write(f'{qa[quest].name} ')
         f.write('\n')
-        print()
         for user in range(len(al)):
             # ws.cell(row=user+2, column=1).value = al[user].username
             f.write(f'{al[user].username} ')
@@ -57,7 +56,7 @@ def make_xl(request, competition, id):
                 else:
                     f.write('0 ')
             f.write('\n')
-                            ws.cell(row=user+2, column=quest+2, value=f"- {delta.total_seconds()//60}")
+                            # ws.cell(row=user+2, column=quest+2, value=f"- {delta.total_seconds()//60}")
     wb.save(str(settings.BASE_DIR / f'media/{id}.xlsx'))
 
 
