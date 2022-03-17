@@ -25,11 +25,9 @@ def upload_file(file: InMemoryUploadedFile, path, name):
 def make_xl(request, competition, id):
     comp = Competitions.objects.get(pk=competition)
     group = StudentGroup.objects.get(competitions=comp)
-    wb = openpyxl.Workbook()
-    ws = wb.create_sheet("result")
     al = group.users.all().order_by('username')
     qa = comp.questions.all().order_by('name')
-    with open(settings.BASE_DIR/f'media/{id}.txt', 'w') as f:
+    with open(settings.BASE_DIR/f'media/{id}.txt', 'w', encoding="utf-8") as f:
         for quest in range(len(qa)): 
             f.write(f'{qa[quest].name} ')
         f.write('\n')
