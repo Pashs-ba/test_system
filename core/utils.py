@@ -47,12 +47,12 @@ def make_xl(request, competition, id):
                     if a[0].result:
                         if a[0].time:
                             delta = a[0].time-comp.start_time
-                            f.write('+ ')
+                            f.write(f'+ {delta.total_seconds()//60}')
                             # ws.cell(row=user+2, column=quest+2, value=f"+ {delta.total_seconds()//60}")
                     else:
                         if a[0].time:
                             delta = a[0].time-comp.start_time
-                            f.write('- ')
+                            f.write(f'- {delta.total_seconds()//60}')
                 else:
                     f.write('0 ')
             f.write('\n')
