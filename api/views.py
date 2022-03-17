@@ -45,7 +45,7 @@ def set_ans(request, q_pk):
     return HttpResponse('OK')
 
 def is_exist(request, c_pk):
-    return JsonResponse({'exist': os.path.isfile(settings.BASE_DIR/f'media/{c_pk}.xlsx')})
+    return JsonResponse({'exist': os.path.isfile(settings.BASE_DIR/f'media/{c_pk}.txt')})
         
 
 
