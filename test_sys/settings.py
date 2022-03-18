@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'n90gvfs-c$f#i-)&3_mdd)@c#o*5s@1la(abe)e@vfm618s8v8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['kussystem.ru', '127.0.0.1']
 
