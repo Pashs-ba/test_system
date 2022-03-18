@@ -58,7 +58,6 @@ def make_xl(request, competition, id):
                     f.write('0;')
             f.write('\n')
                             # ws.cell(row=user+2, column=quest+2, value=f"- {delta.total_seconds()//60}")
-    wb.save(str(settings.BASE_DIR / f'media/{id}.xlsx'))
 
 
 def competition_status(competition: Competitions):

@@ -94,6 +94,7 @@ class Competitions(models.Model):
     questions = models.ManyToManyField(Question, blank=True, verbose_name='Вопросы')
     is_visible_result = models.BooleanField(null=True, blank=True, verbose_name="Показывать результаты", default=True)
     is_simulator = models.BooleanField(default=False, verbose_name='Является симулятором')
+    is_final = models.BooleanField(default=False, verbose_name='Финальный результат')
     class Meta:
         verbose_name = 'Competition'
         verbose_name_plural = 'Competitions'

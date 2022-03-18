@@ -7,15 +7,11 @@
     <h2 class="display-2 text-center">{{ competition.name }}</h2>
     {% if status == 'ОТКРЫТО' or status == 'ИДЕТ' %}
         <div class="text-center">
-            <div class="alert alert-danger" role="alert">
-                Внимание! При оценивании учитывается время отправки. Чем раньше вы отправили правильный ответ тем выше вы в таблице результатов
+            {%if competition.is_final%}
+            <div class="alert alert-info" role="alert">
+                Вы можете посмотреть ваши результаты, вы не можете слать посылки.
             </div>
-            <div class="alert alert-danger" role="alert">
-                Внимание! Вы можете отправлять ответ на каждое задание сколько угодно раз. Учитываться будет только последняя попытка.
-            </div>
-            <div class="alert alert-danger" role="alert">
-                Внимание! Результаты будут скрыты до конца соревнований
-            </div>
+            {%endif%}
             <p> 
                 По всем вопросам технического характера пишите <a href="https://t.me/rcomrad">@rcomrad</a> или на почту fedorovas@adtspb.ru</br>
             </p>
@@ -51,7 +47,7 @@
 
                         </th>
                         {% comment %} TODO fix question result {% endcomment %}
-                        <th class="text-center">{% if competition.is_visible_result%} {% if request.user|check_ans_id:i.1 and request.user|check_ans_id:i.1 != -1 %}Правильно{% elif request.user|check_ans_id:i.1 == -1  %} {% else %}Неправильно{% endif %}{%else%}Скрыто{%endif%}</th>
+                        <th class="text-center">{% if competition.is_visible_result or competition.is_final%} {% if request.user|check_ans_id:i.1 and request.user|check_ans_id:i.1 != -1 %}Правильно{% elif request.user|check_ans_id:i.1 == -1  %} {% else %}Неправильно{% endif %}{%else%}Скрыто{%endif%}</th>
                     </tr>
                 {% endfor %}
                 </tbody>

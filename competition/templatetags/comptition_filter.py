@@ -1,7 +1,6 @@
 from django.template import Library
 from core.models import QuestionAns, Question
-
-
+from ast import literal_eval
 register = Library()
 
 
@@ -28,7 +27,7 @@ def is_ansed(question: Question, user):
 @register.filter
 def get_ans(question: Question, user):
     print(QuestionAns.objects.filter(user=user, question=question)[0].ans)
-    return QuestionAns.objects.filter(user=user, question=question)[0].ans
+    # return QuestionAns.objects.filter(user=user, question=question)[0].ans
 
 @register.filter
 def count_ans(competition, user):
@@ -36,3 +35,9 @@ def count_ans(competition, user):
     for i in competition.questions.all():
         c+= len(QuestionAns.objects.filter(user=user, question=i))
     return c
+
+
+@register.filter
+def get_question_ans(a):
+    # print(QuestionAns.objects.filter(user=user, question=question)[0].ans)
+    return literal_eval(a).get('ans', 'error')

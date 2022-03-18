@@ -23,13 +23,9 @@ def question(request, pk, ret):
             if question.type == '0':
                 qans = QuestionAns.objects.get_or_create(user=user,
                             question=question)
-   #             print(ans['ans'], type(ans['ans']))
-  #              print(request.POST['ans'], type(request.POST['ans']))
- #               print(request.POST['ans'] == ans['ans'])
                 qans[0].ans = request.POST['ans']
                 qans[0].result=request.POST['ans']==ans['ans']
                 qans[0].save()
-#                print(qans[0].result)
             elif question.type == '1':
                 for i in ans['ans']:
                     if ans['ans'][i][1]:
@@ -88,6 +84,8 @@ def question(request, pk, ret):
             if QuestionAns.objects.filter(question=question, user=request.user):
                 context.update({'need': True})
             context.update({'status': competition_status(Competitions.objects.get(pk=ret))})
+            if Competitions.objects.get(pk=ret).is_final:
+                context.update({"ans": QuestionAns.objects.filter(question=question, user=request.user)})
         return render(request, 'question_page.html', context)
 
 # Create your views here.

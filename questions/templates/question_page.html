@@ -2,7 +2,8 @@
 {% load static %}
 {% block title %} {{ question.name }} {% endblock %}
 {% block main %}
-{%if status == "ИДЕТ"%}
+{%load comptition_filter%}
+{%if status == "ИДЕТ" or competition.is_final%}
     <h2 class="display-2 text-center mb-4">{{ question.name }}</h2>
     {%if image%}
     <div class="container d-flex justify-content-center">
@@ -32,8 +33,15 @@
     </div>
     {%endif%}
 
+    <div class="text-center">
 
-
+    
+        {%if competition.is_final%}
+        <p>Ваш ответ: {%if ans%}{{ans.0.ans}}{%endif%}</p>
+        <p>Ответ жюри: {{question.question|get_question_ans}}</p>
+        {%if ans%}<p>Результат:{% if ans.0.result%} Правильно{%else%} Неправильно{%endif%}{%endif%}</p>
+        {%else%}
+    </div>
     <div class="container d-flex justify-content-center">
         <form id="form" method="post">
             {% csrf_token %}
@@ -58,6 +66,7 @@
             </div>
         </form>
     </div>
+    {%endif%}
     <script>
        {%comment%} function aa() {
             $.ajax({
@@ -78,7 +87,9 @@
     </script>
     {%else%}
     <script>
+        {%if not competition.is_final%}
         document.location.replace('/')
+        {%endif%}
     </script>
     {%endif%}
 {% endblock %}
