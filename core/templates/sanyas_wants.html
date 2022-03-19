@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{%load filters %}
+
+{% block main %}
+    <div class="card my-5">
+        <div class="card-body px-5">
+            <form method="POST" id="form">
+                <form method="post">
+                  {% csrf_token %}
+              
+                  {% for hidden in form.hidden_fields %}
+                    {{ hidden }}
+                  {% endfor %}
+              
+                  {% for field in form.visible_fields %}
+                    <div class="form-group">
+                      <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                      {{ field|add_class:'form-control' }}
+                      {% for error in field.errors %}
+                        <span class="help-block">{{ error }}</span>
+                      {% endfor %}
+                    </div>
+                  {% endfor %}
+              
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-danger">
+                      Ебанет?
+                    </button>
+                    <a class="btn btn-warning" href="https://t.me/Pashs_ba">Позови Пашу</a>
+                    <a class="btn btn-secondary" href="{% url 'homepage' %}">Верни меня назад</a>
+                    
+                  </div>
+                </form>
+            </form>
+        </div>
+    </div>
+{%endblock%}

@@ -7,7 +7,7 @@ from .models import Competitions, Question, QuestionAns, StudentGroup
 import openpyxl
 from django.conf import settings
 from django.conf import settings
-
+import subprocess
 def upload_file(file: InMemoryUploadedFile, path, name):
     """
     Upload files from form
@@ -72,5 +72,12 @@ def competition_status(competition: Competitions):
     else:
         return 'ЗАКОНЧИЛОСЬ'
 
+def sanya_run(string):
+    a = subprocess.Popen([settings.BASE_DIR/'some'],
+                         stdout=subprocess.PIPE,
+                         stdin=subprocess.PIPE,
+                         stderr=subprocess.PIPE)
+    a.communicate(input=string)
+    a.wait()
 
 

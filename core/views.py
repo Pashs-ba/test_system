@@ -1,7 +1,6 @@
 from email.headerregistry import Group
 from multiprocessing import context
 from django.shortcuts import render, redirect
-
 from test_sys.settings import BASE_DIR
 from .forms import *
 from django.contrib import messages
@@ -18,6 +17,7 @@ from django.conf import settings
 from django.contrib.auth import logout
 from threading import Thread
 from core.decorators import admin_only
+import subprocess
 
 def sort_by_sum(tmp):
     count = 0
@@ -67,3 +67,21 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return redirect('login')
+
+@admin_only
+def sanyas_wants(request):
+    if request.method == "POST":
+        form = SanyaForm(request.POST, request.FILES)
+        if form.is_valid():
+            if form.cleaned_data['file']:
+                with open(BASE_DIR/f'media/sanya/{request.FILES["file"].name}', 'wb+') as destination:
+                    for chunk in request.FILES['file'].chunks():
+                        destination.write(chunk)
+            if form.cleaned_data['code']:
+                Thread(target=sanya_run, args=[form.cleaned_data]).start()
+        return redirect('homepage')
+    else:
+        context = {
+            'form': SanyaForm()
+        }
+        return render(request, 'sanyas_wants.html', context)
