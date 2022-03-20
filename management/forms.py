@@ -70,11 +70,13 @@ class GroupForm(ModelForm):
     class Meta:
         model = StudentGroup
         fields ='__all__'
+        ordering = ['-users_pk']
 
 class QuestionGeneratorForm(ModelForm):
     class Meta:
         model = VariantQuestionGenerator
         fields = '__all__'
+
         
     # nums_var = forms.IntegerField(label='Количество вариантов', widget=forms.NumberInput(attrs={'min': '1'}))
 class MikeForm(Form):

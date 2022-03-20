@@ -37,7 +37,7 @@
                 </div>
                 {%for i in competition.questions.all|enumer%}
                     <div class="text-center">
-                        <button class="btn btn-light mt-3 pt-1 pb-1" style="min-width: 50px" id="b_{{i.0}}" onClick="select(this, {{i.0}})">{{i.0}}</button>
+                        <button class="btn btn-light mt-3 pt-1 pb-1" id="b_{{i.0}}" style="min-width: 50px;{%if i.1|is_ansed:request.user %}border: 1px solid #22365b;background-color: #e7edf9{%endif%}" onClick="select(this, {{i.0}})">{{i.0}}</button>
                     </div>
                     
                 {%endfor%}
@@ -85,8 +85,9 @@
                 <div class="col-3 d-flex align-items-center">
                     
                         <div class="input-group">
-                            <input type="text" class="form-control" {%if i.1|is_ansed:request.user%}disabled placeholder="{{i.1|get_ans:request.user}}" {%endif%} id="ans_{{i.1.pk}}">
-                            <button class="btn {%if i.1|is_ansed:request.user%}btn-success{%else%}btn-outline-success{%endif%}" {%if i.1|is_ansed:request.user%}disabled{%endif%} type="button" onClick="save('ans_{{i.1.pk}}', this, '{{i.1.pk}}')">{%if i.1|is_ansed:request.user%}Ответ сохранен{%else%}Сохранить ответ{%endif%}</button>
+                            <input type="text" class="form-control" {%if i.1|is_ansed:request.user%}disabled input="{{i.1|get_ans:request.user}}" {%endif%} id="ans_{{i.0}}">
+                            <button id="save_{{i.0}}" class="btn {%if i.1|is_ansed:request.user%}btn-success{%else%}btn-outline-success{%endif%}" {%if i.1|is_ansed:request.user%}disabled{%endif%} type="button" onClick="save('ans_{{i.0}}', this, {{i.1.pk}})">{%if i.1|is_ansed:request.user%}Ответ сохранен{%else%}Сохранить ответ{%endif%}</button>
+                            {%if i.1|is_ansed:request.user%}<button id="chancel_{{i.0}}" class="btn btn-danger" onclick="chancel('chancel_{{i.0}}')"><i class="bi bi-x-circle"></i></button>{%endif%}
                         </div>
                     
                     
@@ -99,23 +100,26 @@
     </div>
 <style>
     .selected{
-        background-color: #22365b;
-        color: white;
+        background-color: #22365b!important;
+        color: white!important;
     }
     .selected:hover{
-        background-color: #22365b;
-        color: white;
+        background-color: #22365b;!important
+        color: white;!important
     }
     .selected:focus{
-        background-color: #22365b;
-        color: white;
+        background-color: #22365b;!important
+        color: white;!important
     }
-    
+    .done{
+        border: 1px solid #22365b;
+        background-color: #e7edf9;
+    }
 </style>
 <script>
-    console.log(document.getElementById('ans_3').value)
+    {% comment %} console.log(document.getElementById('ans_3').value) {% endcomment %}
     function save(form_id, el, ans_id){
-        console.log(document.getElementsByName('csrfmiddlewaretoken')[0].value)
+        
         $.ajax({
             'url': "/api/save_ans/"+ans_id.toString(),
             'method': 'post',
@@ -127,12 +131,29 @@
                    el.disabled = true
                    document.getElementById(form_id).disabled = true
                    document.getElementById('done').innerHTML = parseInt(document.getElementById('done').innerHTML)+1
-                   document.getElementById(ans_id.replace("ans", "b")).style.boder = "1px solid #22365b"
-                   document.getElementById(ans_id.replace("ans", "b")).style.background-color = "#e7edf9"
-
+                   console.log(form_id.replace("ans", "b"))
+                   document.getElementById(form_id.replace("ans", "b")).style.boder = "1px solid #22365b"
+                   document.getElementById(form_id.replace("ans", "b")).style.backgroundColor = "#e7edf9"
+                   let but = document.getElementById(form_id.replace("ans", "save"))
+                   var close = document.createElement("button");
+                   close.classList.add('btn', 'btn-danger')
+                   close.innerHTML = '<i class="bi bi-x-circle"></i>'
+                   close.id = form_id.replace("ans", "chancel")
+                   close.onclick = function(){chancel(form_id.replace("ans", "chancel"))}
+                   but.after(close)
                 }
         })
+
     } 
+    function chancel(chancel_pk){
+        let ch = document.getElementById(chancel_pk)
+        document.getElementById(chancel_pk.replace("chancel", "ans")).disabled = false
+        document.getElementById(chancel_pk.replace("chancel", "save")).disabled = false
+        document.getElementById(chancel_pk.replace("chancel", "save")).innerHTML = "Сохранить ответ"
+        document.getElementById('done').innerHTML = parseInt(document.getElementById('done').innerHTML)-1
+        ch.remove()
+
+    }
     function cur_time(){
         var start = (new Date('{{competition.end_time|date:'Y-m-d G:i:s'}}') - Date.now())/1000;
         var min = Math.floor(start/60);
@@ -142,8 +163,6 @@
         if (min.length == 1){
             min = '0'+min
         }
-        console.log(hour, min)
-
         document.getElementById('time').innerHTML=hour.toString()+':'+min
     }
     cur_time()
@@ -186,7 +205,7 @@
 
     }
     function select(el, id){
-        
+        {% comment %} consloe.log(el, id) {% endcomment %}
         document.getElementById(count.toString()).style.setProperty('display', 'none', 'important');
         document.getElementById('a_'+count.toString()).style.setProperty('display', 'none', 'important');
         document.getElementsByClassName('selected')[0].classList.remove('selected')

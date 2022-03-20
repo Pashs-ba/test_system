@@ -38,10 +38,11 @@ def get_status(request):
 
 @require_http_methods(["POST"])
 def set_ans(request, q_pk):
-    QuestionAns.objects.create(user=request.user,
-                               question=Question.objects.get(pk=q_pk), 
-                               ans = request.POST['ans'].lower(),
-                               result=ast.literal_eval(Question.objects.get(pk=q_pk).question)['ans'].lower() == request.POST['ans'].lower()).save()
+    a = QuestionAns.objects.get_or_create(user=request.user,
+                               question=Question.objects.get(pk=q_pk))[0]
+    a.result=ast.literal_eval(Question.objects.get(pk=q_pk).question)['ans'].lower() == request.POST['ans'].lower()
+    a.ans = request.POST['ans'].lower()
+    a.save()
     return HttpResponse('OK')
 
 def is_exist(request, c_pk):
