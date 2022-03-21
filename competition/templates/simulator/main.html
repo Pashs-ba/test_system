@@ -20,6 +20,12 @@
                 <p class="fs-3 fw-light align-middle"style="color: white; margin:0">БР № 1111111111111</p>
               </li>
             </ul>
+            <form class="d-flex align-items-center" style="margin: 0">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Завершить экзамен
+                  </button>
+                  
+            </form>
           </div>
         </div>
       </nav>
@@ -98,6 +104,23 @@
         </div>
     
     </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Вы уверены?</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              Вы больше не сможете решать задания
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Вернуться</button>
+              <a class="btn btn-primary" href="{%url 'final' competition.pk%}">Завершить</a>
+            </div>
+          </div>
+        </div>
+      </div>
 <style>
     .selected{
         background-color: #22365b!important;
@@ -158,6 +181,9 @@
     }
     function cur_time(){
         var start = (new Date('{{competition.end_time|date:'Y-m-d G:i:s'}}') - Date.now())/1000;
+        if (start <= 0){
+            window.location.replace("{%url 'final' competition.pk%}");
+        }
         var min = Math.floor(start/60);
         let hour = Math.floor(min/60);
         min = min%60

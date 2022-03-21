@@ -65,7 +65,6 @@ def create_ans(pk: str, path_ideal: str):
     tests = Test.objects.filter(contest=Contests.objects.get(pk=pk))
     if '.py' in path_ideal:
         for i in tests:
-            
             if platform.system() == 'Linux':
                 process = Popen(['python3', path_ideal], stdout=PIPE, stderr=PIPE, stdin=PIPE)
             else:
