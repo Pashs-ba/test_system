@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.shortcuts import render, redirect
 from core.models import Competitions, Contests, Solutions, QuestionAns, StudentGroup
 from core.utils import competition_status, upload_file
@@ -119,3 +120,8 @@ def load_ans(request, pk):
             })
         return render(request, 'load_ans.html', context)
         
+def final(request, pk):
+    context = {'competition': Competitions.objects.get(pk=pk),
+               'questions_ans': QuestionAns.objects.filter(user=request.user, question__in=Competitions.objects.get(pk=pk).questions.all())}
+
+    return render(request, 'simulator/final.html', context)

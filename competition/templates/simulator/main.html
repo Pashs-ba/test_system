@@ -85,8 +85,8 @@
                 <div class="col-3 d-flex align-items-center">
                     
                         <div class="input-group">
-                            <input type="text" class="form-control" {%if i.1|is_ansed:request.user%}disabled input="{{i.1|get_ans:request.user}}" {%endif%} id="ans_{{i.0}}">
-                            <button id="save_{{i.0}}" class="btn {%if i.1|is_ansed:request.user%}btn-success{%else%}btn-outline-success{%endif%}" {%if i.1|is_ansed:request.user%}disabled{%endif%} type="button" onClick="save('ans_{{i.0}}', this, {{i.1.pk}})">{%if i.1|is_ansed:request.user%}Ответ сохранен{%else%}Сохранить ответ{%endif%}</button>
+                            <input type="text" class="form-control" {%if i.1|is_ansed:request.user%} value="{{i.1|get_ans:request.user}}" disabled{%endif%} id="ans_{{i.0}}">
+                            <button {%if i.1|is_ansed:request.user%}disabled=""{%endif%} id="save_{{i.0}}" class="btn {%if i.1|is_ansed:request.user%}btn-success {%else%}btn-outline-success{%endif%}"  type="button" onClick="save('ans_{{i.0}}', this, {{i.1.pk}})"  >{%if i.1|is_ansed:request.user%}Ответ сохранен{%else%}Сохранить ответ{%endif%}</button>
                             {%if i.1|is_ansed:request.user%}<button id="chancel_{{i.0}}" class="btn btn-danger" onclick="chancel('chancel_{{i.0}}')"><i class="bi bi-x-circle"></i></button>{%endif%}
                         </div>
                     
@@ -149,6 +149,8 @@
         let ch = document.getElementById(chancel_pk)
         document.getElementById(chancel_pk.replace("chancel", "ans")).disabled = false
         document.getElementById(chancel_pk.replace("chancel", "save")).disabled = false
+        document.getElementById(chancel_pk.replace("chancel", "b")).style.boder = "1px solid white"
+        document.getElementById(chancel_pk.replace("chancel", "b")).style.backgroundColor = "white"
         document.getElementById(chancel_pk.replace("chancel", "save")).innerHTML = "Сохранить ответ"
         document.getElementById('done').innerHTML = parseInt(document.getElementById('done').innerHTML)-1
         ch.remove()

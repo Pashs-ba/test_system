@@ -79,6 +79,7 @@ class Question(models.Model):
     class Meta:
         verbose_name = 'Question'
         verbose_name_plural = 'Questions'
+        ordering = ['name']
 
     def __str__(self):
         return f'{self.name}'
@@ -98,6 +99,7 @@ class Competitions(models.Model):
     class Meta:
         verbose_name = 'Competition'
         verbose_name_plural = 'Competitions'
+        ordering = ['questions__name']
 
     def __str__(self):
         return f'{self.name}'

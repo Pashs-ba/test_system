@@ -27,7 +27,7 @@ def is_ansed(question: Question, user):
 @register.filter
 def get_ans(question: Question, user):
     print(QuestionAns.objects.filter(user=user, question=question)[0].ans)
-    # return QuestionAns.objects.filter(user=user, question=question)[0].ans
+    return QuestionAns.objects.filter(user=user, question=question)[0].ans
 
 @register.filter
 def count_ans(competition, user):
@@ -41,3 +41,15 @@ def count_ans(competition, user):
 def get_question_ans(a):
     # print(QuestionAns.objects.filter(user=user, question=question)[0].ans)
     return literal_eval(a).get('ans', 'error')
+@register.filter
+def is_right(question: Question, user):
+    ans = QuestionAns.objects.filter(user=user, question=question)
+    if ans:
+        return ans[0].result
+@register.filter
+def count_true(competition, user):
+    count = 0
+    for i in QuestionAns.objects.filter(user=user, question__in=competition.questions.all()):
+        if i.result:
+            count+=1
+    return count
