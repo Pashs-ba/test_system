@@ -37,16 +37,56 @@ def homepage(request):
             status.update({i.pk: competition_status(i)})
         context.update({'status': status})
     else:
-        if request.GET.get('competiton', None):
+        if request.GET.get('type', None) =="c":
             return redirect('load_result', request.GET.get('competiton', None))
-        context.update({'competitions': Competitions.objects.all()})
+        else:
+            competition = Competitions.objects.get(pk=request.GET.get('competiton', None))
+            groups = StudentGroup.objects.filter(pk=request.GET.get('group', None))
+            result = {}
+            for i in groups:
+                group_table = {}
+                for j in i.users.all():
+                    user_result = []
+                    for k in competition.questions.all():
+                        # print(QuestionAns.objects.filter(user=j, question=k))
+                        if QuestionAns.objects.filter(user=j, question=k):
+
+                            if QuestionAns.objects.filter(user=j, question=k)[len(QuestionAns.objects.filter(user=j, question=k))-1].result:
+                                user_result.append('+')
+                            else:
+                                user_result.append('-')
+                        else:
+                            user_result.append('')
+                    for k in competition.contests.all():
+                        if Solutions.objects.filter(user=j, contest=k):
+                            bad_reslut = True
+                            for q in Solutions.objects.filter(user=j, contest=k):
+                                if q.result == 'OK':
+                                    bad_reslut = False
+                                    break
+                            if bad_reslut:
+                                user_result.append('-')
+                            else:
+                                user_result.append('+')
+                        else:
+                            user_result.append('')
+                    group_table[j.username] = user_result
+                group_table = {k: v for k, v in sorted(group_table.items(), key=lambda item: sort_by_sum(item[1]), reverse=True)}
+
+                result[i.name] = group_table
+            context.update({
+                'result': result,
+                'bad': ['TL', 'ML', 'WA', 'CE'],
+                'competition': competition
+            })
+        context.update({'competitions': Competitions.objects.all(), 'groups': StudentGroup.objects.all()})
     return render(request, 'homepage.html', context)
 
 
 @admin_only
 def load_result(request, competition):
     a = str(datetime.datetime.now().time()).replace('.', '').replace(':', '')
-    Thread(target=make_xl, args=(request, competition, a)).start()
+    Thread(target=make_csv, args=(request, competition, a)).start()
     return render(request, 'wait.html', context={'id': a})
 
 

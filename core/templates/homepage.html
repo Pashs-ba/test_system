@@ -19,12 +19,29 @@
             
               <div class="mb-3">
                 {% comment %} {{selected}} {% endcomment %}
-                <select class="form-select" name="competiton" aria-label="Default select example">
+                <div class="form-group">
+                <select class="form-select" name="competiton" aria-label="Default select example" required>
                   <option {%if not selected%}selected{%endif%} disabled></option>
                   {%for i in competitions%}%
                     <option {%if selected == i.pk%}selected{%endif%} value="{{i.pk}}">{{i.name}}</option>
                   {%endfor%}
                 </select>
+              </div>
+              <div class="form-group">
+                <select class="form-select" name="group" aria-label="Default select example" required>
+                  <option {%if not selected_group%}selected{%endif%} disabled></option>
+                  {%for i in groups%}%
+                    <option {%if selected_group == i.pk%}selected{%endif%} value="{{i.pk}}">{{i.name}}</option>
+                  {%endfor%}
+                </select>
+              </div>
+              <div class="form-group">
+                <select class="form-select" name="type" aria-label="Default select example" required>
+                  <option {%if not selected_type%}selected{%endif%} disabled></option>
+                  <option {%if selected_type == "t"%}selected{%endif%} value="t">Таблица</option>
+                  <option {%if selected_type == "c"%}selected{%endif%} value="c">CSV</option>
+                </select>
+              </div>
               </div>
             
           </div>
