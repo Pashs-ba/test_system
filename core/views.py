@@ -45,7 +45,7 @@ def homepage(request):
             result = {}
             for i in groups:
                 group_table = {}
-                for j in i.users.all():
+                for j in i.users.all().order_by('username'):
                     user_result = []
                     for k in competition.questions.all():
                         # print(QuestionAns.objects.filter(user=j, question=k))
@@ -71,13 +71,16 @@ def homepage(request):
                         else:
                             user_result.append('')
                     group_table[j.username] = user_result
-                group_table = {k: v for k, v in sorted(group_table.items(), key=lambda item: sort_by_sum(item[1]), reverse=True)}
+                # group_table = {k: v for k, v in sorted(group_table.items(), key=lambda item: sort_by_sum(item[1]), reverse=True)}
 
                 result[i.name] = group_table
             context.update({
                 'result': result,
                 'bad': ['TL', 'ML', 'WA', 'CE'],
-                'competition': competition
+                'competition': competition,
+                'selected': competition.pk,
+                'selected_group': int(request.GET.get('group', None)),
+                'selected_type': int(request.GET.get('type', None))
             })
         context.update({'competitions': Competitions.objects.all(), 'groups': StudentGroup.objects.all()})
     return render(request, 'homepage.html', context)
