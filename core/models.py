@@ -99,7 +99,6 @@ class Competitions(models.Model):
     class Meta:
         verbose_name = 'Competition'
         verbose_name_plural = 'Competitions'
-        ordering = ['questions__name']
 
     def __str__(self):
         return f'{self.name}'
