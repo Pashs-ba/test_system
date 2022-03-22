@@ -39,7 +39,7 @@ def homepage(request):
     else:
         if request.GET.get('type', None) =="c":
             return redirect('load_result', request.GET.get('competiton', None))
-        else:
+        elif request.GET.get('type', None):
             competition = Competitions.objects.get(pk=request.GET.get('competiton', None))
             groups = StudentGroup.objects.filter(pk=request.GET.get('group', None))
             result = {}
