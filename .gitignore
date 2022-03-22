@@ -9,3 +9,5 @@ __pycache__
 Resources
 data.yaml
 data.txt
+*.obj
+.log
