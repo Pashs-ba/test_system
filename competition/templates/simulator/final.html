@@ -14,6 +14,7 @@
 
 <div class="d-flex justify-content-center align-items-center flex-column" style="background-color: #e8eef9; height: 90vh">
     <h3 class="mb-2">Дано ответов {{competition|count_ans:request.user}}/{{competition.questions.all|length}}</h3>
+    {%if competition.is_visible_result%}
     <table class="table table-light table-bordered mb-2" style="max-width: 20vw">
         <thead>
             <tr>
@@ -33,6 +34,7 @@
           </tbody>
     </table>
     <h3 >Результат: {{competition|count_true:request.user}}/{{competition.questions.all|length}}</h3>
+    {%endif%}
 </div>
 
 {%endblock%}
