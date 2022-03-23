@@ -30,7 +30,7 @@
                 <th>
                     {%if group.users.all|length > 10%} {%for i in group.users.all|slice:":10"%}{{i}} {%endfor%}... {%else%} {%for i in group.users.all%}{{i}} {%endfor%}{%endif%}
                 </th>
-                <th>{%for i in group.competitions.all%}{{i}}{%endfor%} </th>
+                <th>{%for i in group.competitions.all%}{{i}} {%endfor%} </th>
                 <th>
                     <a href="{%url 'change_group' group.pk %}" class="btn btn-sm btn-primary">
                         <i class="bi bi-pencil-square"></i>
