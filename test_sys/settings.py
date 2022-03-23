@@ -9,18 +9,20 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
+import toml
+
 
 from pathlib import Path
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
+data = toml.load(BASE_DIR/'config.toml')
+# print(data['common']['secret_key'])
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'n90gvfs-c$f#i-)&3_mdd)@c#o*5s@1la(abe)e@vfm618s8v8'
+SECRET_KEY = data['common']['secret_key']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

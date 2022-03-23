@@ -11,3 +11,4 @@ data.yaml
 data.txt
 *.obj
 .log
+config.toml
