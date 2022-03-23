@@ -25,7 +25,7 @@ data = toml.load(BASE_DIR/'config.toml')
 SECRET_KEY = data['common']['secret_key']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = data['common']['debug']
 
 ALLOWED_HOSTS = ['kussystem.ru', '127.0.0.1']
 
