@@ -28,7 +28,7 @@
                     {{group.name}}
                 </th>
                 <th>
-                    {%for i in group.users.all%}{{i}} {%endfor%}
+                    {%if group.users.all|length > 10%} {%for i in group.users.all|slice:":10"%}{{i}} {%endfor%}... {%else%} {%for i in group.users.all%}{{i}} {%endfor%}{%endif%}
                 </th>
                 <th>{%for i in group.competitions.all%}{{i}}{%endfor%} </th>
                 <th>
