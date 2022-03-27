@@ -8,6 +8,8 @@ urlpatterns = [
     path('simulator/<int:pk>', simulator_start, name='simulator_start'),
     path('simulator/blank/<int:pk>', blank_page, name='blank'),
     path('simulator/instruction/<int:pk>/<str:data>', instruction, name='instruction'),
+    path('simulator/activate/<int:pk>/<str:data>', activate, name="activate"),
     path('simulator/main/<int:pk>/<str:data>', simulator, name="main"),
-    path('simulator/final/<int:pk>', final, name="final")
+    path('simulator/final/<int:pk>/<str:data>', final, name='final'),
+    path('simulator/final_ans/<int:pk>', final_ans, name="final_ans"),
 ]

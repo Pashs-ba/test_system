@@ -122,9 +122,23 @@ def load_ans(request, pk):
                 'contest': contest
             })
         return render(request, 'load_ans.html', context)
+
+def final(request, pk, data):
+    control = ''
+    for i in range(1, 6):
+        s = str((pk*int(data)*(i*13))%100)
+        if len(s) == 1:
+            control+='0'+s+'-'
+        else:
+            control+=s+'-'
+    return render(request, 'simulator/final.html', {'pk':pk, 'data':data, 'sum': control[:-1], 'competition': Competitions.objects.get(pk=pk)})
         
-def final(request, pk):
+def final_ans(request, pk):
     context = {'competition': Competitions.objects.get(pk=pk),
                'questions_ans': QuestionAns.objects.filter(user=request.user, question__in=Competitions.objects.get(pk=pk).questions.all())}
 
-    return render(request, 'simulator/final.html', context)
+    return render(request, 'simulator/final_ans.html', context)
+def activate(reqeuest, pk, data):
+    if reqeuest.method == 'POST':
+        return redirect('main', pk, data)
+    return render(reqeuest, 'simulator/activate.html', {'pk':pk, 'data': data, 'status': competition_status(Competitions.objects.get(pk=pk))})

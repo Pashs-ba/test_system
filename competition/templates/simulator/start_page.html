@@ -12,11 +12,7 @@
     </div>
     
     <div class="d-flex justify-content-center align-items-center" style="height: 50%">
-        {%if status == 'ИДЕТ' or status == "ОТКРЫТО"%}
             <a href="{%url 'blank' pk%} " class="btn btn btn-success btn-lg">Начать экзамен</a>
-        {%else%}
-            <a href="" class="btn btn-success btn-lg disabled">Начать экзамен</a>
-        {%endif%}
     </div>
 </div>
 <script>

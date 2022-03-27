@@ -52,8 +52,8 @@
                 <button class="btn p-3" style="background-color: #22365b" onClick="down()"><i class="bi bi-arrow-down" style="color: white" ></i></button>
             </div>
         </div>
-        <div class="col-11" style="max-height: 100%;">
-            <div class="" style="display: flex;  min-height:90%; max-height: 90%; max-width: 100%; align-items: stretch; justify-content: space-between">
+        <div class="col-11" style="min-height: 100%;">
+            <div class="" style="display: flex;  min-height:90%; max-width: 100%; align-items: stretch; justify-content: space-between">
                 <div class="d-flex align-items-center justify-content-center" style="">
                     <div>
                         <a href="#"onClick="back()"><img src="{%static 'competition/left.png'%}" alt=""></a>
@@ -61,8 +61,8 @@
                     </div>
                     
                 </div>
-                <div class="d-flex justify-content-start" id="0" style="min-width: 70%">
-                    <img src="{%static 'competition/inst.png'%}" alt="" style="max-width: 100%">
+                <div class="d-flex justify-content-center align-items-center" id="0" style="min-width: 70%">
+                    <img src="{%static 'competition/inst.png'%}" alt="" style="max-width: 80%;">
                 </div>
                 {%for i in competition.questions.all|enumer%}
                 <div class="d-flex flex-column justify-content-start p-3" id="{{i.0}}" style="display: none !important; min-width: 70%">
@@ -70,7 +70,7 @@
                     {%if i.1.image%}
                         <img src="/media/{{i.1.image}}" style="max-width: 70%">
                     {%endif%}
-                    <p>{{i.1.description}}</p>
+                    <p>{{i.1.description|safe|linebreaksbr}}</p>
                 </div>
                 {%endfor%}
                 <div class="d-flex align-items-center justify-content-center" >
@@ -116,7 +116,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Вернуться</button>
-              <a class="btn btn-primary" href="{%url 'final' competition.pk%}">Завершить</a>
+              <a class="btn btn-primary" href="{%url 'final' competition.pk data%}">Завершить</a>
             </div>
           </div>
         </div>
@@ -182,7 +182,7 @@
     function cur_time(){
         var start = (new Date('{{competition.end_time|date:'Y-m-d G:i:s'}}') - Date.now())/1000;
         if (start <= 0){
-            window.location.replace("{%url 'final' competition.pk%}");
+            window.location.replace("{%url 'final' competition.pk data%}");
         }
         var min = Math.floor(start/60);
         let hour = Math.floor(min/60);
@@ -207,7 +207,6 @@
         document.getElementById(count.toString()).style.setProperty('display', 'none', 'important');
         document.getElementById('a_'+count.toString()).style.setProperty('display', 'none', 'important');
         document.getElementsByClassName('selected')[0].classList.remove('selected')
-        {% comment %} console.log(document.getElementById(count.toString())) {% endcomment %}
         if (count<max_count){
             count++;
         }

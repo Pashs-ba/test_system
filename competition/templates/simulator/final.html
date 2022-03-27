@@ -2,7 +2,11 @@
 {%load static%}
 {%load comptition_filter%}
 {%block main%}
-
+<style>
+    body{
+        background-color:#e8eef9;
+    }
+</style>
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #22365b; height: 10%">
     <div class="container-fluid">
       <div class="navbar-brand pe-3 ps-3">Единый государственный экзамен Информатика и ИКТ (КЕГЭ)</div>
@@ -11,30 +15,25 @@
       </button>
     </div>
   </nav>
-
-<div class="d-flex justify-content-center align-items-center flex-column" style="background-color: #e8eef9; height: 90vh">
-    <h3 class="mb-2">Дано ответов {{competition|count_ans:request.user}}/{{competition.questions.all|length}}</h3>
-    {%if competition.is_visible_result%}
-    <table class="table table-light table-bordered mb-2" style="max-width: 20vw">
-        <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Ваш ответ</th>
-              <th scope="col">Правильный ответ</th>
-            </tr>
-          </thead>
-          <tbody>
-              {%for i in competition.questions.all|enumer%}
-              <tr {%if i.1|is_ansed:request.user%} class="table-{%if i.1|is_right:request.user%}success{%else%}danger{%endif%}{%endif%}">
-                  <th>{{i.0}}</th>
-                  <th>{%if i.1|is_ansed:request.user%}{{i.1|get_ans:request.user}}{%endif%}</th>
-                  <th>{{i.1.question|get_question_ans}}</th>
-              </tr>
-              {%endfor%}
-          </tbody>
-    </table>
-    <h3 >Результат: {{competition|count_true:request.user}}/{{competition.questions.all|length}}</h3>
-    {%endif%}
+<div class="container">
+    <div class="d-flex flex-column justify-content-center align-items-center" style="height: 90vh">
+        <h2 class="mt-4 mb-4 ">Экзамен закончен</h2>
+        <div style="background-color: white">
+            <p class="fs-3 fw-light p-2" style="margin:0px">КИМ № 025105600{{pk}} БР № {{data}}</p>
+        </div>
+        <h3 class="mb-4 mt-4">Дано ответов {{competition|count_ans:request.user}}/{{competition.questions.all|length}}</h3>
+        <div class="row gx-5" style="min-width: 100%">
+            <div class="col-6">
+                <p class="fs-4 text-center">Запишите контрольную сумму в соответствующее поле бланка регистрации</p>
+                <div class="fs-3 p-5 text-center" style="background-color: white">Контрольная сумма </br> {{sum}}</div>
+                {%if competition.is_visible_result%}
+                <div class="text-center">
+                    <a href="{%url 'final_ans' competition.pk%}" class="btn btn-lg btn-primary mt-3 ms-auto me-auto">Посмотреть результаты</a>
+                </div>
+                {%endif%}
+            </div>
+            <div class="col-6"><img src="{% static 'competition/blank2.png' %}" style="max-width: 100%"></div>
+        </div>
+    </div>
 </div>
-
 {%endblock%}

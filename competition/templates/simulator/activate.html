@@ -1,0 +1,37 @@
+{% extends 'simulator/base_simulator.html' %}
+{%load static%}
+{%block main%}
+<div class="m-3 row" style="">
+    <h1>Активация экзамена</h1>
+    <div class="col-3">
+        <form>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label fs-4">Бланк Регистрации</label>
+              <input type="text" disabled class="form-control form-control-lg" id="exampleInputEmail1" aria-describedby="emailHelp" maxlength="13" value="{{data}}">
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label fs-4">Номер КИМ</label>
+              <input type="text" class="form-control form-control-lg" disabled value="025105600{{pk}}" id="exampleInputPassword1">
+            </div>
+        </form>
+        
+    </div>
+    <div class="text-center">
+        <h2 class="display-6 mb-3">Кнопка начала экзамена будет доступна после 10:00 при введенном коде активации</h2>
+        <div class="row d-flex justify-content-center">
+            <div class="col-3">
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="text" class="form-control form-control-lg mb-3" required placeholder="Код активации">
+                    {%if status == 'ИДЕТ' or status == "ОТКРЫТО"%}
+                    <button class="btn btn btn-success btn-lg">Начать экзамен</button>
+                    {%else%}
+                    <button class="btn btn btn-success btn-lg disabled">Начать экзамен</button>
+                    {%endif%}
+                </form>
+            </div>
+        </div>
+        
+    </div>
+</div>
+{%endblock%}
