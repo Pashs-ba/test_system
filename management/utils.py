@@ -27,9 +27,10 @@ def create_user(user_num: int) -> Passwords:
     
     been = set()
     users = set()
-    for i in range(3):
-        for j in cool_prefix:
-            users.add(f'{cool_names[i].capitalize()}-{j}')
+    for i in range(5):
+        for j in cool_prefix[:15]:
+            users.add(f'{cool_names[i].capitalize()}-{j.capitalize()}')
+    users = sorted(list(users))
     # for i in Users.objects.all():
     #     been.add(i.username)
     # while len(users)<int(user_num):

@@ -24,8 +24,8 @@ def user_panel(request):
     page = request.GET.get('page', 1)
     context.update({'users': Paginator(Passwords.objects.all().order_by('pk'), 1000).page(page)})
     if request.method == 'POST':
-        with open(settings.BASE_DIR/'media/user.txt', 'a') as f:
-            for i in Passwords.objects.all():
+        with open(settings.BASE_DIR/'media/user.txt', 'w') as f:
+            for i in Passwords.objects.all().order_by('pk'):
                 f.write(f'{i.user.username} {i.password}\n')
         return redirect('/media/user.txt')
     return render(request, 'users/user_panel.html', context)

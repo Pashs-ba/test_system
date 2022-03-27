@@ -7,7 +7,7 @@
     <div class="text-center">
         <a class="btn btn-primary my-4  btn-lg btn-block" href="{% url 'generate-users' %}"> Создать новых
             пользователей</a>
-        <form method="POST">{% csrf_token %}<input class="btn btn-primary" type="submit">Скачать</input></form>
+        <form method="POST">{% csrf_token %}<button class="btn btn-primary btn-lg mb-3" type="submit">Скачать</button></form>
     </div>
     <table class="table table-striped">
         <thead class="table-dark">
