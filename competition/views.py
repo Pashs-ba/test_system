@@ -25,15 +25,18 @@ def simulator_start(request, pk):
     return render(request, 'simulator/start_page.html', context={'pk': pk, 'status': competition_status(Competitions.objects.get(pk=pk))})
 
 def blank_page(request, pk):
+    if request.method == 'POST':
+        data = request.POST['f']+request.POST['s']+request.POST['t']
+        return redirect('instruction', pk, data)
     return render(request, 'simulator/blank.html', {'pk': pk})
 
-def instruction(request, pk):
-    return render(request, 'simulator/instruction.html', {'pk': pk})
+def instruction(request, pk, data):
+    return render(request, 'simulator/instruction.html', {'pk': pk, 'data': data})
 
-def simulator(request, pk):
+def simulator(request, pk, data):
     competition = Competitions.objects.get(pk=pk)
     
-    return render(request, 'simulator/main.html', {'competition': competition})
+    return render(request, 'simulator/main.html', {'competition': competition, 'data': data})
 
 def competition_page(request, pk):
     competition = Competitions.objects.get(pk=pk)

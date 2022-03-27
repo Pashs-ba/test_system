@@ -27,25 +27,24 @@ def create_user(user_num: int) -> Passwords:
     
     been = set()
     users = set()
-    for i in range(5):
-        for j in cool_prefix[:15]:
-            users.add(f'{cool_names[i].capitalize()}-{j.capitalize()}')
+    # for i in range(5):
+    #     for j in cool_prefix[:15]:
+    #         users.add(f'{cool_names[i].capitalize()}-{j.capitalize()}')
+    # 
+    for i in Users.objects.all():
+        been.add(i.username)
+    while len(users)<int(user_num):
+        st = ''.join(random.choice(names)+'-'+random.choice(names)+'-'+str(random.randint(1, 30000)))
+        if st in been:
+            continue
+        print(f'gen user {len(users)}', user_num)
+        users.add(st)
     users = sorted(list(users))
-    # for i in Users.objects.all():
-    #     been.add(i.username)
-    # while len(users)<int(user_num):
-    #     st = ''.join(random.choice(names)+'-'+random.choice(names)+'-'+str(random.randint(1, 30000)))
-    #     if st in been:
-    #         continue
-    #     print(f'gen user {len(users)}', user_num)
-    #     users.add(st)
-
     for i in users:
         password = ''.join(random.choice(alphabet) for i in range(settings.PASSWORD_LENGTH))
         user = Users.objects.create_user(i, password)
         a = Passwords(user=user, password=password)
         a.save()
-        print(f'{i} {password}')
             
 
 

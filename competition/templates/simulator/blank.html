@@ -6,17 +6,21 @@
     <div class=" d-flex m-3 justify-content-center row">
         <div class="col-3 me-5" style="max-height: 70vh">
             Введите номер вашего бланка регистрации
-            <div class="d-flex mt-2 row">
-                <div class="col-2">
-                    <input type="text" id="f" class="form-control" maxlength="1" style="width: 100%">
+            <form id="big" method="POST">
+                <div class="d-flex mt-2 row">
+                    {% csrf_token %}
+                    <div class="col-2">
+                        <input type="text" form="big" name="f" id="f" class="form-control" maxlength="1" style="width: 100%">
+                    </div>
+                    <div class="col-5">
+                        <input type="text" form="big" name="s" id="s" class="form-control" maxlength="6" style="width: 100%">
+                    </div>
+                    <div class="col-5">
+                        <input type="text" form="big" name="t" id="t" class="form-control" maxlength="6" style="width: 100%">
+                    </div>
+                    
                 </div>
-                <div class="col-5">
-                    <input type="text" id="s" class="form-control" maxlength="6" style="width: 100%">
-                </div>
-                <div class="col-5">
-                    <input type="text" id="t" class="form-control" maxlength="6" style="width: 100%">
-                </div>
-            </div>
+            </form>
             <div class="form-text">В режиме имитации введите номер бланка, приведенного справа, или любую другую цифровую комбинацию. После ввода номера бланка, включающего 13 цифр, будет доступна кнопка «Далее».</div>
         </div>
         <div class="col-3" style="max-height: 70vh">
@@ -25,7 +29,7 @@
         </div>
     </div>
     <div class="text-center">
-        <a href="{%url 'instruction' pk%}" class="btn btn-lg btn-primary" hidden id="next">Далее</a>
+        <button form="big" class="btn btn-lg btn-primary" hidden id="next">Далее</button>
     </div>
 </div>
 
