@@ -15,7 +15,9 @@ class CompetitionForm(ModelForm):
                    'end_time': DateTimeInput(attrs={'type': 'datetime-local', 'class': 'time'}, format="%Y-%m-%dT%H:%M"),
                    'is_unlimited': CheckboxInput(attrs={'onchange': 'time_close()', 'id': 'unlim'}),
                    'is_visible_result': CheckboxInput(),
-                   'is_simulator': CheckboxInput(),}
+                   'is_simulator': CheckboxInput(),
+                   'questions':forms.SelectMultiple(attrs={'size':"15"}),
+                   }
 
 
 class ContestCreationForm(ModelForm):
@@ -70,7 +72,10 @@ class GroupForm(ModelForm):
     class Meta:
         model = StudentGroup
         fields ='__all__'
-        ordering = ['-users_pk']
+        widgets = {
+            'users': forms.SelectMultiple(attrs={'size':"15"})
+        }
+
 
 class QuestionGeneratorForm(ModelForm):
     class Meta:
