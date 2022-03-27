@@ -21,6 +21,7 @@
         <div class="row d-flex justify-content-center">
             <div class="col-3">
                 <form method="post">
+                    {% now "jS F Y H:i" %}
                     {% csrf_token %}
                     <input type="text" class="form-control form-control-lg mb-3" required placeholder="Код активации">
                     {%if status == 'ИДЕТ' or status == "ОТКРЫТО"%}
