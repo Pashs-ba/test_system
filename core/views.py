@@ -80,7 +80,7 @@ def homepage(request):
                 'competition': competition,
                 'selected': competition.pk,
                 'selected_group': int(request.GET.get('group', None)),
-                'selected_type': int(request.GET.get('type', None))
+                'selected_type': request.GET.get('type', None)
             })
         context.update({'competitions': Competitions.objects.all(), 'groups': StudentGroup.objects.all()})
     return render(request, 'homepage.html', context)
