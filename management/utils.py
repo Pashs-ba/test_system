@@ -22,16 +22,23 @@ def create_user(user_num: int) -> Passwords:
     alphabet = string.ascii_letters + string.digits
     
     names = ['Tau', 'Mu', 'Ro', 'Alfa', 'Beta', 'Gamma', 'Omega', 'Epsilon', 'Eta', 'Nu', 'Pi', 'Dzeta', 'Psi','Dian', 'Nese', 'Falledrick', 'Mae', 'Valhein', 'Dol', 'Earl', 'Cedria', 'Azulei', 'Yun', 'Cybel', 'Ina', 'Foolly', 'Skili', 'Juddol', 'Janver', 'Viska', 'Hirschendy', 'Silka', 'Hellsturn', 'Essa', 'Mykonos', 'Fenton', 'Tyrena', 'Inqoul', 'Mankov', 'Derilia', 'Hexema', 'Wyton', 'Kaedum', 'Gouram', 'Libertia', 'Berasailles', 'Juxta', 'TaeвЂ™hr', 'Comtol', 'Gherak', 'Hest', 'Qony', 'Masamka', 'Twyll', 'Tenos', 'Axim', 'Westrynda', 'Saphros', 'Olkham', 'Handok', 'Kemetra', 'Yos', 'Wentingle', 'Ames', 'Molosh', 'Inkov', 'Phasasia', 'Ziedinghal', 'Bregul', 'Eishvack', 'Lora', 'Krenting', 'Symbole', 'Elignoir', 'Keligkrul', 'Qwey', 'Vindinglag', 'Kusakira', 'Weme', 'Fayd', 'Rushvita', 'Vulkor', 'Amers', 'Ortos', 'Vanius', 'Chandellia', 'Lilikol', 'Catca', 'Cormus', 'Yuela', 'Ariban', 'Tryton', 'Fesscha', 'Opalul', 'Zakzos', 'Hortimer', 'Anklos', 'Dushasiez', 'Polop', 'Mektal', 'Orinphus', 'Denatra', 'Elkazzi', 'Dyne', 'Domos', 'Letryal', 'Manniv', 'Sylestia', 'Esnol', 'Fasafuros', 'Ghanfer', 'Kahnite', 'Sweyda', 'Uylis', 'Retenia', 'Bassos', 'Arkensval', 'Impelos', 'Grandius', 'Fulcrux', 'Lassahein', 'Edsveda', 'Earakun', 'Fous', 'Maas', 'Basenphal', 'Jubidya', 'Divya', 'Kosunten', 'Ordayius', 'Dozzer', 'Gangher', 'Escha', 'Manchul', 'Kempos', 'Kulo', 'Urtench', 'Kesta', 'Helahona', 'Ryte', 'Falcia', 'Umannos', 'Urkensvall', 'Fedra', 'Bulkensar', 'Comia', 'Tyul', 'Lasendarl']
+    cool_names = ["primus", "secundus", "tertius", "quartus","quintus", "sextus", "septimus", "octavus", "nonus", "decimus"]
+    cool_prefix = ["alpha", "beta", "gamma", "delta", "epsilon",  "zeta", "eta", "theta", "iota", "kappa", "lambda", "mu", "nu", "xi",  "omicron", "pi", "rho", "sigma", "tau", "upsilon", "phi", "chi", "psi", "omega" ]
+    
     been = set()
     users = set()
-    for i in Users.objects.all():
-        been.add(i.username)
-    while len(users)<int(user_num):
-        st = ''.join(random.choice(names)+'-'+random.choice(names)+'-'+str(random.randint(1, 30000)))
-        if st in been:
-            continue
-        print(f'gen user {len(users)}', user_num)
-        users.add(st)
+    for i in range(3):
+        for j in cool_prefix:
+            users.add(f'{cool_names[i].capitalize()}-{j}')
+    # for i in Users.objects.all():
+    #     been.add(i.username)
+    # while len(users)<int(user_num):
+    #     st = ''.join(random.choice(names)+'-'+random.choice(names)+'-'+str(random.randint(1, 30000)))
+    #     if st in been:
+    #         continue
+    #     print(f'gen user {len(users)}', user_num)
+    #     users.add(st)
+
     for i in users:
         password = ''.join(random.choice(alphabet) for i in range(settings.PASSWORD_LENGTH))
         user = Users.objects.create_user(i, password)
