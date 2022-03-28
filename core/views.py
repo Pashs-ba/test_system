@@ -18,6 +18,7 @@ from django.contrib.auth import logout
 from threading import Thread
 from core.decorators import admin_only
 import subprocess
+from ast import literal_eval
 
 
 def sort_by_sum(tmp):
@@ -135,6 +136,12 @@ def sanyas_wants(request):
 def error_404(request):
     return render(request, '404.html', status=404)
 
+def check_ans(reqeust):
+    for i in QuestionAns.objects.all():
+        question = i.question
+        i.result = i.ans.replace(' ', '') == literal_eval(question.question)['ans'].replace(' ', '')
+        i.save()
+    return redirect('homepage')
 
 # def handler500(request, *args, **argv):
 #     response = render_to_response('500.html', {},
