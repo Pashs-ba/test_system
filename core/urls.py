@@ -9,4 +9,7 @@ urlpatterns = [path('', homepage, name='homepage'),
                path('sanyas_wants', sanyas_wants, name="sanyas_wants"),
                path('change', check_ans, name="check")
                ]
-handler500 = error_404
+handler404 = error_404
+handler500 = error_500
+handler403 = error_403
+
