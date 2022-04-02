@@ -19,12 +19,11 @@
               <div class="mb-3">
                 {% comment %} {{selected}} {% endcomment %}
                 <div class="form-group">
-                  
                 <label for="exampleFormControlInput1" class="form-label">Соревнование</label>
                 <select class="form-select" name="competiton" aria-label="Default select example" required>
 
                   <option {%if not selected%}selected{%endif%} disabled></option>
-                  {%for i in competitions%}%
+                  {%for i in competitions%}
                     <option {%if selected == i.pk%}selected{%endif%} value="{{i.pk}}">{{i.name}}</option>
                   {%endfor%}
                 </select>
