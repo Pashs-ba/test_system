@@ -16,6 +16,7 @@ import json
 from django.db.models import Count
 from core.utils import upload_file
 from zipfile import ZipFile
+from django.contrib.auth import authenticate
 
 
 @admin_only
@@ -435,9 +436,11 @@ def teacher_create(request):
     while name in been:
         name = create_name()
     password = create_password()
-    u = Users.objects.create(username=name, password=password, is_teacher=True)
+    u = Users.objects.create_user(name, password)
+    u.is_teacher = True
     u.save()
     Teachers.objects.create(user=u, password=password).save()
+    print(authenticate(request, username=name, password=password))
     return redirect('teacher_page')
 
 @admin_only
