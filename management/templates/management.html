@@ -16,6 +16,18 @@
             </div>
         </div>
         <div class="col-sm-3 my-3 text-center">
+            <div class="card">
+                <a href="{% url 'teacher_page' %}">
+                    <img class="card-img-top p-4 " src="{% static "management/img/teacher.svg" %}" height="256" width="256"
+                         alt="Card image cap">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">Управление учителями</h5>
+                    <p class="card-text">Создание и управление аккаунтами учителей</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3 my-3 text-center">
             <div class="card h-100">
                 <a href="{% url 'competition_management' %}">
                     <img class="card-img-top p-4" src="{% static "management/img/competition.svg" %}" height="256"

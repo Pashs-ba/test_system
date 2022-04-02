@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from core.decorators import admin_only
-from .utils import create_user, add_tests, create_ans, upload_tests, generate_variants_question
+from .utils import create_user, add_tests, create_ans, upload_tests, generate_variants_question, create_name, create_password
 from core.models import *
 from django.db import transaction
 from django.contrib import messages
@@ -22,7 +22,7 @@ from zipfile import ZipFile
 def user_panel(request):
     context = {}
     page = request.GET.get('page', 1)
-    context.update({'users': Paginator(Passwords.objects.all().order_by('pk'), 1000).page(page)})
+    context.update({'users': Paginator(Passwords.objects.filter(user__is_teacher=False).order_by('pk'), 1000).page(page)})
     if request.method == 'POST':
         with open(settings.BASE_DIR/'media/user.txt', 'w') as f:
             for i in Passwords.objects.all().order_by('pk'):
@@ -419,3 +419,44 @@ def load_from_mike(request):
         return redirect('contest_management')
     else:
         return render(request, 'contests/load_from_mike.html')
+
+
+@admin_only
+def teacher_page(request):
+    return render(request, 'teacher/main.html', context={'users': Passwords.objects.filter(user__is_teacher=True).order_by('pk')})
+
+
+@admin_only
+def teacher_create(request):
+    been = set()
+    for i in Users.objects.all():
+        been.add(i.username)
+    name = create_name()
+    while name in been:
+        name = create_name()
+    password = create_password()
+    u = Users.objects.create(username=name, password=password, is_teacher=True)
+    u.save()
+    Passwords.objects.create(user=u, password=password).save()
+    return redirect('teacher_page')
+
+@admin_only
+def delete_teacher(request):
+    if request.method == "POST":
+        for i in request.POST['to_del'].split(' '):
+            a = Passwords.objects.get(pk=int(i))
+            a.user.delete()
+            a.delete()
+        return redirect('teacher_page')
+    else:
+        return render(request, 'users/user_delete.html', {'to_del': request.GET['to_del']})
+
+@admin_only
+def teacher_change(request, pk):
+    if request.method == 'POST':
+        user = Passwords.objects.get(pk=pk).user
+        user.username = request.POST['name']
+        user.save()
+        return redirect('teacher_page')
+    else:
+        return render(request, 'users/user_change.html', {'old': Passwords.objects.get(pk=pk).user.username})

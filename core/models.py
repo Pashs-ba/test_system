@@ -15,6 +15,7 @@ class Users(AbstractBaseUser, PermissionsMixin):
 
     is_active = models.BooleanField('Active', default=True)
     is_staff = models.BooleanField('Admin', default=False)
+    is_teacher = models.BooleanField('Teacher', default=False)
 
     objects = UserManager()
 
@@ -39,6 +40,7 @@ class Users(AbstractBaseUser, PermissionsMixin):
 class Passwords(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     password = models.CharField(max_length=1024, verbose_name='Password')
+    
 
 
 class Contests(models.Model):
