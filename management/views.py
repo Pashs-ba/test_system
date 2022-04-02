@@ -17,6 +17,7 @@ from django.db.models import Count
 from core.utils import upload_file
 from zipfile import ZipFile
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import Group
 
 
 @admin_only
@@ -439,8 +440,10 @@ def teacher_create(request):
     u = Users.objects.create_user(name, password)
     u.is_teacher = True
     u.save()
+    gr = Group.objects.get(name='Teacher')
+    gr.user_set.add(u)
+    gr.save()
     Teachers.objects.create(user=u, password=password).save()
-    print(authenticate(request, username=name, password=password))
     return redirect('teacher_page')
 
 @admin_only
