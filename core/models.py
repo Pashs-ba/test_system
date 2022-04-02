@@ -38,6 +38,8 @@ class Users(AbstractBaseUser, PermissionsMixin):
 class Teachers(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     password = models.CharField(max_length=1024, verbose_name='Password')
+    def __str__(self):
+        return f'{self.user}'
     
 class Passwords(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)

@@ -24,12 +24,21 @@ from django.contrib.auth.models import Group
 def user_panel(request):
     context = {}
     page = request.GET.get('page', 1)
-    context.update({'users': Paginator(Passwords.objects.filter(user__is_teacher=False).order_by('pk'), 1000).page(page)})
-    if request.method == 'POST':
-        with open(settings.BASE_DIR/'media/user.txt', 'w') as f:
-            for i in Passwords.objects.all().order_by('pk'):
-                f.write(f'{i.user.username} {i.password}\n')
-        return redirect('/media/user.txt')
+    if request.user.is_teacher:
+        teacher = Teachers.objects.get(user=request.user)
+        context.update({'users': Paginator(Passwords.objects.filter(teacher=teacher).order_by('pk'), 1000).page(page)})
+        if request.method == 'POST':
+            with open(settings.BASE_DIR/'media/user.txt', 'w') as f:
+                for i in Passwords.objects.filter(teacher=teacher).order_by('pk'):
+                    f.write(f'{i.user.username} {i.password}\n')
+            return redirect('/media/user.txt')
+    else:
+        context.update({'users': Paginator(Passwords.objects.filter(user__is_teacher=False).order_by('pk'), 1000).page(page)})
+        if request.method == 'POST':
+            with open(settings.BASE_DIR/'media/user.txt', 'w') as f:
+                for i in Passwords.objects.all().order_by('pk'):
+                    f.write(f'{i.user.username} {i.password}\n')
+            return redirect('/media/user.txt')
     return render(request, 'users/user_panel.html', context)
 
 
@@ -67,9 +76,13 @@ def user_generating(request):
     context = {}
     if request.method == "POST":
         if request.POST['num']:
-            Thread(target=create_user,
-                   args=(request.POST['num'],)).start()
-            messages.info(request, f'Successful created {request.POST["num"]} users')
+            if request.user.is_teacher:
+                Thread(target=create_user,
+                        args=(request.POST['num'], Teachers.objects.get(user=request.user))).start()
+            else:
+                Thread(target=create_user,
+                        args=(request.POST['num'],)).start()
+            messages.info(request, f'Successful creating {request.POST["num"]} users')
             return redirect('user-management')
     else:
         return render(request, 'users/user_generating.html')

@@ -15,6 +15,9 @@
             <th scope="col">Логин</th>
             <th scope="col">Пароль</th>
             <th scope='col'>Группы</th>
+            {%if request.user.is_staff%}
+            <th scope='col'>Учитель</th>
+            {%endif%}
             <th scope="col"><div class="d-flex justify-content-center">Изменить</div></th>
             <th scope="col"><div class="row row-cols-lg-auto g-3 justify-content-center align-items-center"><div class="col-12 d-flex align-items-center"><a type="button" onclick="make_del_link(this)" class="btn btn-danger btn-sm me-3">Удалить</a> <input type="checkbox" onclick="select_all(this)" class="form-check-input" id="all"></div></div></th>
         </tr>
@@ -26,6 +29,9 @@
                 <td>{{ user.user.username }}</td>
                 <td>{{ user.password }}</td>
                 <td>{%for i in user.user.studentgroup_set.all%}{{i.name}} {%endfor%}</td>
+                {%if request.user.is_staff%}
+                <th scope='col'>{%if user.teacher%} {{user.teacher}}{%else%} - {%endif%}</th>
+                {%endif%}
                 <td class=""><div class="d-flex justify-content-center"><a href="{% url 'user_change' user.pk %}" class="btn btn-sm btn-primary">
                     <i class="bi bi-pencil-square"></i></a></div></td>
                 <td class=""><div class="d-flex justify-content-center"><input type="checkbox" class="form-check-input delete_item" id="{{ user.pk }}"></div></td>
