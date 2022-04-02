@@ -37,4 +37,9 @@ urlpatterns = [
     path('generator/question/<int:pk>', question_generator, name='question_generator'),
     path('generator/question/delete/generator', generator_delete, name="generator_delete"),
     path('generator/question/delete/variants', delete_variant_question, name="delete_variant"),
+
+    path('user/teacher', teacher_page, name="teacher_page"),
+    path('user/teacher/create', teacher_create, name="teacher_create"),
+    path('user/teacher/delete', delete_teacher, name='delete_teacher'),
+    path('user/teacher/<int:pk>', teacher_change, name="change_teacher")
 ]

@@ -5,7 +5,7 @@
 {% block main %}
 
 {#    <h1 class = 'display-1 text-center'>Мы все Победители!</h1>#}
-    {% if user.is_staff %}
+    {% if user.is_staff or user.is_teacher %}
         <div class="card my-3 align-middle" style="">
           <div class="card-body text-center">
             <h5 class="card-title text-center">Перейти на панель управления</h5>
@@ -13,19 +13,18 @@
             <a href="{% url 'management-page' %}" class="btn btn-primary text-center">Перейти</a>
           </div>
         </div>
+        {%if user.is_staff%}
         <form id="some" method="GET" autocomplete="off">
         <div class="row d-flex justify-content-center">
           <div class="col-3">
-            
               <div class="mb-3">
                 {% comment %} {{selected}} {% endcomment %}
                 <div class="form-group">
-                  
                 <label for="exampleFormControlInput1" class="form-label">Соревнование</label>
                 <select class="form-select" name="competiton" aria-label="Default select example" required>
 
                   <option {%if not selected%}selected{%endif%} disabled></option>
-                  {%for i in competitions%}%
+                  {%for i in competitions%}
                     <option {%if selected == i.pk%}selected{%endif%} value="{{i.pk}}">{{i.name}}</option>
                   {%endfor%}
                 </select>
@@ -58,6 +57,7 @@
           </div>
         </div>
       </form>
+      {%endif%}
       {%if result %}
       <table class="table table-bordered" style="margin-top: 15px">
         <thead class="table-dark">

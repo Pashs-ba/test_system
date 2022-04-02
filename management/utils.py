@@ -12,40 +12,44 @@ from subprocess import Popen, PIPE
 import time
 from django.db import transaction
 
+def create_name():
+    names = ['Tau', 'Mu', 'Ro', 'Alfa', 'Beta', 'Gamma', 'Omega', 'Epsilon', 'Eta', 'Nu', 'Pi', 'Dzeta', 'Psi','Dian', 'Nese', 'Falledrick', 'Mae', 'Valhein', 'Dol', 'Earl', 'Cedria', 'Azulei', 'Yun', 'Cybel', 'Ina', 'Foolly', 'Skili', 'Juddol', 'Janver', 'Viska', 'Hirschendy', 'Silka', 'Hellsturn', 'Essa', 'Mykonos', 'Fenton', 'Tyrena', 'Inqoul', 'Mankov', 'Derilia', 'Hexema', 'Wyton', 'Kaedum', 'Gouram', 'Libertia', 'Berasailles', 'Juxta', 'Comtol', 'Gherak', 'Hest', 'Qony', 'Masamka', 'Twyll', 'Tenos', 'Axim', 'Westrynda', 'Saphros', 'Olkham', 'Handok', 'Kemetra', 'Yos', 'Wentingle', 'Ames', 'Molosh', 'Inkov', 'Phasasia', 'Ziedinghal', 'Bregul', 'Eishvack', 'Lora', 'Krenting', 'Symbole', 'Elignoir', 'Keligkrul', 'Qwey', 'Vindinglag', 'Kusakira', 'Weme', 'Fayd', 'Rushvita', 'Vulkor', 'Amers', 'Ortos', 'Vanius', 'Chandellia', 'Lilikol', 'Catca', 'Cormus', 'Yuela', 'Ariban', 'Tryton', 'Fesscha', 'Opalul', 'Zakzos', 'Hortimer', 'Anklos', 'Dushasiez', 'Polop', 'Mektal', 'Orinphus', 'Denatra', 'Elkazzi', 'Dyne', 'Domos', 'Letryal', 'Manniv', 'Sylestia', 'Esnol', 'Fasafuros', 'Ghanfer', 'Kahnite', 'Sweyda', 'Uylis', 'Retenia', 'Bassos', 'Arkensval', 'Impelos', 'Grandius', 'Fulcrux', 'Lassahein', 'Edsveda', 'Earakun', 'Fous', 'Maas', 'Basenphal', 'Jubidya', 'Divya', 'Kosunten', 'Ordayius', 'Dozzer', 'Gangher', 'Escha', 'Manchul', 'Kempos', 'Kulo', 'Urtench', 'Kesta', 'Helahona', 'Ryte', 'Falcia', 'Umannos', 'Urkensvall', 'Fedra', 'Bulkensar', 'Comia', 'Tyul', 'Lasendarl']
+    return ''.join(random.choice(names)+'-'+random.choice(names)+'-'+str(random.randint(1, 30000)))
+
+def create_password():
+    alp = string.ascii_letters + string.digits
+    alp = alp.replace('I', '')
+    alp = alp.replace('L', '')
+    alp = alp.replace('1', '')
+    alp = alp.replace('0', '')
+    alp = alp.replace('o', '')
+    alp = alp.replace('O', '')
+    return ''.join(random.choice(alp) for i in range(settings.PASSWORD_LENGTH))
 
 def create_user(user_num: int) -> Passwords:
     """
     Create random user
-
     :return: login and password of user
     """
     alphabet = string.ascii_letters + string.digits
-    
-    names = ['Tau', 'Mu', 'Ro', 'Alfa', 'Beta', 'Gamma', 'Omega', 'Epsilon', 'Eta', 'Nu', 'Pi', 'Dzeta', 'Psi','Dian', 'Nese', 'Falledrick', 'Mae', 'Valhein', 'Dol', 'Earl', 'Cedria', 'Azulei', 'Yun', 'Cybel', 'Ina', 'Foolly', 'Skili', 'Juddol', 'Janver', 'Viska', 'Hirschendy', 'Silka', 'Hellsturn', 'Essa', 'Mykonos', 'Fenton', 'Tyrena', 'Inqoul', 'Mankov', 'Derilia', 'Hexema', 'Wyton', 'Kaedum', 'Gouram', 'Libertia', 'Berasailles', 'Juxta', 'Comtol', 'Gherak', 'Hest', 'Qony', 'Masamka', 'Twyll', 'Tenos', 'Axim', 'Westrynda', 'Saphros', 'Olkham', 'Handok', 'Kemetra', 'Yos', 'Wentingle', 'Ames', 'Molosh', 'Inkov', 'Phasasia', 'Ziedinghal', 'Bregul', 'Eishvack', 'Lora', 'Krenting', 'Symbole', 'Elignoir', 'Keligkrul', 'Qwey', 'Vindinglag', 'Kusakira', 'Weme', 'Fayd', 'Rushvita', 'Vulkor', 'Amers', 'Ortos', 'Vanius', 'Chandellia', 'Lilikol', 'Catca', 'Cormus', 'Yuela', 'Ariban', 'Tryton', 'Fesscha', 'Opalul', 'Zakzos', 'Hortimer', 'Anklos', 'Dushasiez', 'Polop', 'Mektal', 'Orinphus', 'Denatra', 'Elkazzi', 'Dyne', 'Domos', 'Letryal', 'Manniv', 'Sylestia', 'Esnol', 'Fasafuros', 'Ghanfer', 'Kahnite', 'Sweyda', 'Uylis', 'Retenia', 'Bassos', 'Arkensval', 'Impelos', 'Grandius', 'Fulcrux', 'Lassahein', 'Edsveda', 'Earakun', 'Fous', 'Maas', 'Basenphal', 'Jubidya', 'Divya', 'Kosunten', 'Ordayius', 'Dozzer', 'Gangher', 'Escha', 'Manchul', 'Kempos', 'Kulo', 'Urtench', 'Kesta', 'Helahona', 'Ryte', 'Falcia', 'Umannos', 'Urkensvall', 'Fedra', 'Bulkensar', 'Comia', 'Tyul', 'Lasendarl']
-    cool_names = ["primus", "secundus", "tertius", "quartus","quintus", "sextus", "septimus", "octavus", "nonus", "decimus"]
-    cool_prefix = ["alpha", "beta", "gamma", "delta", "epsilon",  "zeta", "eta", "theta", "iota", "kappa", "lambda", "mu", "nu", "xi",  "omicron", "pi", "rho", "sigma", "tau", "upsilon", "phi", "chi", "psi", "omega" ]
-    
     been = set()
     users = set()
-    # for i in range(5):
-    #     for j in cool_prefix[:15]:
-    #         users.add(f'{cool_names[i].capitalize()}-{j.capitalize()}')
-    # 
     for i in Users.objects.all():
         been.add(i.username)
     while len(users)<int(user_num):
-        st = ''.join(random.choice(names)+'-'+random.choice(names)+'-'+str(random.randint(1, 30000)))
+        st = create_name()
         if st in been:
             continue
         print(f'gen user {len(users)}', user_num)
         users.add(st)
     users = sorted(list(users))
     for i in users:
-        password = ''.join(random.choice(alphabet) for i in range(settings.PASSWORD_LENGTH))
+        password = create_password()
         user = Users.objects.create_user(i, password)
         a = Passwords(user=user, password=password)
         a.save()
             
+
 
 
 def add_tests(name: str, path: str, pk: str):

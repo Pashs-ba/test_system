@@ -33,7 +33,7 @@ def sort_by_sum(tmp):
 @login_required(login_url='/login')
 def homepage(request):
     context = {}
-    if not request.user.is_staff:
+    if not (request.user.is_staff or request.user.is_teacher):
         status = {}
         for i in Competitions.objects.filter(studentgroup__users=request.user):
             status.update({i.pk: competition_status(i)})

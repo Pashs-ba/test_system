@@ -32,7 +32,7 @@
             {% endif %}
 
             <div class="navbar-nav">
-                {% if user.is_staff %}
+                {% if user.is_staff or user.is_teacher %}
                     <a class="nav-link active" aria-current="page" href="{% url 'management-page' %}">Панель
                         управления</a>
                 {% endif %}
@@ -40,7 +40,7 @@
         </div>
         {%if request.user.is_authenticated%}
         <div class="d-flex">
-            <div class="text-light d-flex align-items-center">{{request.user.username}}</div>
+            <div class="text-light d-flex align-items-center" ><p style="{%if request.user.is_teacher or request.user.is_staff %}color: #f8bc07;{%endif%} margin:0px">{{request.user.username}}</p></div>
             
             <a class="btn btn-secondary ms-3" href="{% url "logout"%}">Выйти</a>
           </div>
