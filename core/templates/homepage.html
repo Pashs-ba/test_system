@@ -5,7 +5,7 @@
 {% block main %}
 
 {#    <h1 class = 'display-1 text-center'>Мы все Победители!</h1>#}
-    {% if user.is_staff %}
+    {% if user.is_staff or user.is_teacher %}
         <div class="card my-3 align-middle" style="">
           <div class="card-body text-center">
             <h5 class="card-title text-center">Перейти на панель управления</h5>
@@ -16,7 +16,6 @@
         <form id="some" method="GET" autocomplete="off">
         <div class="row d-flex justify-content-center">
           <div class="col-3">
-            
               <div class="mb-3">
                 {% comment %} {{selected}} {% endcomment %}
                 <div class="form-group">

@@ -423,7 +423,7 @@ def load_from_mike(request):
 
 @admin_only
 def teacher_page(request):
-    return render(request, 'teacher/main.html', context={'users': Passwords.objects.filter(user__is_teacher=True).order_by('pk')})
+    return render(request, 'teacher/main.html', context={'users': Teachers.objects.filter(user__is_teacher=True).order_by('pk')})
 
 
 @admin_only
@@ -437,14 +437,14 @@ def teacher_create(request):
     password = create_password()
     u = Users.objects.create(username=name, password=password, is_teacher=True)
     u.save()
-    Passwords.objects.create(user=u, password=password).save()
+    Teachers.objects.create(user=u, password=password).save()
     return redirect('teacher_page')
 
 @admin_only
 def delete_teacher(request):
     if request.method == "POST":
         for i in request.POST['to_del'].split(' '):
-            a = Passwords.objects.get(pk=int(i))
+            a = Teachers.objects.get(pk=int(i))
             a.user.delete()
             a.delete()
         return redirect('teacher_page')
@@ -454,9 +454,9 @@ def delete_teacher(request):
 @admin_only
 def teacher_change(request, pk):
     if request.method == 'POST':
-        user = Passwords.objects.get(pk=pk).user
+        user = Teachers.objects.get(pk=pk).user
         user.username = request.POST['name']
         user.save()
         return redirect('teacher_page')
     else:
-        return render(request, 'users/user_change.html', {'old': Passwords.objects.get(pk=pk).user.username})
+        return render(request, 'users/user_change.html', {'old': Teachers.objects.get(pk=pk).user.username})
