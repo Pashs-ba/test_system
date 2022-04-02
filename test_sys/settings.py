@@ -48,8 +48,6 @@ INSTALLED_APPS = [
     'solutions',
     'questions',
     'widget_tweaks',
-    'teacher_management',
-
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
