@@ -4,7 +4,7 @@ from .utils import create_user, add_tests, create_ans, upload_tests, generate_va
 from core.models import *
 from django.db import transaction
 from django.contrib import messages
-from .forms import CompetitionForm, ContestCreationForm, ContestUpdateForm, QuestionCreationForm, GroupForm, QuestionGeneratorForm, MikeForm
+from .forms import CompetitionForm, ContestCreationForm, ContestUpdateForm, QuestionCreationForm, GroupForm, QuestionGeneratorForm, MikeForm, TeacherCompetitionForm, TeacherGroupForm
 from django.conf import settings
 import os.path
 import shutil
@@ -92,7 +92,10 @@ def user_generating(request):
 @admin_only
 def competition_management(request):
     contest = {}
-    contest.update({'competitions': Competitions.objects.all().order_by('name')})
+    if request.user.is_teacher:
+        contest.update({'competitions': Competitions.objects.filter(teacher=Teachers.objects.get(user=request.user)).order_by('name')})
+    else:
+        contest.update({'competitions': Competitions.objects.all().order_by('name')})
     return render(request, 'competitions/competition_management.html', contest)
 
 
@@ -100,13 +103,23 @@ def competition_management(request):
 @admin_only
 def create_competition(request):
     if request.method == "POST":
-        form = CompetitionForm(request.POST)
+        if request.user.is_teacher:
+            form = TeacherCompetitionForm(request.POST, teacher=request.user)
+        else:
+            form = CompetitionForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'success')
+            c = form.save()
+            if request.user.is_teacher:
+                c.teacher = Teachers.objects.get(user=request.user)
+                c.save()
+            messages.success(request, 'Соревнование создано')
             return redirect('competition_management')
     else:
-        return render(request, 'competitions/competition_creating.html', {'form': CompetitionForm()})
+        if request.user.is_teacher:
+            form = TeacherCompetitionForm(teacher=request.user)
+        else:
+            form = CompetitionForm()
+        return render(request, 'competitions/competition_creating.html', {'form': form})
 
 
 @transaction.atomic
@@ -125,19 +138,27 @@ def delete_competition(request):
 @admin_only
 def update_competition(request, pk):
     if request.method == 'POST':
-        form = CompetitionForm(request.POST, instance=Competitions.objects.get(pk=pk))
+        if request.user.is_teacher:
+            form = TeacherCompetitionForm(request.POST,teacher=request.user, instance=Competitions.objects.get(pk=pk))
+        else:
+            form = CompetitionForm(request.POST, instance=Competitions.objects.get(pk=pk))
         if form.is_valid():
             form.save()
             messages.success(request, 'successful update competition')
             return redirect('competition_management')
     else:
-
+        if request.user.is_teacher:
+            form = TeacherCompetitionForm( teacher=request.user, instance=Competitions.objects.get(pk=pk))
+        else:
+            form = CompetitionForm(instance=Competitions.objects.get(pk=pk))
         return render(request, 'competitions/competition_updating.html',
-                      {'form': CompetitionForm(instance=Competitions.objects.get(pk=pk))})
+                      {'form': form})
 
 
 @admin_only
 def contest_management(request):
+    if request.user.is_teacher:
+        return render(request, 'contests/contests_management.html', {'contests': Contests.objects.filter(teacher=Teachers.objects.get(user=request.user)).order_by('name')})
     return render(request, 'contests/contests_management.html', {'contests': Contests.objects.all().order_by('name')})
 
 
@@ -242,6 +263,8 @@ def delete_test(request, pk):
 
 @admin_only
 def questions_management(request):
+    if request.user.is_teacher:
+        return render(request, 'questions/questions_management.html', {'questions': Question.objects.filter(teacher=Teachers.objects.get(user=request.user)).order_by('name')})
     return render(request, 'questions/questions_management.html', {'questions': Question.objects.all().order_by('name')})
 
 
@@ -250,11 +273,12 @@ def questions_management(request):
 def question_create(request):
     if request.method == 'POST':
         form = QuestionCreationForm(request.POST, request.FILES)
-        print(request.POST['type'])
         if form.is_valid():
             a = form.save()
 
             a.question = form.cleaned_data['question']
+            if request.user.is_teacher:
+                a.teacher = Teachers.objects.get(user = request.user)
             a.save()
             messages.success(request, 'success')
             return redirect('question_management')
@@ -311,18 +335,28 @@ def question_example(request, pk):
 
 @admin_only
 def group_management(request):
-    return render(request, 'group/group_manage.html', {'groups': StudentGroup.objects.all().order_by('name')})
+    if request.user.is_teacher:
+        return render(request, 'group/group_manage.html', {'groups': StudentGroup.objects.filter(teacher=Teachers.objects.get(user=request.user)).order_by('name')})
+    else:
+        return render(request, 'group/group_manage.html', {'groups': StudentGroup.objects.all().order_by('name')})
 
 @admin_only
 def new_group(request):
     if request.method == 'POST':
-        form = GroupForm(request.POST)
+        if request.user.is_teacher:
+            form = TeacherGroupForm(request.POST, teacher=request.user)
+        else:
+            form = GroupForm(request.POST)
         if form.is_valid():
             a = form.save()
-            print(a.name)
+            a.teacher = Teachers.objects.get(user=request.user)
+            a.save()
         return redirect('group_managment')
     else:
-        return render(request, 'group/create_group.html', {'form': GroupForm()})
+        if request.user.is_teacher:
+            return render(request, 'group/create_group.html', {'form': TeacherGroupForm(teacher=request.user)})
+        else:
+            return render(request, 'group/create_group.html', {'form': GroupForm()})
 
 
 @admin_only
@@ -339,12 +373,18 @@ def group_delete(request):
 @admin_only
 def group_change(request, pk):
     if request.method == 'POST':
-        form = GroupForm(request.POST, instance=StudentGroup.objects.get(pk=pk))
+        if request.user.is_teacher:
+            form = TeacherGroupForm(request.POST, instance=StudentGroup.objects.get(pk=pk), teacher=request.user)
+        else:
+            form = GroupForm(request.POST, instance=StudentGroup.objects.get(pk=pk))
         if form.is_valid():
             form.save()
         return redirect('group_managment')
     else:
-        return render(request, 'group/change_group.html', {'form': GroupForm(instance=StudentGroup.objects.get(pk=pk))})
+        if request.user.is_teacher:
+            return render(request, 'group/create_group.html', {'form': TeacherGroupForm(instance=StudentGroup.objects.get(pk=pk), teacher=request.user)})
+        else:
+            return render(request, 'group/create_group.html', {'form': GroupForm(instance=StudentGroup.objects.get(pk=pk))})
 
 @admin_only
 def quest_generator_page(request):
