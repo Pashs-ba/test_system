@@ -349,7 +349,8 @@ def new_group(request):
             form = GroupForm(request.POST)
         if form.is_valid():
             a = form.save()
-            a.teacher = Teachers.objects.get(user=request.user)
+            if request.user.is_teacher:
+                a.teacher = Teachers.objects.get(user=request.user)
             a.save()
         return redirect('group_managment')
     else:
