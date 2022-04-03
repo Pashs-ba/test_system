@@ -14,12 +14,12 @@ from django.db import transaction
 from django.conf import settings
 
 def create_name(names = None, surnames=None):
-    if names:
+    if not names:
         with open(settings.BASE_DIR/'management/Name.txt', 'r') as f:
             names = list(map(lambda x: x.replace(' ', ''), f.read().split('\n')))
-    if surnames:
+    if not surnames:
         with open(settings.BASE_DIR/'management/Surname.txt', 'r') as f:
-            names = list(map(lambda x: x.replace(' ', ''), f.read().split('\n')))
+            surnames = list(map(lambda x: x.replace(' ', ''), f.read().split('\n')))
     return ''.join(random.choice(names)+'-'+random.choice(surnames)+'-'+str(random.randint(1, 200)))
 
 def create_password():
@@ -45,7 +45,7 @@ def create_user(user_num: int, teacher=None) -> Passwords:
     with open(settings.BASE_DIR/'management/Name.txt', 'r') as f:
         names = list(map(lambda x: x.replace(' ', ''), f.read().split('\n')))
     with open(settings.BASE_DIR/'management/Surname.txt', 'r') as f:
-            surnames = list(map(lambda x: x.replace(' ', ''), f.read().split('\n')))
+        surnames = list(map(lambda x: x.replace(' ', ''), f.read().split('\n')))
     while len(users)<int(user_num):
         st = create_name(names, surnames)
         if st in been:
