@@ -13,7 +13,6 @@
             <a href="{% url 'management-page' %}" class="btn btn-primary text-center">Перейти</a>
           </div>
         </div>
-        {%if user.is_staff%}
         <form id="some" method="GET" autocomplete="off">
         <div class="row d-flex justify-content-center">
           <div class="col-3">
@@ -44,7 +43,9 @@
                 <select class="form-select" name="type" aria-label="Default select example" required>
                   <option {%if not selected_type%}selected{%endif%} disabled></option>
                   <option {%if selected_type == "t"%}selected{%endif%} value="t">Таблица</option>
+                  {%if not request.user.is_teacher %}
                   <option {%if selected_type == "c"%}selected{%endif%} value="c">CSV</option>
+                  {%endif%}
                 </select>
               </div>
               </div>
@@ -57,7 +58,6 @@
           </div>
         </div>
       </form>
-      {%endif%}
       {%if result %}
       <table class="table table-bordered" style="margin-top: 15px">
         <thead class="table-dark">

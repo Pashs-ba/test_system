@@ -42,8 +42,12 @@ def homepage(request):
         if request.GET.get('type', None) =="c":
             return redirect('load_result', request.GET.get('competiton', None))
         elif request.GET.get('type', None):
-            competition = Competitions.objects.get(pk=request.GET.get('competiton', None))
-            groups = StudentGroup.objects.filter(pk=request.GET.get('group', None))
+            if request.user.is_teacher:
+                competition = Competitions.objects.get(pk=request.GET.get('competiton', None),teacher=Teachers.objects.get(user=request.user) )
+                groups = StudentGroup.objects.filter(pk=request.GET.get('group', None), teacher=Teachers.objects.get(user=request.user))
+            else:
+                competition = Competitions.objects.get(pk=request.GET.get('competiton', None))
+                groups = StudentGroup.objects.filter(pk=request.GET.get('group', None))
             result = {}
             for i in groups:
                 group_table = {}
@@ -84,7 +88,13 @@ def homepage(request):
                 'selected_group': int(request.GET.get('group', None)),
                 'selected_type': request.GET.get('type', None)
             })
-        context.update({'competitions': Competitions.objects.all(), 'groups': StudentGroup.objects.all()})
+        if request.users.is_teacher:
+            context.update({
+                'competitions': Competitions.objects.filter(teacher=Teachers.objects.get(user=request.user)), 
+                'groups': StudentGroup.objects.filter(teacher=Teachers.objects.get(user=request.user))
+                })
+        else:
+            context.update({'competitions': Competitions.objects.all(), 'groups': StudentGroup.objects.all()})
     return render(request, 'homepage.html', context)
 
 
