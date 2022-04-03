@@ -11,10 +11,16 @@ import platform
 from subprocess import Popen, PIPE
 import time
 from django.db import transaction
+from django.conf import settings
 
-def create_name():
-    names = ['Tau', 'Mu', 'Ro', 'Alfa', 'Beta', 'Gamma', 'Omega', 'Epsilon', 'Eta', 'Nu', 'Pi', 'Dzeta', 'Psi','Dian', 'Nese', 'Falledrick', 'Mae', 'Valhein', 'Dol', 'Earl', 'Cedria', 'Azulei', 'Yun', 'Cybel', 'Ina', 'Foolly', 'Skili', 'Juddol', 'Janver', 'Viska', 'Hirschendy', 'Silka', 'Hellsturn', 'Essa', 'Mykonos', 'Fenton', 'Tyrena', 'Inqoul', 'Mankov', 'Derilia', 'Hexema', 'Wyton', 'Kaedum', 'Gouram', 'Libertia', 'Berasailles', 'Juxta', 'Comtol', 'Gherak', 'Hest', 'Qony', 'Masamka', 'Twyll', 'Tenos', 'Axim', 'Westrynda', 'Saphros', 'Olkham', 'Handok', 'Kemetra', 'Yos', 'Wentingle', 'Ames', 'Molosh', 'Inkov', 'Phasasia', 'Ziedinghal', 'Bregul', 'Eishvack', 'Lora', 'Krenting', 'Symbole', 'Elignoir', 'Keligkrul', 'Qwey', 'Vindinglag', 'Kusakira', 'Weme', 'Fayd', 'Rushvita', 'Vulkor', 'Amers', 'Ortos', 'Vanius', 'Chandellia', 'Lilikol', 'Catca', 'Cormus', 'Yuela', 'Ariban', 'Tryton', 'Fesscha', 'Opalul', 'Zakzos', 'Hortimer', 'Anklos', 'Dushasiez', 'Polop', 'Mektal', 'Orinphus', 'Denatra', 'Elkazzi', 'Dyne', 'Domos', 'Letryal', 'Manniv', 'Sylestia', 'Esnol', 'Fasafuros', 'Ghanfer', 'Kahnite', 'Sweyda', 'Uylis', 'Retenia', 'Bassos', 'Arkensval', 'Impelos', 'Grandius', 'Fulcrux', 'Lassahein', 'Edsveda', 'Earakun', 'Fous', 'Maas', 'Basenphal', 'Jubidya', 'Divya', 'Kosunten', 'Ordayius', 'Dozzer', 'Gangher', 'Escha', 'Manchul', 'Kempos', 'Kulo', 'Urtench', 'Kesta', 'Helahona', 'Ryte', 'Falcia', 'Umannos', 'Urkensvall', 'Fedra', 'Bulkensar', 'Comia', 'Tyul', 'Lasendarl']
-    return ''.join(random.choice(names)+'-'+random.choice(names)+'-'+str(random.randint(1, 30000)))
+def create_name(names = None, surnames=None):
+    if names:
+        with open(settings.BASE_DIR/'management/Name.txt', 'r') as f:
+            names = list(map(lambda x: x.replace(' ', ''), f.read().split('\n')))
+    if surnames:
+        with open(settings.BASE_DIR/'management/Surname.txt', 'r') as f:
+            names = list(map(lambda x: x.replace(' ', ''), f.read().split('\n')))
+    return ''.join(random.choice(names)+'-'+random.choice(surnames)+'-'+str(random.randint(1, 200)))
 
 def create_password():
     alp = string.ascii_letters + string.digits
@@ -31,13 +37,16 @@ def create_user(user_num: int, teacher=None) -> Passwords:
     Create random user
     :return: login and password of user
     """
-    alphabet = string.ascii_letters + string.digits
     been = set()
     users = set()
     for i in Users.objects.all():
         been.add(i.username)
+    with open(settings.BASE_DIR/'management/Name.txt', 'r') as f:
+        names = list(map(lambda x: x.replace(' ', ''), f.read().split('\n')))
+    with open(settings.BASE_DIR/'management/Surname.txt', 'r') as f:
+            surnames = list(map(lambda x: x.replace(' ', ''), f.read().split('\n')))
     while len(users)<int(user_num):
-        st = create_name()
+        st = create_name(names, surnames)
         if st in been:
             continue
         print(f'gen user {len(users)}', user_num)
