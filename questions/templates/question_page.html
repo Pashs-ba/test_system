@@ -3,7 +3,7 @@
 {% block title %} {{ question.name }} {% endblock %}
 {% block main %}
 {%load comptition_filter%}
-{%if status == "ИДЕТ" or competition.is_final%}
+{%if status == "ИДЕТ" or status == "ОТКРЫТО"  or competition.is_final%}
     <h2 class="display-2 text-center mb-4">{{ question.name }}</h2>
     {%if image%}
     <div class="container d-flex justify-content-center">
