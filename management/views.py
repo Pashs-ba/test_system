@@ -110,7 +110,7 @@ def create_competition(request):
         if form.is_valid():
             c = form.save()
             if request.user.is_teacher:
-                c.teacher = Teachers.objects.get(user=request.user)
+                c.teacher.add(Teachers.objects.get(user=request.user))
                 c.save()
             messages.success(request, 'Соревнование создано')
             return redirect('competition_management')
@@ -493,9 +493,6 @@ def teacher_create(request):
     u = Users.objects.create_user(name, password)
     u.is_teacher = True
     u.save()
-    gr = Group.objects.get(name='Teacher')
-    gr.user_set.add(u)
-    gr.save()
     Teachers.objects.create(user=u, password=password).save()
     return redirect('teacher_page')
 

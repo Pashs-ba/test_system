@@ -107,7 +107,7 @@ class Competitions(models.Model):
     is_visible_result = models.BooleanField(null=True, blank=True, verbose_name="Показывать результаты", default=True)
     is_simulator = models.BooleanField(default=False, verbose_name='Является симулятором')
     is_final = models.BooleanField(default=False, verbose_name='Финальный результат')
-    teacher = models.ForeignKey(Teachers, null=True, on_delete=models.CASCADE)
+    teacher = models.ManyToManyField(Teachers)
     class Meta:
         verbose_name = 'Competition'
         verbose_name_plural = 'Competitions'
