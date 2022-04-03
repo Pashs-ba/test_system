@@ -30,6 +30,7 @@ def create_password():
     alp = alp.replace('0', '')
     alp = alp.replace('o', '')
     alp = alp.replace('O', '')
+    alp = alp.replace('l', '')
     return ''.join(random.choice(alp) for i in range(settings.PASSWORD_LENGTH))
 
 def create_user(user_num: int, teacher=None) -> Passwords:
