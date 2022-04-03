@@ -46,7 +46,7 @@ class Passwords(models.Model):
     password = models.CharField(max_length=1024, verbose_name='Password')
     teacher = models.ForeignKey(Teachers, null=True, on_delete=models.CASCADE)
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.user}'
 
 
 class Contests(models.Model):
