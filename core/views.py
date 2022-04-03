@@ -88,7 +88,7 @@ def homepage(request):
                 'selected_group': int(request.GET.get('group', None)),
                 'selected_type': request.GET.get('type', None)
             })
-        if request.users.is_teacher:
+        if request.user.is_teacher:
             context.update({
                 'competitions': Competitions.objects.filter(teacher=Teachers.objects.get(user=request.user)), 
                 'groups': StudentGroup.objects.filter(teacher=Teachers.objects.get(user=request.user))
