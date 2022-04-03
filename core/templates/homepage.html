@@ -59,7 +59,8 @@
         </div>
       </form>
       {%if result %}
-      <table class="table table-bordered" style="margin-top: 15px;overflow-x: auto; max-width: 100%">
+      <div style="overflow-x: auto; max-width: 100%">
+      <table class="table table-bordered" style="margin-top: 15px;">
         <thead class="table-dark">
             <tr>
                 <th></th>
@@ -96,6 +97,7 @@
           {%endfor%}
         </tbody>
     </table>
+    </div>
     {%endif%}
     {% else %}
         <div class="row my-4 d-flex justify-content-center">
