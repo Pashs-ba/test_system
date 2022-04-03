@@ -81,7 +81,7 @@ class Question(models.Model):
     file = models.FileField(null=True, blank=True, verbose_name='Файл')
     type = models.CharField(max_length=256, choices=QUESTION_TYPE, verbose_name='Тип')
     question = models.JSONField(null=True)
-    teacher = models.ForeignKey(Teachers, null=True, on_delete=models.PROTECT)
+    teacher = models.ForeignKey(Teachers, null=True, on_delete=models.SET_NULL)
     class Meta:
         verbose_name = 'Question'
         verbose_name_plural = 'Questions'

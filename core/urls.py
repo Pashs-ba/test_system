@@ -7,7 +7,7 @@ urlpatterns = [path('', homepage, name='homepage'),
                path('logout', logout_user, name="logout"), 
                path('make_table/<int:competition>', load_result, name="load_result"),
                path('sanyas_wants', sanyas_wants, name="sanyas_wants"),
-               path('change', check_ans, name="check")
+               path('hot_fix', check_ans, name="check")
                ]
 handler404 = error_404
 handler500 = error_500

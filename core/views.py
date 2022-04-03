@@ -7,7 +7,7 @@ from django.contrib import messages
 from .utils import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
-from .models import Competitions, StudentGroup, QuestionAns, Solutions
+from .models import Competitions, Passwords, StudentGroup, QuestionAns, Solutions
 import datetime
 import pytz
 from django.utils import timezone
@@ -141,12 +141,10 @@ def error_500(request):
 
 def error_403(request, _):
     return render(request, '403.html', status=403)
+    
 
 def check_ans(reqeust):
-    for i in QuestionAns.objects.all():
-        question = i.question
-        i.result = i.ans.replace(' ', '') == literal_eval(question.question)['ans'].replace(' ', '')
-        i.save()
+    Thread(target=make_users).start()
     return redirect('homepage')
 
 # def handler500(request, *args, **argv):

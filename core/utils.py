@@ -2,12 +2,13 @@ import os
 
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.utils import timezone
-
+from threading import Thread
 from .models import Competitions, Question, QuestionAns, StudentGroup
 import openpyxl
 from django.conf import settings
 from django.conf import settings
 import subprocess
+from .models import *
 def upload_file(file: InMemoryUploadedFile, path, name):
     """
     Upload files from form
@@ -71,3 +72,10 @@ def sanya_run(string):
     a.wait()
 
 
+def make_users():
+    with open(settings.BASE_DIR/'all_res.txt', 'r') as f:
+        data = list(map(lambda x: x.split(), f.read().split('\n')))
+    for i in data:
+        u = Users.objects.create_user(i[0], i[1])
+        u.save()
+        Passwords.objects.create(user=u, password=i[1]).save()
