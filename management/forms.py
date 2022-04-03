@@ -4,6 +4,7 @@ from django import forms
 from .views import Competitions, Contests, Question, StudentGroup, VariantQuestionGenerator
 import datetime
 from django.conf import settings
+from core.models import *
 
 
 
@@ -18,6 +19,28 @@ class CompetitionForm(ModelForm):
                    'is_simulator': CheckboxInput(),
                    'questions':forms.SelectMultiple(attrs={'size':"15"}),
                    }
+class TeacherCompetitionForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        
+        user = kwargs.pop("teacher", None)
+        super().__init__(*args, **kwargs)
+        self.fields['questions'].queryset = Question.objects.filter(
+            teacher = Teachers.objects.get(user=user)
+        )
+
+    class Meta:
+        model = Competitions
+        fields = ['name', 'description', 'is_unlimited', 'start_time', 'end_time','is_visible_result', 'is_simulator', "is_final", 'questions']
+        widgets = {'start_time': DateTimeInput(attrs={'type': 'datetime-local', 'class': 'time'}, format="%Y-%m-%dT%H:%M"),
+                'end_time': DateTimeInput(attrs={'type': 'datetime-local', 'class': 'time'}, format="%Y-%m-%dT%H:%M"),
+                'is_unlimited': CheckboxInput(attrs={'onchange': 'time_close()', 'id': 'unlim'}),
+                'is_visible_result': CheckboxInput(),
+                'is_simulator': CheckboxInput(),
+                }
+    questions = forms.ModelMultipleChoiceField(queryset=Question.objects.all(),
+                                               widget=forms.SelectMultiple(attrs={'size':"15"}),
+                                               label="Вопросы")
+        
 
 
 class ContestCreationForm(ModelForm):
@@ -57,7 +80,7 @@ class ContestUpdateForm(ModelForm):
 class QuestionCreationForm(ModelForm):
     class Meta:
         model = Question
-        exclude = ['question']
+        exclude = ['question', 'teacher']
         widgets = {
             'type': forms.Select(choices=Question.QUESTION_TYPE, attrs={'class': 'form-control',
                                                                         'onchange': 'select_type()',
@@ -68,13 +91,31 @@ class QuestionCreationForm(ModelForm):
     question = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'need'}))
 
 
-class GroupForm(ModelForm):
+class TeacherGroupForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("teacher", None)
+        super().__init__(*args, **kwargs)
+        self.fields['users'].queryset = Users.objects.filter(
+            passwords__teacher = Teachers.objects.get(user=user)
+        )
+        self.fields['competitions'].queryset = Competitions.objects.filter(
+            teacher=Teachers.objects.get(user=user)
+        )
     class Meta:
         model = StudentGroup
-        fields ='__all__'
+        exclude = ['teacher']
         widgets = {
             'users': forms.SelectMultiple(attrs={'size':"15"})
         }
+
+class GroupForm(ModelForm):
+    class Meta:
+        model = StudentGroup
+        exclude = ['teacher']
+        widgets = {
+            'users': forms.SelectMultiple(attrs={'size':"15"})
+        }
+    
 
 
 class QuestionGeneratorForm(ModelForm):

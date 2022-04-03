@@ -26,7 +26,7 @@ def create_password():
     alp = alp.replace('O', '')
     return ''.join(random.choice(alp) for i in range(settings.PASSWORD_LENGTH))
 
-def create_user(user_num: int) -> Passwords:
+def create_user(user_num: int, teacher=None) -> Passwords:
     """
     Create random user
     :return: login and password of user
@@ -46,7 +46,10 @@ def create_user(user_num: int) -> Passwords:
     for i in users:
         password = create_password()
         user = Users.objects.create_user(i, password)
+        
         a = Passwords(user=user, password=password)
+        if teacher:
+            a.teacher = teacher
         a.save()
             
 

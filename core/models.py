@@ -38,11 +38,13 @@ class Users(AbstractBaseUser, PermissionsMixin):
 class Teachers(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     password = models.CharField(max_length=1024, verbose_name='Password')
+    def __str__(self):
+        return f'{self.user}'
     
 class Passwords(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     password = models.CharField(max_length=1024, verbose_name='Password')
-    
+    teacher = models.ForeignKey(Teachers, null=True, on_delete=models.CASCADE)
 
 
 class Contests(models.Model):
@@ -79,6 +81,7 @@ class Question(models.Model):
     file = models.FileField(null=True, blank=True, verbose_name='Файл')
     type = models.CharField(max_length=256, choices=QUESTION_TYPE, verbose_name='Тип')
     question = models.JSONField(null=True)
+    teacher = models.ForeignKey(Teachers, null=True, on_delete=models.PROTECT)
     class Meta:
         verbose_name = 'Question'
         verbose_name_plural = 'Questions'
@@ -102,7 +105,7 @@ class Competitions(models.Model):
     is_visible_result = models.BooleanField(null=True, blank=True, verbose_name="Показывать результаты", default=True)
     is_simulator = models.BooleanField(default=False, verbose_name='Является симулятором')
     is_final = models.BooleanField(default=False, verbose_name='Финальный результат')
-
+    teacher = models.ForeignKey(Teachers, null=True, on_delete=models.CASCADE)
     class Meta:
         verbose_name = 'Competition'
         verbose_name_plural = 'Competitions'
@@ -153,6 +156,7 @@ class StudentGroup(models.Model):
     name= models.CharField(verbose_name="Имя", max_length=1024)
     users = models.ManyToManyField(Users, verbose_name="Пользователи")
     competitions = models.ManyToManyField(Competitions, verbose_name="Соревнования")
+    teacher = models.ForeignKey(Teachers, null=True,on_delete=models.CASCADE)
     def __str__(self):
         return self.name
 
