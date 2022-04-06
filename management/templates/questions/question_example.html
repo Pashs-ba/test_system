@@ -10,7 +10,7 @@
         </div>
     {% endif %}
     <div class="container d-flex justify-content-center mt-4">
-        <p>{{ question.description|linebreaksbr}}</p>
+        <p>{{ question.description|safe|linebreaksbr}}</p>
     </div>
     {%if question.file%}
     <div class="container d-flex justify-content-center mt-4">
