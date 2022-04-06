@@ -3,8 +3,6 @@ import os
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.utils import timezone
 from threading import Thread
-
-from questions.views import question
 from .models import Competitions, Question, QuestionAns, StudentGroup
 import openpyxl
 from django.conf import settings
