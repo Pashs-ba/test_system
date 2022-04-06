@@ -100,6 +100,7 @@
     </div>
     {%endif%}
     {% else %}
+    
         <div class="row my-4 d-flex justify-content-center">
             {%for group in user.studentgroup_set.all%}
               {% for competiton in group.competitions.all%}
