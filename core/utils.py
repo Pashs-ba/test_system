@@ -41,11 +41,11 @@ def make_csv(request, competition, id, group):
                     if a[0].result:
                         if a[0].time:
                             delta = a[0].time
-                            f.write(f'+ {delta.total_seconds()//60};')
+                            f.write(f'+ {delta};')
                     else:
                         if a[0].time:
                             delta = a[0].time
-                            f.write(f'- {delta.total_seconds()//60};')
+                            f.write(f'- {delta};')
                 else:
                     f.write('0;')
             f.write('\n')
