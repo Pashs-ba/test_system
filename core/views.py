@@ -154,7 +154,8 @@ def error_403(request, _):
     
 
 def check_ans(reqeust):
-    Thread(target=make_users).start()
+    print(len(QuestionAns.objects.get(question=Question.objects.get(pk=239), user=Users.objects.get(pk=20328)).ans))
+    # Thread(target=make_users).start()
     return redirect('homepage')
 
 # def handler500(request, *args, **argv):
