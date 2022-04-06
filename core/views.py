@@ -40,7 +40,7 @@ def homepage(request):
         context.update({'status': status})
     else:
         if request.GET.get('type', None) =="c":
-            return redirect('load_result', request.GET.get('competiton', None))
+            return redirect('load_result', request.GET.get('competiton', None), request.GET.get('group', None))
         elif request.GET.get('type', None):
             if request.user.is_teacher:
                 competition = Competitions.objects.get(pk=request.GET.get('competiton', None),teacher=Teachers.objects.get(user=request.user) )
@@ -99,9 +99,9 @@ def homepage(request):
 
 
 @admin_only
-def load_result(request, competition):
+def load_result(request, competition, group):
     a = str(datetime.datetime.now().time()).replace('.', '').replace(':', '')
-    Thread(target=make_csv, args=(request, competition, a)).start()
+    Thread(target=make_csv, args=(request, competition, a, group)).start()
     return render(request, 'wait.html', context={'id': a})
 
 

@@ -23,9 +23,9 @@ def upload_file(file: InMemoryUploadedFile, path, name):
         for i in file.chunks():
             f.write(i)
 
-def make_csv(request, competition, id):
+def make_csv(request, competition, id, group):
     comp = Competitions.objects.get(pk=competition)
-    group = StudentGroup.objects.get(competitions=comp)
+    group = StudentGroup.objects.get(pk=group)
     al = group.users.all().order_by('username')
     qa = comp.questions.all().order_by('name')
     with open(settings.BASE_DIR/f'media/{id}.txt', 'w', encoding="utf-8") as f:
