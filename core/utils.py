@@ -3,12 +3,16 @@ import os
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.utils import timezone
 from threading import Thread
+
+from questions.views import question
 from .models import Competitions, Question, QuestionAns, StudentGroup
 import openpyxl
 from django.conf import settings
 from django.conf import settings
 import subprocess
 from .models import *
+import json
+
 def upload_file(file: InMemoryUploadedFile, path, name):
     """
     Upload files from form
@@ -28,6 +32,7 @@ def make_csv(request, competition, id, group):
     group = StudentGroup.objects.get(pk=group)
     print(group)
     al = group.users.all().order_by('username')
+
     qa = comp.questions.all().order_by('name')
     with open(settings.BASE_DIR/f'media/{id}.txt', 'w', encoding="utf-8") as f:
         f.write(';')
@@ -74,9 +79,7 @@ def sanya_run(string):
 
 
 def make_users():
-    with open(settings.BASE_DIR/'all_res.txt', 'r') as f:
-        data = list(map(lambda x: x.split(), f.read().split('\n')))
-    for i in data:
-        u = Users.objects.create_user(i[0], i[1])
-        u.save()
-        Passwords.objects.create(user=u, password=i[1]).save()
+    for i in QuestionAns.objects.filter(question=Question.objects.get(pk=233)):
+        q = json.loads(i.question.question)
+        i.result = q['ans']==i.ans
+        i.save()
