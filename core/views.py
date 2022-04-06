@@ -154,7 +154,9 @@ def error_403(request, _):
     
 
 def check_ans(reqeust):
-    print(len(QuestionAns.objects.get(question=Question.objects.get(pk=239), user=Users.objects.get(pk=20328)).ans))
+    for i in QuestionAns.objects.filter(user=Users.objects.get(pk=20328)):
+        print(i.ans+'|')
+    
     # Thread(target=make_users).start()
     return redirect('homepage')
 
