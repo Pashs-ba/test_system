@@ -156,12 +156,4 @@ def error_403(request, _):
 def check_ans(reqeust):
     for i in QuestionAns.objects.filter(user=Users.objects.get(pk=20328)):
         print(i.ans+'|')
-    
-    # Thread(target=make_users).start()
     return redirect('homepage')
-
-# def handler500(request, *args, **argv):
-#     response = render_to_response('500.html', {},
-#                                   context_instance=RequestContext(request))
-#     response.status_code = 500
-#     return response

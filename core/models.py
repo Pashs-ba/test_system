@@ -179,6 +179,18 @@ class VariantQuestion(models.Model):
 
     def __str__(self):
         return f'{self.data} {self.ans}'
-    
 
+class Problems(models.Model):
+    get_from = models.ForeignKey(Users, on_delete=models.CASCADE, null=True)
+    session = models.CharField(max_length=4096, null=True)
+    competition = models.ForeignKey(Competitions, on_delete=models.CASCADE, null=True, verbose_name="Соревнование, по которому вы хотите задать вопрос", blank=True)
+    text = models.TextField(verbose_name="Вопрос*")
+    is_ansed = models.BooleanField(default=False)
+    ans = models.TextField(verbose_name="Ответ", null=True)
+    for_all = models.BooleanField(verbose_name="Ответить всем участникам", default=False)
 
+    def __str__(self):
+        if self.get_from:
+            return f'{self.get_from} {bool(self.is_ansed)}'
+        else:
+            return f'{self.session} {bool(self.is_ansed)}'

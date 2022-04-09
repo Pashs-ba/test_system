@@ -18,4 +18,5 @@ admin.site.register(models.QuestionAns)
 admin.site.register(models.StudentGroup)
 admin.site.register(models.VariantQuestionGenerator)
 admin.site.register(models.VariantQuestion)
+admin.site.register(models.Problems)
 

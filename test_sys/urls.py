@@ -26,5 +26,6 @@ urlpatterns = [
     path('competition/', include('competition.urls')),
     path('contest/', include('contest.urls')),
     path('solution/', include('solutions.urls')),
-    path('question/', include('questions.urls'))
+    path('question/', include('questions.urls')),
+    path('error/', include('problems.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)+static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
