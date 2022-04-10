@@ -7,6 +7,7 @@ import ast
 from django.db import transaction
 from .utils import get_variant, variant
 from core.utils import competition_status
+import datetime
 
 
 @login_required
@@ -14,8 +15,11 @@ from core.utils import competition_status
 def question(request, pk, ret):
     question = Question.objects.get(pk=pk)
     user = request.user
-
+    competition = Competitions.objects.get(pk=ret)
     if request.method == 'POST':
+        if not( competition.start_time<datetime.datetime.now()<competition.end_time):
+            messages.success(request, 'Ваш ответ не был записан из за того что соревноание кончилось')
+            return redirect('homepage')
         ans = json.loads(question.question)
         if VariantQuestionGenerator.objects.filter(question=question.pk):
             variant(request, user, question)
