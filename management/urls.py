@@ -1,45 +1,46 @@
 from django.urls import path
-from .views import *
+from .views import common, users, competitions, contests, questions, groups, question_generators, teachers
 
 urlpatterns = [
-    path('', management_page, name='management-page'),
+    path('', common.management_page, name='management-page'),
     
 
-    path('user_panel', user_panel, name='user-management'),
-    path('user_panel/change/<int:pk>', user_change, name='user_change'),
-    path('user/delete', delete_user, name='delete-user'),
-    path('generate_users', user_generating, name='generate-users'),
+    path('user_panel', users.user_panel, name='user-management'),
+    path('user_panel/change/<int:pk>', users.user_change, name='user_change'),
+    path('user/delete', users.delete_user, name='delete-user'),
+    path('generate_users', users.user_generating, name='generate-users'),
 
-    path('competition_management', competition_management, name='competition_management'),
-    path('competition_creating', create_competition, name='competition_creating'),
-    path('delete_competition', delete_competition, name='delete_competition'),
-    path('update_competition/<int:pk>', update_competition, name='update_competition'),
-    path('contest_management', contest_management, name='contest_management'),
-    path('delete_contest/', contest_delete, name='delete_contest'),
-    path('contest_creating', create_contest, name='contest_creating'),
-    path('contest/<int:pk>', contest_page, name='contest_m_page'),
-    path('contest/delete_test/<int:pk>', delete_test, name='delete_test'),
-    path('contest/mike', load_from_mike, name="fucking_mike"),
+    path('competition_management', competitions.competition_management, name='competition_management'),
+    path('competition_creating', competitions.create_competition, name='competition_creating'),
+    path('delete_competition', competitions.delete_competition, name='delete_competition'),
+    path('update_competition/<int:pk>', competitions.update_competition, name='update_competition'),
 
-    path('question', questions_management, name='question_management'),
-    path('question/create', question_create, name='question_creating'),
-    path('question/<int:pk>', question_change, name='question_change'),
-    path('question/delete', question_delete, name='question_delete'),
-    path('question/example/<int:pk>', question_example, name='question_example'),
+    path('contest_management', contests.contest_management, name='contest_management'),
+    path('delete_contest/', contests.contest_delete, name='delete_contest'),
+    path('contest_creating', contests.create_contest, name='contest_creating'),
+    path('contest/<int:pk>', contests.contest_page, name='contest_m_page'),
+    path('contest/delete_test/<int:pk>', contests.delete_test, name='delete_test'),
+    path('contest/mike', contests.load_from_mike, name="fucking_mike"),
 
-    path('group', group_management, name="group_managment"),
-    path('group/create', new_group, name='new_group'),
-    path('group/delete', group_delete, name='delete_group'),
-    path('group/change/<int:pk>', group_change, name='change_group'),
+    path('question', questions.questions_management, name='question_management'),
+    path('question/create',  questions.question_create, name='question_creating'),
+    path('question/<int:pk>',  questions.question_change, name='question_change'),
+    path('question/delete',  questions.question_delete, name='question_delete'),
+    path('question/example/<int:pk>',  questions.question_example, name='question_example'),
 
-    path('generator/question', quest_generator_page, name='question_generator_manage'),
-    path('generator/question/create', question_gen_create, name='question_gen_create'),
-    path('generator/question/<int:pk>', question_generator, name='question_generator'),
-    path('generator/question/delete/generator', generator_delete, name="generator_delete"),
-    path('generator/question/delete/variants', delete_variant_question, name="delete_variant"),
+    path('group', groups.group_management, name="group_managment"),
+    path('group/create', groups.new_group, name='new_group'),
+    path('group/delete', groups.group_delete, name='delete_group'),
+    path('group/change/<int:pk>', groups.group_change, name='change_group'),
 
-    path('user/teacher', teacher_page, name="teacher_page"),
-    path('user/teacher/create', teacher_create, name="teacher_create"),
-    path('user/teacher/delete', delete_teacher, name='delete_teacher'),
-    path('user/teacher/<int:pk>', teacher_change, name="change_teacher")
+    path('generator/question', question_generators.quest_generator_page, name='question_generator_manage'),
+    path('generator/question/create', question_generators.question_gen_create, name='question_gen_create'),
+    path('generator/question/<int:pk>', question_generators.question_generator, name='question_generator'),
+    path('generator/question/delete/generator', question_generators.generator_delete, name="generator_delete"),
+    path('generator/question/delete/variants', question_generators.delete_variant_question, name="delete_variant"),
+
+    path('user/teacher', teachers.teacher_page, name="teacher_page"),
+    path('user/teacher/create',  teachers.teacher_create, name="teacher_create"),
+    path('user/teacher/delete',  teachers.delete_teacher, name='delete_teacher'),
+    path('user/teacher/<int:pk>',  teachers.teacher_change, name="change_teacher")
 ]

@@ -1,7 +1,7 @@
 from unicodedata import name
 from django.forms import ModelForm, DateTimeInput, FileField, FileInput, Textarea, TextInput, CheckboxInput, Form
 from django import forms
-from .views import Competitions, Contests, Question, StudentGroup, VariantQuestionGenerator
+from core.models import Competitions, Contests, Question, StudentGroup, VariantQuestionGenerator
 import datetime
 from django.conf import settings
 from core.models import *

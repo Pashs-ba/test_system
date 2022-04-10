@@ -2,7 +2,7 @@ from multiprocessing import context
 from django.shortcuts import render, redirect
 from core.models import Competitions, Contests, Solutions, QuestionAns, StudentGroup
 from core.utils import competition_status, upload_file
-from management.views import question_change
+from management.views.questions import question_change
 from .utils import get_extension, get_next_name, save_solution, check_solution
 from django.conf import settings
 from django.contrib import messages
