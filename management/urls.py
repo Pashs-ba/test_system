@@ -20,7 +20,7 @@ urlpatterns = [
     path('contest_creating', contests.create_contest, name='contest_creating'),
     path('contest/<int:pk>', contests.contest_page, name='contest_m_page'),
     path('contest/delete_test/<int:pk>', contests.delete_test, name='delete_test'),
-    path('contest/mike', contests.load_from_mike, name="fucking_mike"),
+    path('contest/mike', common.under_construction, name="fucking_mike"),
 
     path('question', questions.questions_management, name='question_management'),
     path('question/create',  questions.question_create, name='question_creating'),
@@ -33,11 +33,11 @@ urlpatterns = [
     path('group/delete', groups.group_delete, name='delete_group'),
     path('group/change/<int:pk>', groups.group_change, name='change_group'),
 
-    path('generator/question', question_generators.quest_generator_page, name='question_generator_manage'),
-    path('generator/question/create', question_generators.question_gen_create, name='question_gen_create'),
-    path('generator/question/<int:pk>', question_generators.question_generator, name='question_generator'),
-    path('generator/question/delete/generator', question_generators.generator_delete, name="generator_delete"),
-    path('generator/question/delete/variants', question_generators.delete_variant_question, name="delete_variant"),
+    path('generator/question', common.under_construction, name='question_generator_manage'),
+    path('generator/question/create', common.under_construction, name='question_gen_create'),
+    path('generator/question/<int:pk>', common.under_construction, name='question_generator'),
+    path('generator/question/delete/generator', common.under_construction, name="generator_delete"),
+    path('generator/question/delete/variants', common.under_construction, name="delete_variant"),
 
     path('user/teacher', teachers.teacher_page, name="teacher_page"),
     path('user/teacher/create',  teachers.teacher_create, name="teacher_create"),
