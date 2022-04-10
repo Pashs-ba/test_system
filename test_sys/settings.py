@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'questions',
     'widget_tweaks',
     'problems',
+    # 'channels',
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
