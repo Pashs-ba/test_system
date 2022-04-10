@@ -71,9 +71,9 @@
         {%if not competition.is_unlimited%}
         setInterval( function a(){
             var a = new Date("{{competition.end_time|date:'Y-m-d G:i:s'}}")
-            console.log(Date.now(),a.getTime(), Date.now()>a,"{{competition.end_time|date:'Y-m-d G:i:s'}}" )
+
             if (Date.now()>a){
-                console.log('done')
+
                 document.location.replace("/")
             }
         }, 1000);
