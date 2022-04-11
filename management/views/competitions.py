@@ -51,7 +51,6 @@ def delete_competition(request):
         return render(request, 'competitions/competition_deleting.html', {'to_del': request.GET['to_del']})
 
 
-# 
 @admin_only
 def update_competition(request, pk):
     if request.method == 'POST':
