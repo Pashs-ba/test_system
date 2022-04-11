@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from core.decorators import admin_only
 from core.models import Competitions, Teachers

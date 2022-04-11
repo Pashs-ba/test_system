@@ -3,7 +3,6 @@ from .views import common, users, competitions, contests, questions, groups, que
 
 urlpatterns = [
     path('', common.management_page, name='management-page'),
-    
 
     path('user_panel', users.user_panel, name='user-management'),
     path('user_panel/change/<int:pk>', users.user_change, name='user_change'),
