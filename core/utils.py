@@ -77,5 +77,7 @@ def sanya_run(string):
 def make_users():
     for i in QuestionAns.objects.filter(question=Question.objects.get(pk=233)):
         q = json.loads(i.question.question)
+        print(i.ans, i.result, end=" ")
         i.result = q['ans']==i.ans
         i.save()
+        print(i.result)
