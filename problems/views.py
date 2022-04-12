@@ -45,3 +45,7 @@ def delete_error(request):
         return redirect('all_errors')
     else:
         return render(request, 'delete_errors.html', {'to_del': request.GET['to_del']})
+
+@admin_only
+def answer(request):
+    

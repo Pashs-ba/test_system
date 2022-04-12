@@ -18,3 +18,5 @@ class ProblemCreate(forms.ModelForm):
         widgets = {
             'text': forms.Textarea(attrs={'placeholder': 'Помогите, у меня все сломалось!!!'})
         }
+
+class 
