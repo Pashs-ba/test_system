@@ -20,7 +20,7 @@
                 <th>{%if error.get_from%}{{error.get_from}}{%else%}{{error.session}}{%endif%}</th>
                 <th>{%if error.competition%}{{error.competition}}{%else%}-{%endif%}</th>
                 <th>
-                    <a href="#" class="btn btn-sm btn-primary">
+                    <a href="{%url "answer" error.pk %}" class="btn btn-sm btn-primary">
                         {%if error.is_ansed%}
                         <i class="bi bi-check-circle"></i>
                         {%else%}

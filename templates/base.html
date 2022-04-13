@@ -33,10 +33,10 @@
 
             <div class="navbar-nav">
                 {% if user.is_staff or user.is_teacher %}
-                    <a class="nav-link active" aria-current="page" href="{% url 'management-page' %}">Панель
-                        управления</a>
+                    <a class="nav-link active" aria-current="page" href="{% url 'management-page' %}">Панель управления</a>
+                    <a class="nav-link active" aria-current="page" href="{% url 'all_errors' %}">Панель ошибок</a>
                 {%else%}
-                {% comment %} <a class="nav-link active" aria-current="page" href="{% url 'create_problem' %}">Написать о проблеме</a> {% endcomment %}
+                <a class="nav-link active" aria-current="page" href="{% url 'create_problem' %}">Написать о проблеме</a>
                 {% endif %}
             </div>
         </div>

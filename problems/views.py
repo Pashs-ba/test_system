@@ -47,5 +47,15 @@ def delete_error(request):
         return render(request, 'delete_errors.html', {'to_del': request.GET['to_del']})
 
 @admin_only
-def answer(request):
-    
+def answer(request, pk):
+    problem = Problems.objects.get(pk=pk)
+
+    if request.method == "POST":
+        form = AnswerForm(request.POST, instance=problem)
+        if form.is_valid():
+            model = form.save()
+            model.is_ansed = True
+            model.save()
+            return redirect('all_errors')
+    else:
+        return render(request, 'ans.html', {'problem':problem, 'form':AnswerForm(instance=problem)})
