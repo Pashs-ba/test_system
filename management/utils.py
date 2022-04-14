@@ -20,7 +20,7 @@ def create_name(names = None, surnames=None):
     if not surnames:
         with open(settings.BASE_DIR/'management/Surname.txt', 'r') as f:
             surnames = list(map(lambda x: x.replace(' ', ''), f.read().split('\n')))
-    f = random.choice(names)+'-'+random.choice(surnames))
+    f = random.choice(names)+'-'+random.choice(surnames)
     return f'6-{f}'
 
 
