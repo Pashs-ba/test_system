@@ -20,7 +20,7 @@ def create_name(names = None, surnames=None):
     if not surnames:
         with open(settings.BASE_DIR/'management/Surname.txt', 'r') as f:
             surnames = list(map(lambda x: x.replace(' ', ''), f.read().split('\n')))
-    return ''.join(random.choice(names)+'-'+random.choice(surnames)+'-'+str(random.randint(1, 200)))
+    return '6-'.join(random.choice(names)+'-'+random.choice(surnames)+'-'+str(random.randint(1, 200)))
 
 def create_password():
     alp = string.ascii_letters + string.digits
