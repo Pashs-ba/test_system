@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Errors{% endblock %}
+{% block main %}
+
+    <h1 class='display-1 text-center'>Список ошибок</h1>
+    <div class="text-center">
+        <a class="btn btn-primary my-4  btn-lg btn-block" href="{% url 'create_problem' %}">Задать вопрос</a>
+    </div>
+    <table class="table table-striped">
+        <thead class="table-dark">
+        <tr>
+            <th scope="col">Статус</th>
+            <th scope="col">Открыть</th>
+        </tr>
+        </thead>
+        <tbody>
+            {%for error in problems%}
+            <tr>
+                <th>{%if error.is_ansed%}ОТВЕТ ПОЛУЧЕН{%else%}НА РАССМОТРЕНИИ{%endif%}</th>
+                <th>
+                    <a href="#" class="btn btn-sm btn-primary">
+                        <i class="bi bi-eye-fill"></i>
+                    </a>
+                </th>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+{% endblock %}

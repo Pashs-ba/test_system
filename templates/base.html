@@ -34,9 +34,9 @@
             <div class="navbar-nav">
                 {% if user.is_staff or user.is_teacher %}
                     <a class="nav-link active" aria-current="page" href="{% url 'management-page' %}">Панель управления</a>
-                    <a class="nav-link active" aria-current="page" href="{% url 'all_errors' %}">Панель ошибок</a>
+                    <a class="nav-link active" aria-current="page" href="{% url 'errors_list_admin' %}">Панель ошибок</a>
                 {%else%}
-                <a class="nav-link active" aria-current="page" href="{% url 'create_problem' %}">Написать о проблеме</a>
+                <a class="nav-link active" aria-current="page" href="{% url 'errors_list_user' %}">Написать о проблеме</a>
                 {% endif %}
             </div>
         </div>
