@@ -1,5 +1,3 @@
-from email.headerregistry import Group
-from multiprocessing import context
 from django.shortcuts import render, redirect
 from test_sys.settings import BASE_DIR
 from .forms import *
@@ -7,18 +5,13 @@ from django.contrib import messages
 from .utils import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
-from .models import Competitions, Passwords, StudentGroup, QuestionAns, Solutions
+from .models import Competitions, StudentGroup, QuestionAns, Solutions
 import datetime
 import pytz
-from django.utils import timezone
 utc = pytz.UTC
-import openpyxl
-from django.conf import settings
 from django.contrib.auth import logout
 from threading import Thread
 from core.decorators import admin_only
-import subprocess
-from ast import literal_eval
 
 
 def sort_by_sum(tmp):
@@ -117,7 +110,10 @@ def login_user(request):
             messages.error(request, 'Ошибка. Проверьте правильность логина и пароля')
             return render(request, 'login.html')
     else:
-        return render(request, 'login.html')
+        context = {}
+        if request.session.get('key', None):
+            context.update({'errors':Problems.objects.filter(session__in=request.session.get('key', None))})
+        return render(request, 'login.html', context)
 
 def logout_user(request):
     logout(request)

@@ -10,7 +10,7 @@
                 {% csrf_token %}
                 <input type="hidden" name="to_del" value="{{ to_del }}">
                 <button type="submit" class="btn btn-danger">Подтвердить</button>
-                <a href="{% url 'all_errors' %}" class="btn btn-success">Отмена</a>
+                <a href="{% url 'errors_list_admin' %}" class="btn btn-success">Отмена</a>
             </form>
         </div>
     </div>
