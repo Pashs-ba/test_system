@@ -24,5 +24,6 @@ class AnswerForm(forms.ModelForm):
         model = Problems
         fields = ['competition', 'ans', 'for_all']
         widgets = {
+            'ans': forms.Textarea(attrs={'placeholder': 'Ничего не знаю, система стронг, в задаче все написанно!'}),
             'for_all': forms.CheckboxInput()
         }

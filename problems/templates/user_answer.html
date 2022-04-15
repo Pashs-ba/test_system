@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{%load widget_tweaks%}
+{%load filters%}
+{%block main%}
+<div class="alert alert-warning my-3" role="alert">
+    Решение жюри окончательно и не может быть оспорено
+</div>
+<div class="card">
+  <div class="card-body">
+    <div class="form-group">
+        <label class="form-label my-3"><b>Вопрос:</b></br></label>
+        <p>{{problem.text}}</p>
+    </div>
+    {%if problem.competition%}
+    <div class="form-group">
+        <label class="form-label my-3"><b>Соревнование:</b></br></label>
+        <p>{{problem.competition}}</p>
+    </div>
+    {%endif%}
+    <div class="form-group">
+        <label class="form-label my-3"><b>Ответ жюри:</b></br></label>
+        <p>{{problem.ans}}</p>
+    </div>
+    <div class="form-group mt-3">
+        <a href="{%url "errors_list_user"%}" class="btn btn-success">
+        Назад
+        </a>
+    </div>
+  </div>
+</div>
+
+{%endblock%}

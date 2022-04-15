@@ -4,6 +4,7 @@ from .forms import *
 from django.contrib.sessions.backends.db import SessionStore
 from core.decorators import admin_only
 from django.db.models import Q
+from django.core.exceptions import PermissionDenied
 
 
 def create_problem(request):
@@ -34,7 +35,7 @@ def create_problem(request):
             return render(request, 'new.html', {'form': ProblemCreate(user=request.user)})
 
 def errors_list_user(request):
-    print(request.session.get('key', []))
+    # print(request.session.get('key', []))
     if request.user.is_authenticated:
         problems = Problems.objects.filter(Q(session__in=request.session.get('key', []))|Q(get_from=request.user))
     else:
@@ -69,3 +70,11 @@ def answer(request, pk):
             return redirect('errors_list_admin')
     else:
         return render(request, 'ans.html', {'problem':problem, 'form':AnswerForm(instance=problem)})
+
+
+def user_answer(request, pk):
+    problem = Problems.objects.get(pk=pk)
+    if request.user.is_authenticated and problem.get_from == request.user or problem.session in request.session.get('key', []):
+        return render(request, 'user_answer.html', {'problem': problem})
+    else:
+        raise PermissionDenied
