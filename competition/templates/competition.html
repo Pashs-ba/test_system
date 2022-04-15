@@ -79,7 +79,7 @@
                  color: black">{{ contest.1.name }}</a></th>
                         <th class="text-center">{{ contest.1.time_limit }} мс</th>
                         <th class="text-center">{{ contest.1.memory_limit }} MB</th>
-                        {%if competition.is_visible_result%}
+                        {%if competition.is_visible_result or competition.learning_mode%}
                         {% if solutions %}
                         {% for pk, result in solutions.items %}
                             {% if pk == contest.1.pk %}
