@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from core.decorators import admin_only
 from django.views.decorators.http import require_http_methods
 from core.utils import competition_status
-from core.models import Question, QuestionAns, Test, Competitions, Contests, Solutions
+from core.models import Question, QuestionAns, Test, Competitions, Contests, Solutions, Problems
 import ast
 from django.conf import settings
 import os
@@ -47,8 +47,8 @@ def set_ans(request, q_pk):
 
 def is_exist(request, c_pk):
     return JsonResponse({'exist': os.path.isfile(settings.BASE_DIR/f'media/{c_pk}.txt')})
-        
 
-
-
+@admin_only        
+def count_new_errors(request):
+    return JsonResponse({'count': Problems.objects.get(is_ansed=False)})
 
