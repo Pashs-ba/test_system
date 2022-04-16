@@ -109,7 +109,7 @@ def load_ans(request, pk):
                              file_name=solution_path, lang=lang, result='Проверка')
         solution.save()
         Thread(target=check_solution, args=(solution,)).start()
-        messages.info(request, 'Решение отправленно на проверку')
+        messages.success(request, 'Решение отправленно на проверку')
         return redirect('competition_page', competition.pk)
     else:
         context = {

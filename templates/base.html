@@ -1,5 +1,5 @@
 {% load static %}
-
+{%load core_filters%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,8 +52,8 @@
 <div class="container my-4">
     {% if messages %}
         {% for message in messages %}
-            <div class="alert alert-info my-4">
-                {{ message }}
+            <div class="alert alert-{{message.tags|messages_tag}} my-4">
+                {{ message }} 
             </div>
         {% endfor %}
     {% endif %}
