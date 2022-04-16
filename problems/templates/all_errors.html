@@ -15,7 +15,7 @@
         </tr>
         </thead>
         <tbody>
-            {%for error in errors%}
+            {%for error in problems%}
             <tr class="{%if error.is_ansed%}text_muted{%endif%}">
                 <th>{%if error.get_from%}{{error.get_from}}{%else%}{{error.session}}{%endif%}</th>
                 <th>{%if error.competition%}{{error.competition}}{%else%}-{%endif%}</th>

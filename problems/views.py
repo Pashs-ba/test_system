@@ -44,7 +44,7 @@ def errors_list_user(request):
 
 @admin_only
 def errors_list_admin(request):
-    return render(request, 'all_errors.html', {'errors': Problems.objects.all().order_by('is_ansed')})
+    return render(request, 'all_errors.html', {'problems': Problems.objects.all().order_by('is_ansed')})
 
 
 @admin_only

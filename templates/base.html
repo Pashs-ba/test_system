@@ -31,10 +31,14 @@
                 </div>
             {% endif %}
 
-            <div class="navbar-nav">
+            <div class="navbar-nav d-flex align-items-center">
                 {% if user.is_staff or user.is_teacher %}
                     <a class="nav-link active" aria-current="page" href="{% url 'management-page' %}">Панель управления</a>
-                    <a class="nav-link active" aria-current="page" href="{% url 'errors_list_admin' %}">Панель ошибок</a>
+                    <a class="nav-link active" aria-current="page" href="{% url 'errors_list_admin' %}">Панель ошибок </a>
+                    {% count_new_errors as errors%}
+                    {%if errors %}
+                    <span class="rounded-circle bg-danger text-white text-center" style="width: 25px; height: 25px; margin: 0" id="errors">{{errors}}</span>
+                    {%endif%}
                 {%else%}
                 <a class="nav-link active" aria-current="page" href="{% url 'errors_list_user' %}">Написать о проблеме</a>
                 {% endif %}
@@ -70,6 +74,20 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-
+{%if request.user.is_staff%}
+<script>
+    function a(){
+        $.ajax({
+            url: "{%url 'count_new_errors'%}",
+            dataType: 'json',
+            success: function (data) {
+              document.getElementById('errors').innerHTML = data['count']
+            }
+          });
+    
+        }
+    setInterval(a, 1000)
+</script>
+{%endif%}
 </body>
 </html>

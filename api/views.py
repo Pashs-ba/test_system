@@ -50,5 +50,5 @@ def is_exist(request, c_pk):
 
 @admin_only        
 def count_new_errors(request):
-    return JsonResponse({'count': Problems.objects.get(is_ansed=False)})
+    return JsonResponse({'count': len(Problems.objects.filter(is_ansed=False))})
 
