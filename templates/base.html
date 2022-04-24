@@ -34,11 +34,9 @@
             <div class="navbar-nav d-flex align-items-center">
                 {% if user.is_staff or user.is_teacher %}
                     <a class="nav-link active" aria-current="page" href="{% url 'management-page' %}">Панель управления</a>
-                    <a class="nav-link active" aria-current="page" href="{% url 'errors_list_admin' %}">Панель ошибок </a>
+                    <a class="nav-link active" aria-current="page" href="{% url 'errors_list_admin' %}" id="prev_error">Панель ошибок </a>
                     {% count_new_errors as errors%}
-                    {%if errors %}
-                    <span class="rounded-circle bg-danger text-white text-center" style="width: 25px; height: 25px; margin: 0" id="errors">{{errors}}</span>
-                    {%endif%}
+                    <span class="rounded-circle bg-danger text-white text-center" style="width: 25px; height: 25px; margin: 0;{%if not errors%}display:none{%endif%}" id="errors" >{{errors}}</span>
                 {%else%}
                 <a class="nav-link active" aria-current="page" href="{% url 'errors_list_user' %}">Написать о проблеме</a>
                 {% endif %}
@@ -81,7 +79,10 @@
             url: "{%url 'count_new_errors'%}",
             dataType: 'json',
             success: function (data) {
-              document.getElementById('errors').innerHTML = data['count']
+                document.getElementById('errors').innerHTML = data['count']
+                if (data['count'] != 0){
+                    document.getElementById('errors').style.display = "block"
+                }
             }
           });
     
