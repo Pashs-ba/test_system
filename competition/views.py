@@ -1,6 +1,6 @@
 from multiprocessing import context
 from django.shortcuts import render, redirect
-from core.models import Competitions, Contests, Solutions, QuestionAns, StudentGroup
+from core.models import Competitions, Contests, Solutions, QuestionAns, StudentGroup, Problems
 from core.utils import competition_status, upload_file
 from management.views.questions import question_change
 from .utils import get_extension, get_next_name, save_solution, check_solution
@@ -51,6 +51,7 @@ def competition_page(request, pk):
             'competition': competition,
             'solutions': solutions,
             'bad': ['TL', 'ML', 'WA', 'CE', 'PE'],
+            'errors': Problems.objects.filter(competition=competition, for_all=True, is_ansed=True)
         }
         # TODO fix ok solution
         context.update({'status': competition_status(competition)})
@@ -66,7 +67,6 @@ def result(request, pk):
         for j in i.users.all():
             user_result = []
             for k in competition.questions.all():
-                print(QuestionAns.objects.filter(user=j, question=k))
                 if QuestionAns.objects.filter(user=j, question=k):
                     if QuestionAns.objects.filter(user=j, question=k)[len(QuestionAns.objects.filter(user=j, question=k))-1].result:
                         user_result.append('+')

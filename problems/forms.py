@@ -22,8 +22,9 @@ class ProblemCreate(forms.ModelForm):
 class AnswerForm(forms.ModelForm):
     class Meta:
         model = Problems
-        fields = ['competition', 'ans', 'for_all']
+        fields = ['competition', 'ans', 'for_all', 'error_type']
         widgets = {
             'ans': forms.Textarea(attrs={'placeholder': 'Ничего не знаю, система стронг, в задаче все написанно!'}),
-            'for_all': forms.CheckboxInput()
+            'for_all': forms.CheckboxInput(),
+            'error_type': forms.Select(choices=Problems.PROBLEM_TYPE)
         }
