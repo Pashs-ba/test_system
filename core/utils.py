@@ -30,28 +30,30 @@ def make_csv(request, competition, id, group):
     group = StudentGroup.objects.get(pk=group)
     al = group.users.all().order_by('username')
     qa = comp.questions.all().order_by('name')
-    with open(settings.BASE_DIR/f'media/{id}.txt', 'w', encoding="utf-8") as f:
-        f.write(';')
-        for quest in range(len(qa)): 
-            f.write(f'{qa[quest].name};')
-        f.write('\n')
-        for user in range(len(al)):
-            f.write(f'{al[user].username};')
-            for quest in range(len(qa)):
-                a = QuestionAns.objects.filter(user=al[user].pk, question=qa[quest].pk)
-                if a:
-                    if a[0].result:
-                        if a[0].time:
-                            delta = a[0].time
-                            f.write(f'+ {delta};')
-                    else:
-                        if a[0].time:
-                            delta = a[0].time
-                            f.write(f'- {delta};')
+    w = ""
+    w+=';'
+    for quest in range(len(qa)): 
+        w+=f'{qa[quest].name};'
+    w+='\n'
+    for user in range(len(al)):
+        w+=f'{al[user].username};'
+        for quest in range(len(qa)):
+            a = QuestionAns.objects.filter(user=al[user].pk, question=qa[quest].pk)
+            if a:
+                if a[0].result:
+                    if a[0].time:
+                        delta = a[0].time
+                        w+=f'+ {delta};'
                 else:
-                    f.write('0;')
-            f.write('\n')
+                    if a[0].time:
+                        delta = a[0].time
+                        w+=f'- {delta};'
+            else:
+                w+='0;'
+        w+='\n'
 
+    with open(settings.BASE_DIR/f'media/{id}.txt', 'w', encoding="utf-8") as f:
+        f.write(w)
 
 def competition_status(competition: Competitions):
     if not competition.is_unlimited:
