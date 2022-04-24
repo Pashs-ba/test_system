@@ -3,7 +3,7 @@
 {% block title %}Management{% endblock %}
 {% block main %}
     <div class="row my-4 d-flex justify-content-center">
-        <div class="col-sm-3 my-3 text-center">
+        <div class="col-lg-3 my-3 text-center">
             <div class="card">
                 <a href="{% url 'user-management' %}">
                     <img class="card-img-top p-4 " src="{% static "management/img/add.svg" %}" height="256" width="256"
@@ -15,7 +15,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-3 my-3 text-center">
+        <div class="col-lg-3 my-3 text-center">
             <div class="card h-100">
                 <a href="{% url 'competition_management' %}">
                     <img class="card-img-top p-4" src="{% static "management/img/competition.svg" %}" height="256"
@@ -27,7 +27,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-3 my-3 text-center">
+        <div class="col-lg-3 my-3 text-center">
             <div class="card h-100">
                 <a href="{% url 'question_management' %}">
                     <img class="card-img-top p-4" src="{% static 'management/img/question.svg' %}" height="256" width="256" alt="Card image cap">
@@ -38,7 +38,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-3 my-3 text-center">
+        <div class="col-lg-3 my-3 text-center">
             <div class="card h-100">
                 <a href="{% url 'group_managment' %}">
                     <img class="card-img-top p-4" src="{% static 'management/img/team.svg' %}" height="256"
@@ -51,7 +51,7 @@
             </div>
         </div>
         {%if request.user.is_staff%}
-        <div class="col-sm-3 my-3 text-center">
+        <div class="col-lg-3 my-3 text-center">
             <div class="card">
                 <a href="{% url 'teacher_page' %}">
                     <img class="card-img-top p-4 " src="{% static "management/img/teacher.svg" %}" height="256" width="256"
@@ -64,7 +64,7 @@
             </div>
         </div>
         
-        <div class="col-sm-3 my-3 text-center">
+        <div class="col-lg-3 my-3 text-center">
             <div class="card h-100">
                 <a href="{% url 'contest_management' %}">
                     <img class="card-img-top p-4" src="{% static "management/img/trophy.svg" %}" height="256"
@@ -76,7 +76,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-3 my-3 text-center">
+        <div class="col-lg-3 my-3 text-center">
             <div class="card h-100">
                 <a href="{% url 'question_generator_manage' %}">
                     <img class="card-img-top p-4" src="{% static 'management/img/generator.svg' %}" height="256"
