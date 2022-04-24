@@ -184,6 +184,14 @@ class VariantQuestion(models.Model):
         return f'{self.data} {self.ans}'
 
 class Problems(models.Model):
+    PROBLEM_TYPE = [
+        ('primary', 'primary'),
+        ('secondary', 'secondary'),
+        ('info', 'info'),
+        ('danger', 'danger'),
+        ('warning', 'warning'),
+        ('success', 'success')
+    ]
     get_from = models.ForeignKey(Users, on_delete=models.CASCADE, null=True)
     session = models.CharField(max_length=4096, null=True)
     competition = models.ForeignKey(Competitions, on_delete=models.CASCADE, null=True, verbose_name="Соревнование, по которому вы хотите задать вопрос", blank=True)
@@ -191,6 +199,7 @@ class Problems(models.Model):
     is_ansed = models.BooleanField(default=False)
     ans = models.TextField(verbose_name="Ответ", null=True)
     for_all = models.BooleanField(verbose_name="Ответить всем участникам", default=False)
+    error_type = models.CharField(max_length=256, choices=PROBLEM_TYPE, verbose_name='Тип', default="primary")
 
     def __str__(self):
         if self.get_from:

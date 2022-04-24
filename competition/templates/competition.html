@@ -7,14 +7,16 @@
     <h2 class="display-2 text-center">{{ competition.name }}</h2>
     {% if status == 'ОТКРЫТО' or status == 'ИДЕТ' %}
         <div class="text-center">
+            {%for i in errors%}
+            <div class="alert alert-{{i.error_type}} mb-3" role="alert">
+                {{i.ans}}
+            </div>
+            {%endfor%}
             {%if competition.is_final%}
             <div class="alert alert-info" role="alert">
                 Вы можете посмотреть ваши результаты, вы не можете слать посылки.
             </div>
             {%endif%}
-            <div class="alert alert-info" role="alert">
-                Результаты олимпиады будут доступны после 20:00, заходите под вашими логинами и паролями
-            </div>
             <p> 
                 По всем вопросам технического характера пишите  <a href="https://t.me/rcomrad">@rcomrad</a> или на почту fedorovas@adtspb.ru</br>
             </p>
