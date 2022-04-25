@@ -7,5 +7,6 @@ urlpatterns = [
     path('log', errors_list_admin, name="errors_list_admin"),
     path('delete', delete_error, name="delete_error"),
     path('ans/<int:pk>', answer, name="answer"),
-    path('answer/<int:pk>', user_answer, name="user_answer")
+    path('answer/<int:pk>', user_answer, name="user_answer"),
+    path('notification', massive_notification, name="notification"),
 ]

@@ -1,0 +1,38 @@
+
+{% extends 'base.html' %}
+{%load widget_tweaks%}
+{%load filters%}
+{%block main%}
+<div class="card">
+  <div class="card-body">
+    <form method="post">
+    
+    {% csrf_token %}
+
+    {% for hidden in form.hidden_fields %}
+        {{ hidden }}
+    {% endfor %}
+
+    {% for field in form.visible_fields %}
+        
+        {%if field.field|get_widget_type == 'NullBooleanField' or field.field|get_widget_type == 'BooleanField' %}
+        <div class="form-check">
+            {{ field|add_class:'form-check-input' }}
+            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+        {%else%}
+        <div class="form-group">
+            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+        {{ field|add_class:'form-control' }}
+        {%endif%}
+        </div>
+    {% endfor %}
+    
+    <div class="form-group mt-3">
+        <button type="submit" class="btn btn-success btn-lg">
+        Послать
+        </button>
+    </div>
+    </form>
+  </div>
+</div>
+{%endblock%}

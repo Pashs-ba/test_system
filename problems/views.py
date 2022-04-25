@@ -78,3 +78,16 @@ def user_answer(request, pk):
         return render(request, 'user_answer.html', {'problem': problem})
     else:
         raise PermissionDenied
+
+@admin_only
+def massive_notification(request):
+    if request.method == "POST":
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            model = form.save()
+            model.is_ansed = True
+            model.get_from = request.user
+            model.save()
+            return redirect('errors_list_admin')
+    else:
+        return render(request, 'notification.html', {'form':NotificationForm()})

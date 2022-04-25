@@ -1,3 +1,4 @@
+from cProfile import label
 from dataclasses import field
 from django import forms
 from core.models import Problems, Competitions, StudentGroup
@@ -27,4 +28,16 @@ class AnswerForm(forms.ModelForm):
             'ans': forms.Textarea(attrs={'placeholder': 'Ничего не знаю, система стронг, в задаче все написанно!'}),
             'for_all': forms.CheckboxInput(),
             'error_type': forms.Select(choices=Problems.PROBLEM_TYPE)
+        }
+    
+
+class NotificationForm(forms.ModelForm):
+    class Meta:
+        model = Problems
+        fields = ['competition', 'ans', 'error_type']
+        widgets = {
+            'ans': forms.Textarea(attrs={'placeholder': 'Системка Стронг'}),
+        }
+        labels = {
+            'ans': 'Текст оповещения'
         }
