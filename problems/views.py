@@ -87,6 +87,7 @@ def massive_notification(request):
             model = form.save()
             model.is_ansed = True
             model.get_from = request.user
+            model.for_all = True
             model.save()
             return redirect('errors_list_admin')
     else:
