@@ -42,12 +42,10 @@ def make_csv(request, competition, id, group):
             if a:
                 if a[0].result:
                     if a[0].time:
-                        delta = a[0].time
-                        w+=f'+ {delta};'
+                        w+=f'+ {a[0].ans};'
                 else:
                     if a[0].time:
-                        delta = a[0].time
-                        w+=f'- {delta};'
+                        w+=f'- {a[0].ans};'
             else:
                 w+='0;'
         w+='\n'
