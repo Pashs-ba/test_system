@@ -1,5 +1,4 @@
 import os
-
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.utils import timezone
 from threading import Thread
