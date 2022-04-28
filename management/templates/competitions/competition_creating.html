@@ -12,7 +12,6 @@
                 {% csrf_token %}
                 {% for i in form %}
                 <div class="mb-3">
-                    {% comment %} {{i.field|get_widget_type}} {% endcomment %}
                     {%if i.field|get_widget_type == 'NullBooleanField' or i.field|get_widget_type == 'BooleanField' %}
                     <div class="form-check">
                         <label for="{{ i.auto_id }}" class="form-label">{{ i.label }}</label>
@@ -23,7 +22,7 @@
                     <div class="mb-3">
                         <div class="input-group input-group-sm">
                             <span class="input-group-text"><i class="bi bi-search"></i></span>
-                            <input type="text" class="form-control" id="search" placeholder="Найти" onchange="find('{{i.auto_id}}', this.value)">
+                            <input type="text" class="form-control" id="search" placeholder="Искать по тегам или названию" onchange="find('{{i.auto_id}}', this.value)">
                           </div>
                     </div>
                     
@@ -46,19 +45,43 @@
                             
                         }
                     }
+                    let question_tags = {
+                        {%for i in question%}
+                        '{{i.pk}}': [{%for j in i.tag_list%}"{{j.value|lower}}",{%endfor%}],
+                        {%endfor%}
+                    }
                     function find(id, val){
-                        el = document.getElementById(id)
-                        val = val.toLowerCase()
-                        {% comment %} console.log(el, val) {% endcomment %}
-                        {% comment %} console.log(el.options) {% endcomment %}
+                        var el = document.getElementById(id)
+
+                        var val = val.toLowerCase()
+                        if (val[0] == "#"){
+                            find_by_tag(el, val)
+                            return
+                        }
                         for(var i of el.options){
                             i.hidden = false
-                            console.log(i.innerHTML.toLowerCase().match(val), val)
                             if (!i.innerHTML.toLowerCase().match(val)){
                                 i.hidden = true
                             }
                         }
                     }
+                    function find_by_tag(el, val){
+                        let clear = val.split(' ')
+                        console.log(clear)
+                        for(var i of el.options){
+                            i.hidden = true
+                            let tags = question_tags[i.value]
+                            
+                            for (var j of clear){
+                                if (tags.includes(j.slice(1))){
+                                    i.hidden=false
+                                    break
+                                }
+                            }
+
+                        }
+                    }
+                    //Disable enter
                     $(document).keypress(
                     function(event){
                         if (event.which == '13') {
