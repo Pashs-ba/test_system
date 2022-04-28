@@ -50,17 +50,39 @@
                             
                         }
                     }
+                    let question_tags = {
+                        {%for i in question%}
+                        '{{i.pk}}': [{%for j in i.tag_list%}"{{j.value|lower}}",{%endfor%}],
+                        {%endfor%}
+                    }
                     function find(id, val){
                         el = document.getElementById(id)
                         val = val.toLowerCase()
-                        {% comment %} console.log(el, val) {% endcomment %}
-                        {% comment %} console.log(el.options) {% endcomment %}
+                        if (val[0] == "#"){
+                            find_by_tag(el, val)
+                            return
+                        }
                         for(var i of el.options){
                             i.hidden = false
-                            console.log(i.innerHTML.toLowerCase().match(val), val)
                             if (!i.innerHTML.toLowerCase().match(val)){
                                 i.hidden = true
                             }
+                        }
+                    }
+                    function find_by_tag(el, val){
+                        let clear = val.split(' ')
+                        console.log(clear)
+                        for(var i of el.options){
+                            i.hidden = true
+                            let tags = question_tags[i.value]
+                            
+                            for (var j of clear){
+                                if (tags.includes(j.slice(1))){
+                                    i.hidden=false
+                                    break
+                                }
+                            }
+
                         }
                     }
                     $(document).keypress(
