@@ -11,6 +11,13 @@
                 {{ form|crispy }}
 
             </form>
+            <input name="tags" placeholder="Больше тегов Богу тегов!!!" value="{{}}">
+            <script src="{%static "management/tagging/tagify.js"%}"></script>
+            <script>
+                
+                var input = document.querySelector('input[name=tags]'),
+                tagify = new Tagify( input );
+            </script>
             <script>
                 let test_ones_ans_lab = `<label for="test_one_ans" class="col-form-label">Добавьте варианты ответа и отметьте правильный.</label>`
                 let test_ones_ans = `

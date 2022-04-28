@@ -10,12 +10,14 @@
             <form method="POST" enctype='multipart/form-data' id="form">
                 {% csrf_token %}
                 {{ form|crispy }}
-                <div id="simple-tag" class="simple-tags" data-simple-tags="Article, Blog, Page, Post, Category, Updates"></div>
+                
             </form>
-            <script src="{%static "management/tagging/simple-tags.min.js"%}"></script>
+            <input name="tags" placeholder="Больше тегов Богу тегов!!!" value="">
+            <script src="{%static "management/tagging/tagify.js"%}"></script>
             <script>
-                {% comment %} console.log(document.getElementById("simple-tag")) {% endcomment %}
-                Tags(document.getElementById("simple-tag"))
+                
+                var input = document.querySelector('input[name=tags]'),
+                tagify = new Tagify( input );
             </script>
             <script>
                 let test_ones_ans_lab = `<label for="test_one_ans" class="col-form-label">Добавьте варианты ответа и отметьте правильный.</label>`
@@ -120,9 +122,15 @@
                     }
 
                 }
+                function send_tags(){
+                    /*
+                    Connect tag input and tag form-field
+                    */
+                    document.getElementById("tag_list").value = document.querySelector('input[name=tags]').value
+                }
             </script>
             <div class="my-3">
-                <button type="submit" class="btn btn-primary" form="form">Подтвердить</button>
+                <button type="submit" class="btn btn-primary" onClick="send_tags()" form="form">Подтвердить</button>
                 <a href="{% url 'question_management' %}" class="btn btn-secondary">Отмена</a>
             </div>
         </div>

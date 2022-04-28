@@ -88,9 +88,9 @@ class QuestionCreationForm(ModelForm):
                                                                         'id': 'type'}),
             'image': forms.FileInput(attrs={'accept': 'image/*',
                                             'class': 'form-control'}),
+            'tag_list': forms.HiddenInput(attrs={'id': 'tag_list'})
         }
     question = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'need'}))
-    tags = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'tags'}))
 
 
 class TeacherGroupForm(ModelForm):
