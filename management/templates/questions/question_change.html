@@ -11,7 +11,11 @@
                 {{ form|crispy }}
 
             </form>
-            <input name="tags" placeholder="Больше тегов Богу тегов!!!" value="{%for i in question.tag_list%}{{i.value}},{%endfor%}">
+            <div class="mb-3">
+                <label class="form-label">Теги вопроса</label>
+                <input name="tags" placeholder="Больше тегов Богу тегов!!!" value="{%for i in question.tag_list%}{{i.value}},{%endfor%}">
+            </div>
+            
             <script src="{%static "management/tagging/tagify.js"%}"></script>
             <script>
                 
