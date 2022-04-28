@@ -11,7 +11,7 @@
                 {{ form|crispy }}
 
             </form>
-            <input name="tags" placeholder="Больше тегов Богу тегов!!!" value="{{}}">
+            <input name="tags" placeholder="Больше тегов Богу тегов!!!" value="{%for i in question.tag_list%}{{i.value}},{%endfor%}">
             <script src="{%static "management/tagging/tagify.js"%}"></script>
             <script>
                 
@@ -177,9 +177,15 @@
                         }
                     }
                     get_data()
+                    function send_tags(){
+                        /*
+                        Connect tag input and tag form-field
+                        */
+                        document.getElementById("tag_list").value = document.querySelector('input[name=tags]').value
+                    }
             </script>
             <div class="my-3">
-                <button type="submit" class="btn btn-primary" form="form">Подтвердить</button>
+                <button type="submit" class="btn btn-primary" onClick="send_tags()" form="form">Подтвердить</button>
                 <a href="{% url 'question_management' %}" class="btn btn-secondary">Отмена</a>
             </div>
         </div>

@@ -52,7 +52,7 @@ def question_change(request, pk):
             return HttpResponse(form.errors)
     else:
         form = QuestionCreationForm(instance=Question.objects.get(pk=pk), initial={'question': Question.objects.get(pk=pk).question})
-        return render(request, 'questions/question_change.html', {'form': form})
+        return render(request, 'questions/question_change.html', {'form': form, 'question': Question.objects.get(pk=pk)})
 
 
 @admin_only
