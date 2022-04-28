@@ -20,6 +20,7 @@ def questions_management(request):
 def question_create(request):
     if request.method == 'POST':
         form = QuestionCreationForm(request.POST, request.FILES)
+
         if form.is_valid():
             a = form.save()
 
@@ -30,7 +31,7 @@ def question_create(request):
             messages.success(request, 'success')
             return redirect('question_management')
         else:
-            return HttpResponse(form.errors)
+            return HttpResponse(f"Error with POST {form.errors}")
     else:
         return render(request, 'questions/question_creating.html', {'form': QuestionCreationForm()})
 
@@ -51,7 +52,7 @@ def question_change(request, pk):
             return HttpResponse(form.errors)
     else:
         form = QuestionCreationForm(instance=Question.objects.get(pk=pk), initial={'question': Question.objects.get(pk=pk).question})
-        return render(request, 'questions/question_change.html', {'form': form})
+        return render(request, 'questions/question_change.html', {'form': form, 'question': Question.objects.get(pk=pk)})
 
 
 @admin_only

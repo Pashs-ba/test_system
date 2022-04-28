@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
+{%load static%}
 {% block title %}Question creating{% endblock %}
 {% block main %}
     <div class="card my-5">
@@ -9,8 +10,19 @@
             <form method="POST" enctype='multipart/form-data' id="form">
                 {% csrf_token %}
                 {{ form|crispy }}
-
+                
             </form>
+            <div class="mb-3">
+                <label class="form-label">Теги вопроса</label>
+                <input name="tags" placeholder="Больше тегов Богу тегов!!!" value="">
+            </div>
+            
+            <script src="{%static "management/tagging/tagify.js"%}"></script>
+            <script>
+                
+                var input = document.querySelector('input[name=tags]'),
+                tagify = new Tagify( input );
+            </script>
             <script>
                 let test_ones_ans_lab = `<label for="test_one_ans" class="col-form-label">Добавьте варианты ответа и отметьте правильный.</label>`
                 let test_ones_ans = `
@@ -114,9 +126,15 @@
                     }
 
                 }
+                function send_tags(){
+                    /*
+                    Connect tag input and tag form-field
+                    */
+                    document.getElementById("tag_list").value = document.querySelector('input[name=tags]').value
+                }
             </script>
             <div class="my-3">
-                <button type="submit" class="btn btn-primary" form="form">Подтвердить</button>
+                <button type="submit" class="btn btn-primary" onClick="send_tags()" form="form">Подтвердить</button>
                 <a href="{% url 'question_management' %}" class="btn btn-secondary">Отмена</a>
             </div>
         </div>
