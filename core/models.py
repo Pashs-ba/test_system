@@ -206,3 +206,7 @@ class Problems(models.Model):
             return f'{self.get_from} {bool(self.is_ansed)}'
         else:
             return f'{self.session} {bool(self.is_ansed)}'
+
+class QuestionTag(models.Model):
+    name = models.CharField(verbose_name="Название", max_length=1024)
+    questions = models.ManyToManyField(Question)

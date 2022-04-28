@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
+{%load static%}
 {% block title %}Question creating{% endblock %}
 {% block main %}
     <div class="card my-5">
@@ -9,8 +10,13 @@
             <form method="POST" enctype='multipart/form-data' id="form">
                 {% csrf_token %}
                 {{ form|crispy }}
-
+                <div id="simple-tag" class="simple-tags" data-simple-tags="Article, Blog, Page, Post, Category, Updates"></div>
             </form>
+            <script src="{%static "management/tagging/simple-tags.min.js"%}"></script>
+            <script>
+                {% comment %} console.log(document.getElementById("simple-tag")) {% endcomment %}
+                Tags(document.getElementById("simple-tag"))
+            </script>
             <script>
                 let test_ones_ans_lab = `<label for="test_one_ans" class="col-form-label">Добавьте варианты ответа и отметьте правильный.</label>`
                 let test_ones_ans = `

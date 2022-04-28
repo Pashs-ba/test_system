@@ -87,9 +87,10 @@ class QuestionCreationForm(ModelForm):
                                                                         'onchange': 'select_type()',
                                                                         'id': 'type'}),
             'image': forms.FileInput(attrs={'accept': 'image/*',
-                                            'class': 'form-control'})
+                                            'class': 'form-control'}),
         }
     question = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'need'}))
+    tags = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'tags'}))
 
 
 class TeacherGroupForm(ModelForm):
