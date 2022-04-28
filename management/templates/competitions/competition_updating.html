@@ -11,7 +11,7 @@
                 {% csrf_token %}
                 {% for i in form %}
                 <div class="mb-3">
-                    {% comment %} {{i.field|get_widget_type}} {% endcomment %}
+
                     {%if i.field|get_widget_type == 'NullBooleanField' or i.field|get_widget_type == 'BooleanField' %}
                     <div class="form-check">
                         <label for="{{ i.auto_id }}" class="form-label">{{ i.label }}</label>
