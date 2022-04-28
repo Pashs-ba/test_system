@@ -36,7 +36,12 @@ def create_competition(request):
             form = TeacherCompetitionForm(teacher=request.user)
         else:
             form = CompetitionForm()
-        return render(request, 'competitions/competition_creating.html', {'form': form})
+        context = {'form': form}
+        if not request.user.is_teacher:
+            context.update({'question': Question.objects.all()})
+        else:
+            context.update({'question': Question.objects.filter(teacher=Teachers.objects.get(user=request.user))})
+        return render(request, 'competitions/competition_creating.html', context)
 
 
 
@@ -67,6 +72,11 @@ def update_competition(request, pk):
             form = TeacherCompetitionForm( teacher=request.user, instance=Competitions.objects.get(pk=pk))
         else:
             form = CompetitionForm(instance=Competitions.objects.get(pk=pk))
+        context = {'form': form}
+        if not request.user.is_teacher:
+            context.update({'question': Question.objects.all()})
+        else:
+            context.update({'question': Question.objects.filter(teacher=Teachers.objects.get(user=request.user))})
         return render(request, 'competitions/competition_updating.html',
-                      {'form': form})
+                     context)
 

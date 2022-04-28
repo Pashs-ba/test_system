@@ -84,6 +84,7 @@ class Question(models.Model):
     type = models.CharField(max_length=256, choices=QUESTION_TYPE, verbose_name='Тип')
     question = models.JSONField(null=True)
     teacher = models.ForeignKey(Teachers, null=True, on_delete=models.SET_NULL)
+    tag_list = models.JSONField(null=True, blank=True)
     class Meta:
         verbose_name = 'Question'
         verbose_name_plural = 'Questions'
@@ -206,3 +207,4 @@ class Problems(models.Model):
             return f'{self.get_from} {bool(self.is_ansed)}'
         else:
             return f'{self.session} {bool(self.is_ansed)}'
+
