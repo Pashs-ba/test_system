@@ -1,5 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+
+from core.models import Passwords, Teachers, Users
 from .forms import *
 from django.contrib.sessions.backends.db import SessionStore
 from core.decorators import admin_only
@@ -44,7 +46,10 @@ def errors_list_user(request):
 
 @admin_only
 def errors_list_admin(request):
-    return render(request, 'all_errors.html', {'problems': Problems.objects.all().order_by('is_ansed', '-pk')})
+    if request.user.is_teacher:
+        return render(request, 'all_errors.html', {'problems': Problems.objects.filter(get_from__in=Users.objects.filter(passwords__in=Passwords.objects.filter(teacher=Teachers.objects.get(user=request.user)))).order_by('is_ansed', '-pk')})
+    else:
+        return render(request, 'all_errors.html', {'problems': Problems.objects.all().order_by('is_ansed', '-pk')})
 
 
 @admin_only

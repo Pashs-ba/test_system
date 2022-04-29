@@ -201,7 +201,7 @@ class Problems(models.Model):
     ans = models.TextField(verbose_name="Ответ", null=True)
     for_all = models.BooleanField(verbose_name="Ответить всем участникам", default=False)
     error_type = models.CharField(max_length=256, choices=PROBLEM_TYPE, verbose_name='Тип', default="primary")
-
+    teacher = models.ForeignKey(Teachers, on_delete=models.CASCADE, null=True)
     def __str__(self):
         if self.get_from:
             return f'{self.get_from} {bool(self.is_ansed)}'
