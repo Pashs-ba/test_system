@@ -12,6 +12,11 @@
                 {{i.ans}}
             </div>
             {%endfor%}
+            {%for i in teacher_errors%}
+            <div class="alert alert-{{i.error_type}} mb-3" role="alert">
+                {{i.ans}}
+            </div>
+            {%endfor%}
             {%if competition.is_final%}
             <div class="alert alert-info" role="alert">
                 Вы можете посмотреть ваши результаты, вы не можете слать посылки.

@@ -1,6 +1,6 @@
 from multiprocessing import context
 from django.shortcuts import render, redirect
-from core.models import Competitions, Contests, Solutions, QuestionAns, StudentGroup, Problems
+from core.models import Competitions, Contests, Solutions, QuestionAns, StudentGroup, Problems, Teachers
 from core.utils import competition_status, upload_file
 from management.views.questions import question_change
 from .utils import get_extension, get_next_name, save_solution, check_solution
@@ -51,9 +51,10 @@ def competition_page(request, pk):
             'competition': competition,
             'solutions': solutions,
             'bad': ['TL', 'ML', 'WA', 'CE', 'PE'],
-            'errors': Problems.objects.filter(competition=competition, for_all=True, is_ansed=True)
+            'errors': Problems.objects.filter(competition=competition, for_all=True, is_ansed=True, teacher=None),
         }
-        # TODO fix ok solution
+        if competition.teacher:
+            context.update({'teacher_errors': Problems.objects.filter(competition=competition, for_all=True, is_ansed=True, teacher__in=competition.teacher.all())})
         context.update({'status': competition_status(competition)})
         return render(request, 'competition.html', context=context)
 

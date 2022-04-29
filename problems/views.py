@@ -47,7 +47,7 @@ def errors_list_user(request):
 @admin_only
 def errors_list_admin(request):
     if request.user.is_teacher:
-        return render(request, 'all_errors.html', {'problems': Problems.objects.filter(get_from__in=Users.objects.filter(passwords__in=Passwords.objects.filter(teacher=Teachers.objects.get(user=request.user)))).order_by('is_ansed', '-pk')})
+        return render(request, 'all_errors.html', {'problems': Problems.objects.filter(Q(get_from__in=Users.objects.filter(passwords__in=Passwords.objects.filter(teacher=Teachers.objects.get(user=request.user))))|Q(teacher=Teachers.objects.get(user=request.user))).order_by('is_ansed', '-pk')})
     else:
         return render(request, 'all_errors.html', {'problems': Problems.objects.all().order_by('is_ansed', '-pk')})
 
@@ -74,7 +74,10 @@ def answer(request, pk):
             model.save()
             return redirect('errors_list_admin')
     else:
-        return render(request, 'ans.html', {'problem':problem, 'form':AnswerForm(instance=problem)})
+        if request.user.is_teacher:
+            return render(request, 'ans.html', {'problem':problem, 'form':AnswerForm(instance=problem, teacher=request.user)})
+        else:
+            return render(request, 'ans.html', {'problem':problem, 'form':AnswerForm(instance=problem)})
 
 
 def user_answer(request, pk):
@@ -93,7 +96,12 @@ def massive_notification(request):
             model.is_ansed = True
             model.get_from = request.user
             model.for_all = True
+            if request.user.is_teacher:
+                model.teacher = Teachers.objects.get(user=request.user)
             model.save()
             return redirect('errors_list_admin')
     else:
-        return render(request, 'notification.html', {'form':NotificationForm()})
+        if request.user.is_teacher:
+            return render(request, 'notification.html', {'form':NotificationForm(teacher=request.user)})
+        else:
+            return render(request, 'notification.html', {'form':NotificationForm()})

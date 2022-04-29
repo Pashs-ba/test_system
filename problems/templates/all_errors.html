@@ -20,7 +20,7 @@
         <tbody>
             {%for error in problems%}
             <tr class="{%if error.is_ansed%}text_muted{%endif%}">
-                <th>{%if error.get_from%}{%if error.get_from.is_staff%}ОПОВЕЩЕНИЕ{%else%} {{error.get_from}}{%endif%}{%else%}{{error.session}}{%endif%}</th>
+                <th>{%if error.get_from%}{%if error.get_from.is_staff or error.get_from.is_teacher %}ОПОВЕЩЕНИЕ{%else%} {{error.get_from}}{%endif%}{%else%}{{error.session}}{%endif%}</th>
                 <th>{%if error.competition%}{{error.competition}}{%else%}-{%endif%}</th>
                 <th>
                     <a href="{%url "answer" error.pk %}" class="btn btn-sm btn-primary">

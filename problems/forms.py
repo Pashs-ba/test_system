@@ -1,7 +1,7 @@
 from cProfile import label
 from dataclasses import field
 from django import forms
-from core.models import Problems, Competitions, StudentGroup
+from core.models import Problems, Competitions, StudentGroup, Teachers
 
 class ProblemCreate(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -21,6 +21,15 @@ class ProblemCreate(forms.ModelForm):
         }
 
 class AnswerForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        
+        user = kwargs.pop("teacher", None)
+        
+        super().__init__(*args, **kwargs)
+        if user:
+            self.fields['competition'].queryset = Competitions.objects.filter(
+                teacher = Teachers.objects.get(user=user)
+            )
     class Meta:
         model = Problems
         fields = ['competition', 'ans', 'for_all', 'error_type']
@@ -32,6 +41,15 @@ class AnswerForm(forms.ModelForm):
     
 
 class NotificationForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        
+        user = kwargs.pop("teacher", None)
+        
+        super().__init__(*args, **kwargs)
+        if user:
+            self.fields['competition'].queryset = Competitions.objects.filter(
+                teacher = Teachers.objects.get(user=user)
+            )
     class Meta:
         model = Problems
         fields = ['competition', 'ans', 'error_type']
