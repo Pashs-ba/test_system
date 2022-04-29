@@ -3,7 +3,8 @@ from django.http import JsonResponse
 from core.decorators import admin_only
 from django.views.decorators.http import require_http_methods
 from core.utils import competition_status
-from core.models import Question, QuestionAns, Test, Competitions, Contests, Solutions, Problems
+from core.models import Question, QuestionAns, Test, Competitions, Contests, Solutions, Problems, Teachers, Users, Passwords
+from django.db.models import Q
 import ast
 from django.conf import settings
 import os
@@ -50,5 +51,8 @@ def is_exist(request, c_pk):
 
 @admin_only        
 def count_new_errors(request):
-    return JsonResponse({'count': len(Problems.objects.filter(is_ansed=False))})
+    if request.user.is_teacher:
+        return JsonResponse({'count': len(Problems.objects.filter(Q(get_from__in=Users.objects.filter(passwords__in=Passwords.objects.filter(teacher=Teachers.objects.get(user=request.user))))|Q(teacher=Teachers.objects.get(user=request.user))).order_by('is_ansed', '-pk'))})
+    else:
+        return JsonResponse({'count': len(Problems.objects.filter(is_ansed=False))})
 
