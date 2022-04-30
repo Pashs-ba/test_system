@@ -22,7 +22,6 @@ class CompetitionForm(ModelForm):
                    }
 class TeacherCompetitionForm(ModelForm):
     def __init__(self, *args, **kwargs):
-        
         user = kwargs.pop("teacher", None)
         super().__init__(*args, **kwargs)
         self.fields['questions'].queryset = Question.objects.filter(
