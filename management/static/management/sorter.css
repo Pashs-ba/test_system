@@ -1,0 +1,8 @@
+@keyframes appearance {
+    from{opacity: 0;}
+    to{opacity: 1;}
+}
+
+.animated{
+    animation: appearance 1s;
+}
