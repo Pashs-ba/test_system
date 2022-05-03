@@ -9,7 +9,7 @@
             пользователей</a>
         <form method="POST">{% csrf_token %}<button class="btn btn-primary btn-lg mb-3" type="submit">Скачать</button></form>
     </div>
-    <table class="table table-striped">
+    <table class="table table-striped" id="table">
         <thead class="table-dark">
         <tr class="">
             <th scope="col">Логин</th>
@@ -19,27 +19,31 @@
             <th scope='col'>Учитель</th>
             {%endif%}
             <th scope="col"><div class="d-flex justify-content-center">Изменить</div></th>
-            <th scope="col"><div class="row row-cols-lg-auto g-3 justify-content-center align-items-center"><div class="col-12 d-flex align-items-center"><a type="button" onclick="make_del_link(this)" class="btn btn-danger btn-sm me-3">Удалить</a> <input type="checkbox" onclick="select_all(this)" class="form-check-input" id="all"></div></div></th>
+            <th scope="col" id="delete"><div class="row row-cols-lg-auto g-3 justify-content-center align-items-center"><div class="col-12 d-flex align-items-center"><a type="button" onclick="make_del_link(this)" class="btn btn-danger btn-sm me-3">Удалить</a> <input type="checkbox" onclick="select_all(this)" class="form-check-input" id="all"></div></div></th>
         </tr>
         </thead>
         <tbody>
         {% for user in users %}
             <tr>
 
-                <td>{{ user.user.username }}</td>
-                <td>{{ user.password }}</td>
-                <td>{%for i in user.user.studentgroup_set.all%}{{i.name}} {%endfor%}</td>
+                <th>{{ user.user.username }}</th>
+                <th>{{ user.password }}</th>
+                <th>{%for i in user.user.studentgroup_set.all%}{{i.name}} {%endfor%}</th>
                 {%if request.user.is_staff%}
                 <th scope='col'>{%if user.teacher%} {{user.teacher}}{%else%} - {%endif%}</th>
                 {%endif%}
-                <td class=""><div class="d-flex justify-content-center"><a href="{% url 'user_change' user.pk %}" class="btn btn-sm btn-primary">
-                    <i class="bi bi-pencil-square"></i></a></div></td>
-                <td class=""><div class="d-flex justify-content-center"><input type="checkbox" class="form-check-input delete_item" id="{{ user.pk }}"></div></td>
+                <th class=""><div class="d-flex justify-content-center"><a href="{% url 'user_change' user.pk %}" class="btn btn-sm btn-primary">
+                    <i class="bi bi-pencil-square"></i></a></div></th>
+                <th class=""><div class="d-flex justify-content-center"><input type="checkbox" class="form-check-input delete_item" id="{{ user.pk }}"></div></th>
             </tr>
 
         {% endfor %}
         </tbody>
     </table>
+    <script src="{%static "/management/sorter.js"%}"></script>
+    <script>
+        var sorter = new Sorter(document.getElementById("table"), document.getElementById("delete"));
+    </script>
     {% if users.has_other_pages %}
                 <nav aria-label="Page navigation example" class="d-flex justify-content-center">
                     <ul class="pagination">

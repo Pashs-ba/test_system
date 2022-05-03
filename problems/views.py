@@ -37,7 +37,6 @@ def create_problem(request):
             return render(request, 'new.html', {'form': ProblemCreate(user=request.user)})
 
 def errors_list_user(request):
-    # print(request.session.get('key', []))
     if request.user.is_authenticated:
         problems = Problems.objects.filter(Q(session__in=request.session.get('key', []))|Q(get_from=request.user))
     else:
