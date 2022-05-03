@@ -10,14 +10,14 @@
     </div>
     
 
-    <table class="table table-striped">
+    <table class="table table-striped" id="table">
         <thead class="table-dark">
         <tr>
             <th scope="col">Название</th>
             <th scope="col">Участники</th>
             <th scope="col">Соревнования</th>
             <th scope="col">Изменить</th>
-            <th scope="col"><div class="row row-cols-lg-auto g-3 justify-content-center align-items-center"><div class="col-12 d-flex align-items-center"><a type="button" onclick="make_del_link(this)" class="btn btn-danger btn-sm me-3">Удалить</a> <input type="checkbox" onclick="select_all(this)" class="form-check-input" id="all"></div></div></th>
+            <th scope="col" id="delete"><div class="row row-cols-lg-auto g-3 justify-content-center align-items-center"><div class="col-12 d-flex align-items-center"><a type="button" onclick="make_del_link(this)" class="btn btn-danger btn-sm me-3">Удалить</a> <input type="checkbox" onclick="select_all(this)" class="form-check-input" id="all"></div></div></th>
 
         </tr>
         </thead>
@@ -36,15 +36,19 @@
                         <i class="bi bi-pencil-square"></i>
                     </a>
                 </th>
-                <td class="">
+                <th class="">
                     <div class="d-flex justify-content-center">
                         <input type="checkbox" class="form-check-input delete_item" id="{{ group.pk }}">
                     </div>
-                </td>
+                </th>
             </tr>
             {%endfor%}
         </tbody>
     </table>
+    <script src="{%static "/management/sorter.js"%}"></script>
+    <script>
+        var sorter = new Sorter(document.getElementById("table"), document.getElementById("delete"));
+    </script>
     <script>
         function select_all(el){
             for(let i = 0; i<document.getElementsByClassName('delete_item').length; i++){

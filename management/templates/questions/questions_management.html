@@ -9,7 +9,7 @@
         <a class="btn btn-primary my-4  btn-lg btn-block" href="{% url 'question_creating' %}"> Создать новый вопрос</a>
     </div>
 
-    <table class="table table-striped">
+    <table class="table table-striped" id="table">
         <thead class="table-dark">
         <tr>
             <th scope="col">Название</th>
@@ -18,7 +18,7 @@
 
             <th scope="col">Изменить</th>
             <th scope="col">Открыть</th>
-            <th scope="col"><div class="row row-cols-lg-auto g-3 justify-content-center align-items-center"><div class="col-12 d-flex align-items-center"><a type="button" onclick="make_del_link(this)" class="btn btn-danger btn-sm me-3">Удалить</a> <input type="checkbox" onclick="select_all(this)" class="form-check-input" id="all"></div></div></th>
+            <th scope="col" id="delete"><div class="row row-cols-lg-auto g-3 justify-content-center align-items-center"><div class="col-12 d-flex align-items-center"><a type="button" onclick="make_del_link(this)" class="btn btn-danger btn-sm me-3">Удалить</a> <input type="checkbox" onclick="select_all(this)" class="form-check-input" id="all"></div></div></th>
 
         </tr>
         </thead>
@@ -30,26 +30,30 @@
                 <th>{{ question.type|get_type_name }}</th>
                 <th>{% if question.competitions_set.all %}{% for cometition in question.competitions_set.all %}
                     {{ cometition.name }} {% endfor %}{% else %} - {% endif %}</th>
-                <td>
+                <th>
                     <a href="{% url 'question_change' question.pk %}" class="btn btn-sm btn-primary">
                         <i class="bi bi-pencil-square"></i>
                     </a>
-                </td>
-                <td>
+                </th>
+                <th>
                     <a href="{% url 'question_example' question.pk %}" class="btn btn-sm btn-primary">
                         <i class="bi bi-eye-fill"></i>
                     </a>
-                </td>
+                </th>
                 
-                <td class="">
+                <th class="">
                     <div class="d-flex justify-content-center">
                         <input type="checkbox" class="form-check-input delete_item" id="{{ question.pk }}">
                     </div>
-                </td>
+                </th>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+    <script src="{%static "/management/sorter.js"%}"></script>
+    <script>
+        var sorter = new Sorter(document.getElementById("table"), document.getElementById("delete"));
+    </script>
     <script>
         function select_all(el){
             for(let i = 0; i<document.getElementsByClassName('delete_item').length; i++){

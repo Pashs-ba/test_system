@@ -10,7 +10,7 @@
 
     </div>
 
-    <table class="table table-striped">
+    <table class="table table-striped" id="table">
         <thead class="table-dark">
         <tr>
             <th scope="col">Название</th>
@@ -20,7 +20,7 @@
 
             <th scope="col">Изменить</th>
             <th scope="col">Открыть</th>
-            <th scope="col"><div class="row row-cols-lg-auto g-3 justify-content-center align-items-center"><div class="col-12 d-flex align-items-center"><a type="button" onclick="make_del_link(this)" class="btn btn-danger btn-sm me-3">Удалить</a> <input type="checkbox" onclick="select_all(this)" class="form-check-input" id="all"></div></div></th>
+            <th scope="col" id="delete"><div class="row row-cols-lg-auto g-3 justify-content-center align-items-center"><div class="col-12 d-flex align-items-center"><a type="button" onclick="make_del_link(this)" class="btn btn-danger btn-sm me-3">Удалить</a> <input type="checkbox" onclick="select_all(this)" class="form-check-input" id="all"></div></div></th>
 
         </tr>
         </thead>
@@ -29,31 +29,35 @@
         {% for contest in contests %}
             <tr>
 
-                <td>{{ contest.name }}</td>
-                <td> {{ contest.memory_limit }} КB</td>
-                <td>{{ contest.time_limit }} мс</td>
-                <td>{% if  contest.competitions_set.all %}{% for i in contest.competitions_set.all %}
-                    {{ i }} {% endfor %}{% else %} - {% endif %}</td>
-                <td>
+                <th>{{ contest.name }}</th>
+                <th> {{ contest.memory_limit }} КB</th>
+                <th>{{ contest.time_limit }} мс</th>
+                <th>{% if  contest.competitions_set.all %}{% for i in contest.competitions_set.all %}
+                    {{ i }} {% endfor %}{% else %} - {% endif %}</th>
+                <th>
                     <a href="{% url 'contest_m_page' contest.pk %}" class="btn btn-sm btn-primary">
                         <i class="bi bi-pencil-square"></i>
                     </a>
-                </td>
-                <td>
+                </th>
+                <th>
                     <a href="{% url 'contest_page' contest.pk 10000 %}" class="btn btn-sm btn-primary">
                         <i class="bi bi-eye-fill"></i>
                     </a>
-                </td>
-                <td class="">
+                </th>
+                <th class="">
                     <div class="d-flex justify-content-center">
                         <input type="checkbox" class="form-check-input delete_item" id="{{ contest.pk }}">
                     </div>
-                </td>
+                </th>
             </tr>
 
         {% endfor %}
         </tbody>
     </table>
+    <script src="{%static "/management/sorter.js"%}"></script>
+    <script>
+        var sorter = new Sorter(document.getElementById("table"), document.getElementById("delete"));
+    </script>
     <script>
         function select_all(el){
             for(let i = 0; i<document.getElementsByClassName('delete_item').length; i++){

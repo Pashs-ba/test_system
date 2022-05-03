@@ -24,20 +24,20 @@
             {% for competition in competitions %}
                 <tr>
 
-                    <td>{{ competition.name }}</td>
+                    <th>{{ competition.name }}</th>
                     {% if competition.is_unlimited %}
-                        <td colspan="2" class="text-center">Бессрочно</td>
+                        <th colspan="2" class="text-center">Бессрочно</th>
                     {% else %}
-                        <td>{{ competition.start_time }}</td>
-                        <td>{{ competition.end_time }}</td>
+                        <th>{{ competition.start_time }}</th>
+                        <th>{{ competition.end_time }}</th>
                     {% endif %}
-                    <td> <a href="{% url 'update_competition' competition.pk%}" class="btn btn-sm btn-primary">
-                        <i class="bi bi-pencil-square"></i></a> </td>
-                    <td class="">
+                    <th> <a href="{% url 'update_competition' competition.pk%}" class="btn btn-sm btn-primary">
+                        <i class="bi bi-pencil-square"></i></a> </th>
+                    <th class="">
                         <div class="d-flex justify-content-center">
                             <input type="checkbox" class="form-check-input delete_item" id="{{ competition.pk }}">
                         </div>
-                    </td>
+                    </th>
                 </tr>
 
             {% endfor %}
