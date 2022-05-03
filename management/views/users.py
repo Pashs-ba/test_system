@@ -16,14 +16,14 @@ def user_panel(request):
     page = request.GET.get('page', 1)
     if request.user.is_teacher:
         teacher = Teachers.objects.get(user=request.user)
-        context.update({'users': Paginator(Passwords.objects.filter(teacher=teacher).order_by('pk'), 1000).page(page)})
+        context.update({'users': Paginator(Passwords.objects.filter(teacher=teacher).order_by('pk'), 500).page(page)})
         if request.method == 'POST':
             with open(settings.BASE_DIR/'media/user.txt', 'w') as f:
                 for i in Passwords.objects.filter(teacher=teacher).order_by('pk'):
                     f.write(f'{i.user.username} {i.password}\n')
             return redirect('/media/user.txt')
     else:
-        context.update({'users': Paginator(Passwords.objects.filter(user__is_teacher=False).order_by('pk'), 1000).page(page)})
+        context.update({'users': Paginator(Passwords.objects.filter(user__is_teacher=False).order_by('pk'), 500).page(page)})
         if request.method == 'POST':
             with open(settings.BASE_DIR/'media/user.txt', 'w') as f:
                 for i in Passwords.objects.all().order_by('pk'):
