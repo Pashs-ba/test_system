@@ -89,7 +89,6 @@ class Question(models.Model):
         verbose_name = 'Question'
         verbose_name_plural = 'Questions'
         ordering = ['name']
-
     def __str__(self):
         return f'{self.name}'
 

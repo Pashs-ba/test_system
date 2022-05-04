@@ -15,9 +15,10 @@ class CompetitionForm(ModelForm):
         widgets = {'start_time': DateTimeInput(attrs={'type': 'datetime-local', 'class': 'time'}, format="%Y-%m-%dT%H:%M"),
                    'end_time': DateTimeInput(attrs={'type': 'datetime-local', 'class': 'time'}, format="%Y-%m-%dT%H:%M"),
                    'is_unlimited': CheckboxInput(attrs={'onchange': 'time_close()', 'id': 'unlim'}),
-                   'is_visible_result': CheckboxInput(),
-                   'is_simulator': CheckboxInput(),
-                   'learning_mode': CheckboxInput(),
+                   'is_visible_result': CheckboxInput(attrs={"onchange":"close_option(this)"}),
+                   'is_simulator': CheckboxInput(attrs={"onchange":"close_option(this)"}),
+                   'is_final': CheckboxInput(attrs={"onchange":"close_option(this)"}),
+                   'learning_mode':CheckboxInput(attrs={"onchange":"close_option(this)"}),
                    'questions':forms.SelectMultiple(attrs={'size':"15"}),
                    }
 class TeacherCompetitionForm(ModelForm):

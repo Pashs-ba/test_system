@@ -35,6 +35,33 @@
                 </div>
                 {%endfor%}
                 <script>
+                    function close_option(el){
+                        if (el.checked){
+                            if (el.name == "is_simulator"){
+                                document.getElementsByName("is_visible_result")[0].disabled = true;
+                                document.getElementsByName("is_final")[0].disabled = true;
+                                document.getElementsByName("learning_mode")[0].disabled = true;
+                            }else if(el.name == "is_visible_result"){
+                                document.getElementsByName("is_simulator")[0].disabled = true;
+                                document.getElementsByName("is_final")[0].disabled = true;
+                                document.getElementsByName("learning_mode")[0].disabled = true;
+                            }else if(el.name == "is_final"){
+                                document.getElementsByName("is_simulator")[0].disabled = true;
+                                document.getElementsByName("is_visible_result")[0].disabled = true;
+                                document.getElementsByName("learning_mode")[0].disabled = true;
+                            }else if(el.name == "learning_mode"){
+                                document.getElementsByName("is_simulator")[0].disabled = true;
+                                document.getElementsByName("is_final")[0].disabled = true;
+                                document.getElementsByName("is_visible_result")[0].disabled = true;
+                            }
+                        }
+                        else{
+                            document.getElementsByName("is_visible_result")[0].disabled = false;
+                            document.getElementsByName("is_simulator")[0].disabled = false;
+                            document.getElementsByName("is_final")[0].disabled = false;
+                            document.getElementsByName("learning_mode")[0].disabled = false;
+                        }
+                    }
                     function time_close() {
                         console.log(document.getElementsByClassName('form-control'))
                         for (let i in document.getElementsByClassName('form-control')) {
