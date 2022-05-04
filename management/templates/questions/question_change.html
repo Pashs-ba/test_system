@@ -16,7 +16,9 @@
                 <input name="tags" placeholder="Больше тегов Богу тегов!!!" value="{%for i in question.tag_list%}{{i.value}},{%endfor%}">
             </div>
             
-            <script src="{%static "management/tagging/tagify.js"%}"></script>
+            <script src="https://unpkg.com/@yaireo/tagify"></script>
+            <script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+            <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
             <script>
                 
                 var input = document.querySelector('input[name=tags]'),
