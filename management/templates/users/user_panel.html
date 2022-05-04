@@ -7,7 +7,10 @@
     <div class="text-center">
         <a class="btn btn-primary my-4  btn-lg btn-block" href="{% url 'generate-users' %}"> Создать новых
             пользователей</a>
-        <form method="POST">{% csrf_token %}<button class="btn btn-primary btn-lg mb-3" type="submit">Скачать</button></form>
+        <div class="d-flex justify-content-center">
+            <form method="POST">{% csrf_token %}<button class="btn btn-primary btn-lg mb-3" type="submit">Скачать таблицу юзеров</button></form>
+            <a class="btn btn-danger ms-3 mb-3 btn-lg btn-block" href="{% url 'delete_all' %}"> Удалить всех</a>
+        </div>
     </div>
     <table class="table table-striped" id="table">
         <thead class="table-dark">

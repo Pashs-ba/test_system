@@ -74,7 +74,7 @@ def user_generating(request):
 def delete_all(request):
     if request.method == "POST":
         if request.user.is_teacher:
-            for i in Passwords.objects.filter(Teachers.objects.get(user=request.user)):
+            for i in Passwords.objects.filter(teacher=Teachers.objects.get(user=request.user)):
                 i.user.delete()
                 i.delete()
         else:
