@@ -69,3 +69,18 @@ def user_generating(request):
             return redirect('user-management')
     else:
         return render(request, 'users/user_generating.html')
+
+@admin_only
+def delete_all(request):
+    if request.method == "POST":
+        if request.user.is_teacher:
+            for i in Passwords.objects.filter(Teachers.objects.get(user=request.user)):
+                i.user.delete()
+                i.delete()
+        else:
+            for i in Passwords.objects.all():
+                i.user.delete()
+                i.delete()
+        return redirect('user-management')
+    else:
+        return render(request, 'users/user_delete_all.html')
