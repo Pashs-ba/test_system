@@ -7,7 +7,7 @@
 <div style="display: flex; flex-direction: column; height: 100vh">
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #22365b; height: 10%">
         <div class="container-fluid">
-          <div class="navbar-brand pe-3 ps-3" style="border: 1px solid #087475; border-radius: 5px; color: #087475"><i class="bi bi-hourglass-split"></i><span id="time"></span></div>
+          {%if not competition.is_unlimited%}<div class="navbar-brand pe-3 ps-3" style="border: 1px solid #087475; border-radius: 5px; color: #087475"><i class="bi bi-hourglass-split"></i><span id="time"></span></div>{%endif%}
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
