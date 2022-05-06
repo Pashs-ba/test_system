@@ -4,7 +4,6 @@ class Sorter{
         var header = table.children[0];
         for (var col_header of header.children[0].children){
             col_header.onclick = function(){sort_col(this, except)};
-            // console.log(col_header.onclick, )
         }
     }
 }
@@ -23,42 +22,27 @@ function clear_arrows(el, except){
 }
 function sort_table(el, reverse){
     let n = el.cellIndex
-    let table = el.closest("table").children[1]
-    switching = true;
-    switchcount = 0
-    dir = "asc";
-    while (switching) {
-        switching = false;
-        rows = table.rows;
-        for (i = 0; i < (rows.length - 1); i++) {
-        shouldSwitch = false;
-        x = rows[i].getElementsByTagName("TH")[n];
-        y = rows[i + 1].getElementsByTagName("TH")[n];
-        if (dir == "asc") {
-            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-            shouldSwitch = true;
-            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-            break;
-            }
-        } else if (dir == "desc") {
-            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-            shouldSwitch = true;
-            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-            break;
-            }
+    let tbody = el.closest("table").children[1]
+    let rows = Array.from(tbody.rows)
+    let old_f = rows[0]
+    let old_last = rows[rows.length-1]
+    let sorted_rows = rows.sort(function(a,b){
+        if (a.getElementsByTagName("TH")[n].innerHTML<b.getElementsByTagName("TH")[n].innerHTML){
+            return -1
         }
+        if (a.getElementsByTagName("TH")[n].innerHTML>b.getElementsByTagName("TH")[n].innerHTML){
+            return 1
         }
-        if (shouldSwitch) {
-        // rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-        switching = true;
-        switchcount ++;
-        } else {
-        if (switchcount == 0 && dir == "asc") {
-            dir = "desc";
-            switching = true;
-        }
-        }
+        return 0
+    })
+    tbody.innerHTML = ''
+    if(old_f===sorted_rows[0] && old_last === sorted_rows[rows.length-1]){
+        sorted_rows = sorted_rows.reverse()
     }
+    for (i of sorted_rows){
+        tbody.appendChild(i)
+    }
+    
 }
 function sort_col(el, except, index){
     if (el == except){
