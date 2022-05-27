@@ -8,6 +8,8 @@ from django.db.models import Q
 import ast
 from django.conf import settings
 import os
+from django.contrib.sessions.backends.db import SessionStore
+from celery.result import AsyncResult
 
 @admin_only
 @require_http_methods(["POST"])
@@ -30,6 +32,8 @@ def is_close(request, pk):
         return JsonResponse({'open': True})
     else:
         return JsonResponse({'open': False})
+
+
 @require_http_methods(["POST"])
 def get_status(request):
     pk = request.POST['pk']
@@ -46,8 +50,13 @@ def set_ans(request, q_pk):
     a.save()
     return HttpResponse('OK')
 
-def is_exist(request, c_pk):
-    return JsonResponse({'exist': os.path.isfile(settings.BASE_DIR/f'media/{c_pk}.txt')})
+def is_csv_ready(request):
+    c_pk = SessionStore(session_key=request.session['session'])
+    promise = AsyncResult(c_pk['promise'])
+    
+    return JsonResponse({'exist': bool(promise.result),
+                         'href': f'/media/{promise.result}.txt'
+                         })
 
 @admin_only        
 def count_new_errors(request):

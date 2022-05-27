@@ -5,16 +5,17 @@
 {% block main %}
 <div class="d-flex justify-content-center align-items-center text-center flex-column" style="min-height: 80vh">
     <h1 class="display-2 mb-6">Скоро сгенерится, надо немного подождать</h1>
-    <a href="/media/{{id}}.txt" download class="btn btn-primary btn-lg" style="display: none" id="download">Скачать</a>
+    <a href="" download class="btn btn-primary btn-lg" style="display: none" id="download">Скачать</a>
 </div>
 <script>
     function aa() {
         $.ajax({
-            url: '{% url 'is_exist' id %}',
+            url: '{% url 'is_csv_ready' %}',
             data: {},
             success: function (data) {
                 if (data['exist']) {
                     document.getElementById("download").style.display = "block"
+                    document.getElementById("download").href = data['href']
                     clearInterval(a);
                     
                 }

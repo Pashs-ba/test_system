@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'questions',
     'widget_tweaks',
     'problems',
-    # 'channels',
+    'django_celery_results',
+
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -155,3 +156,14 @@ ACCEPTABLE_LANGUAGES = {'Python 3.9': ['python', '.py'],
 PATH_TO_WIN_CPP = "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\Tools\\VsDevCmd.bat"
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
 
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+REDIS_HOST = '127.0.0.1'
+REDIS_PORT = '6379'
+# CELERY settings
+CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+CELERY_BROKER_TRANSPORT_OPTION = {'visibility_timeout': 3600}
+CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
