@@ -150,9 +150,9 @@ USERNAME_LENGTH = 2
 PASSWORD_LENGTH = 5
 DATETIME_FORMAT = "%d.%m.%Y %H:%M"
 
-ACCEPTABLE_FORMATS_IDEAL = ".py, .cpp"
-ACCEPTABLE_LANGUAGES = {'Python 3.9': ['python', '.py'],
-                        'MS C++ 19': ['c_cpp', '.cpp']}
+ACCEPTABLE_FORMATS_IDEAL = ".cpp"
+ACCEPTABLE_LANGUAGES = {'Python 3.9': '.py',
+                        'MS C++ 19': '.cpp'}
 PATH_TO_WIN_CPP = "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\Tools\\VsDevCmd.bat"
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
 
@@ -160,7 +160,7 @@ CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
 REDIS_HOST = '127.0.0.1'
 REDIS_PORT = '6379'
-# CELERY settings
+
 CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
 CELERY_BROKER_TRANSPORT_OPTION = {'visibility_timeout': 3600}
 CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'

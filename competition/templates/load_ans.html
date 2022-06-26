@@ -21,8 +21,8 @@
             <div class="col-3"><label for="lang" class="text-right">Выберите язык: </label></div>
             <div class="col-9 text-center"><select name="lang" id="lang" class="col-form-label form-control"
                                                    onchange="change_lang()">
-                {% for i, j in langs.items %}
-                    <option value="{{ j.0 }}">{{ i }}</option>
+                {% for i in langs.keys %}
+                    <option value="{{ i }}">{{ i }}</option>
                 {% endfor %}
 
             </select></div>

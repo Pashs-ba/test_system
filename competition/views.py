@@ -109,6 +109,7 @@ def load_ans(request, pk):
         solution = Solutions(user=request.user, contest=Contests.objects.get(pk=task),
                              file_name=solution_path, lang=lang, result='Проверка')
         solution.save()
+
         Thread(target=check_solution, args=(solution,)).start()
         messages.success(request, 'Решение отправленно на проверку')
         return redirect('competition_page', competition.pk)

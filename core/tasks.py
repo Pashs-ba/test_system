@@ -4,6 +4,8 @@ from .models import Competitions, StudentGroup, QuestionAns
 
 from celery import shared_task
 import datetime
+
+import resource
    
 @shared_task
 def make_csv(competition, group):
@@ -36,3 +38,5 @@ def make_csv(competition, group):
     with open(settings.BASE_DIR/f'media/{name}.txt', 'w', encoding="utf-8") as f:
         f.write(w)
     return name
+
+
