@@ -58,6 +58,7 @@ def create_contest(request):
 
 
 
+
 @admin_only
 def contest_page(request, pk):
     if request.method == 'POST':
