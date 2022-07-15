@@ -1,3 +1,4 @@
+from asyncio import tasks
 from django.shortcuts import render, redirect
 from test_sys.settings import BASE_DIR
 from .forms import *
@@ -6,12 +7,14 @@ from .utils import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from .models import Competitions, StudentGroup, QuestionAns, Solutions
-import datetime
 import pytz
 utc = pytz.UTC
+
 from django.contrib.auth import logout
 from threading import Thread
 from core.decorators import admin_only
+from .tasks import make_csv
+from django.contrib.sessions.backends.db import SessionStore
 
 
 def sort_by_sum(tmp):
@@ -93,9 +96,12 @@ def homepage(request):
 
 @admin_only
 def load_result(request, competition, group):
-    a = str(datetime.datetime.now().time()).replace('.', '').replace(':', '')
-    Thread(target=make_csv, args=(request, competition, a, group)).start()
-    return render(request, 'wait.html', context={'id': a})
+    promise = make_csv.delay(competition, group)
+    session = SessionStore()
+    session['promise'] = promise.id
+    session.create()
+    request.session['session'] = session.session_key
+    return render(request, 'wait.html')
 
 
 def login_user(request):
