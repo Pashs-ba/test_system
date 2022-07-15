@@ -150,9 +150,10 @@ USERNAME_LENGTH = 2
 PASSWORD_LENGTH = 5
 DATETIME_FORMAT = "%d.%m.%Y %H:%M"
 
-ACCEPTABLE_FORMATS_IDEAL = ".cpp"
+ACCEPTABLE_FORMATS_IDEAL = ".cpp,.py"
 ACCEPTABLE_LANGUAGES = {'Python 3.9': '.py',
                         'MS C++ 19': '.cpp'}
+ACE_LANGUAGES = ['python', 'c_cpp']
 PATH_TO_WIN_CPP = "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\Tools\\VsDevCmd.bat"
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
 

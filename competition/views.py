@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from core.models import Competitions, Contests, Solutions, QuestionAns, StudentGroup, Problems, Teachers
 from core.utils import competition_status, upload_file
 from management.views.questions import question_change
-from .utils import get_extension, get_next_name, save_solution, check_solution
+from .utils import get_extension, get_next_name, save_solution, check_solution, get_ace_lang
 from django.conf import settings
 from django.contrib import messages
 import os
@@ -116,7 +116,8 @@ def load_ans(request, pk):
     else:
         context = {
             'competition': competition,
-            'langs': settings.ACCEPTABLE_LANGUAGES
+            'langs': settings.ACCEPTABLE_LANGUAGES,
+            'ace_langs': get_ace_lang(),
         }
         if request.GET.get('contest', ''):
             contest = Contests.objects.get(pk=request.GET.get('contest', ''))

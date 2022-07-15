@@ -4,6 +4,7 @@ from django.conf import settings
 from core.models import Solutions
 from core.utils import upload_file
 import subprocess
+from django.conf import settings
 
 def get_extension(lang: str):
     return settings.ACCEPTABLE_LANGUAGES[lang]
@@ -32,9 +33,21 @@ def save_solution(request, lang, code):
 
 
 def check_solution(solution: Solutions):
-    need = 'ChineseTester'
+    # print(str(settings.BASE_DIR))
+    need = str(settings.BASE_DIR)+'/ChineseTester'
     a = subprocess.Popen([need, str(solution.pk), get_extension(solution.lang)],
                          stdout=subprocess.PIPE,
                          stdin=subprocess.PIPE,
                          stderr=subprocess.PIPE)
     a.wait()
+    ans, err = a.communicate()
+    if ans:
+        print(ans.decode())
+    if err:
+        print(err.decode())
+
+def get_ace_lang():
+    d = {}
+    for i in range(len(settings.ACCEPTABLE_LANGUAGES)):
+        d[list(settings.ACCEPTABLE_LANGUAGES.keys())[i]] = settings.ACE_LANGUAGES[i]
+    return d

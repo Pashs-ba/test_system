@@ -5,8 +5,6 @@ from .models import Competitions, StudentGroup, QuestionAns
 from celery import shared_task
 import datetime
 
-import resource
-   
 @shared_task
 def make_csv(competition, group):
     comp = Competitions.objects.get(pk=competition)

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {%load static %}
 {% block main %}
-    <script src="{% static 'management/ace/ace.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.7.1/ace.js"></script>
     <h2 class="display-2 text-center">Отослать решение</h2>
     <form class="text-center form my-3" enctype="multipart/form-data" method="post">
         {% csrf_token %}
@@ -58,10 +58,15 @@
         function change_lang() {
             const langs = {
                 {% for i, j in langs.items %}
-                    '{{ j.0 }}': '{{ j.1 }}',
+                    '{{ i }}': '{{ j }}',
                 {% endfor %}
             }
-            editor.session.setMode('ace/mode/' + document.getElementById('lang').value)
+            const ace_langs = {
+                {% for i, j in ace_langs.items %}
+                    '{{ i }}': '{{ j }}',
+                {% endfor %}
+            }
+            editor.session.setMode('ace/mode/' + ace_langs[document.getElementById('lang').value])
             document.getElementById('file').setAttribute('accept', langs[document.getElementById('lang').value])
         }
 
