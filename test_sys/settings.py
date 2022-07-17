@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     'questions',
     'widget_tweaks',
     'problems',
-    'django_celery_results',
 
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
