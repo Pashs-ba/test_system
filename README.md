@@ -77,3 +77,5 @@
     python manage.py runserver
     ```
 **После этих инструкций у вас запустится минимально рабочий проект. ЧАСТЬ ФИЧЕЙ НЕ БУДЕТ РАБОТАТЬ пока вы не установите Сelery и Redis инструкция по установке находится [вот здесь](https://hashsum.ru/celery-django-redis/)**
+### Установка на сервер
+Я использовал инструкцию по установке от [DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-django-on-ubuntu-16-04), там все очень подробно описанно, кроме того что нужно обязательно создавать еще одного юзера, кроме рута.
