@@ -17,6 +17,29 @@
         </div>
         <div class="col-lg-3 my-3 text-center">
             <div class="card h-100">
+                <a href="{% url 'question_management' %}">
+                    <img class="card-img-top p-4" src="{% static 'management/img/question.svg' %}" height="256" width="256" alt="Card image cap">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">Управление вопросами</h5>
+                    <p class="card-text">Ну... Я думаю вы поняли</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 my-3 text-center">
+            <div class="card h-100">
+                <a href="{% url 'contest_management' %}">
+                    <img class="card-img-top p-4" src="{% static "management/img/trophy.svg" %}" height="256"
+                         width="256" alt="Card image cap">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">Управление задачами</h5>
+                    <p class="card-text">Ну... Я думаю вы поняли</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 my-3 text-center">
+            <div class="card h-100">
                 <a href="{% url 'competition_management' %}">
                     <img class="card-img-top p-4" src="{% static "management/img/competition.svg" %}" height="256"
                          width="256" alt="Card image cap">
@@ -27,17 +50,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 my-3 text-center">
-            <div class="card h-100">
-                <a href="{% url 'question_management' %}">
-                    <img class="card-img-top p-4" src="{% static 'management/img/question.svg' %}" height="256" width="256" alt="Card image cap">
-                </a>
-                <div class="card-body">
-                    <h5 class="card-title">Управление вопросами</h5>
-                    <p class="card-text">Ну... Я думаю вы поняли</p>
-                </div>
-            </div>
-        </div>
+        
         <div class="col-lg-3 my-3 text-center">
             <div class="card h-100">
                 <a href="{% url 'group_managment' %}">
@@ -64,19 +77,8 @@
             </div>
         </div>
         
-        <div class="col-lg-3 my-3 text-center">
-            <div class="card h-100">
-                <a href="{% url 'contest_management' %}">
-                    <img class="card-img-top p-4" src="{% static "management/img/trophy.svg" %}" height="256"
-                         width="256" alt="Card image cap">
-                </a>
-                <div class="card-body">
-                    <h5 class="card-title">Управление задачами</h5>
-                    <p class="card-text">Ну... Я думаю вы поняли</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 my-3 text-center">
+        
+        {% comment %} <div class="col-lg-3 my-3 text-center">
             <div class="card h-100">
                 <a href="{% url 'question_generator_manage' %}">
                     <img class="card-img-top p-4" src="{% static 'management/img/generator.svg' %}" height="256"
@@ -87,7 +89,7 @@
                     <p class="card-text">Для вопросов</p>
                 </div>
             </div>
-        </div>
+        </div> {% endcomment %}
     </div>
     {%endif%}
     <div class="row my-4 d-flex justify-content-center">
