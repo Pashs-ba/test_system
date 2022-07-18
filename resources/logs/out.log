@@ -1,0 +1,1383 @@
+ID: 8 
+
+Opened_database_successfully 
+Geting_ID_and_name_from_database 
+	Send_select_query 
+	Select_step 
+	Get_solution_filename 
+	Solution_filename: 2/7.py 
+		
+	Get_contestID 
+	Contest_id: 1 
+		
+	Close_statment 
+	File_name: 2/7.py 
+	Contest_ID: 1 
+Geting_limits_from_database 
+	Time_limit: 1000 
+	Memory_limit: 256 
+Rederecting_input_and_output_to_pipe 
+Creating_process_with_name: g++ 
+Runing_simple_process 
+Checking_participant_code 
+	Prepare_geting_test_from_database 
+		I'm_ready 
+	Result_evoluation 
+		ok_test_passed 
+			result_is_ok 
+		
+	Result_evoluation 
+	Result_evoluation 
+		Checking_test# 2 
+			ok_test_passed 
+				result_is_ok 
+			
+		Taking_next_test 
+		Rederecting_input_and_output_to_pipe 
+		Creating_process_with_name: python3 
+	Result_evoluation 
+			ok_test_passed 
+				result_is_ok 
+			
+			
+		Checking_test# 4 
+			Taking_next_test 
+			Rederecting_input_and_output_to_pipe 
+			Creating_process_with_name: python3 
+			Runing_process_with_time_and_memory_evaluation 
+			Runing_process_with_time_and_memory_evaluation 
+				Checking_test# 5 
+						Taking_next_test time_and_memory_evaluation 
+				Checking_test# 5 
+					Result_evoluation 
+						Taking_next_test 
+						ok_test_passed 
+							result_is_ok 
+						
+					Rederecting_input_and_output_to_pipe 
+					Rederecting_input_and_output_to_pipe 
+					Runing_process_with_time_and_memory_evaluation 
+						Creating_process_with_name: python3 
+						Result_evoluation 
+							ok_test_passed 
+								result_is_ok 
+							
+						Checking_test# 8 
+						Checking_test# 8 
+							Runing_process_with_time_and_memory_evaluation 
+								Taking_next_test 
+								Rederecting_input_and_output_to_pipe 
+								Creating_process_with_name: python3 
+								Runing_process_with_time_and_memory_evaluation 
+									Checking_test# 9 
+											Taking_next_test 
+											Taking_next_test 
+								Result_evoluation 
+											ok_test_passed 
+												result_is_ok 
+											
+											
+result_is_ok 
+
+t_and_output_to_pipe 
+										Result_evoluation 
+Creating_process_with_name: python3 
+Creating_process_with_name: python3 
+											ok_test_passed 
+												result_is_ok 
+											
+										Checking_test# 12 
+											Taking_next_test 
+																						Result_evoluation 
+												ok_test_passed 
+													result_is_ok 
+												
+											Result_evoluation 
+												ok_test_passed 
+													result_is_ok 
+												
+											Result_evoluation 
+												ok_test_passed 
+													result_is_ok 
+												
+											Result_evoluation 
+												ok_test_passed 
+													result_is_ok 
+												
+											Result_evoluation 
+												ok_test_passed 
+													result_is_ok 
+												
+											Result_evoluation 
+												ok_test_passed 
+													result_is_ok 
+												
+											Result_evoluation 
+												ok_test_passed 
+													result_is_ok 
+												
+											Result_evoluation 
+												ok_test_passed 
+													result_is_ok 
+												
+											Result_evoluation 
+												ok_test_passed 
+													result_is_ok 
+												
+											Result_evoluation 
+												ok_test_passed 
+													result_is_ok 
+												
+											Result_evoluation 
+												ok_test_passed 
+													result_is_ok 
+												
+											Result_evoluation 
+												ok_test_passed 
+													result_is_ok 
+												
+											Result_evoluation 
+												ok_test_passed 
+													result_is_ok 
+												
+											Result_evoluation 
+												ok_test_passed 
+													result_is_ok 
+												
+											Result_evoluation 
+												ok_test_passed 
+													result_is_ok 
+												
+											Result_evoluation 
+												ok_test_passed 
+													result_is_ok 
+												
+											Result_evoluation 
+												ok_test_passed 
+													result_is_ok 
+												
+											Result_evoluation 
+												ok_test_passed 
+													result_is_ok 
+												
+											Result_evoluation 
+												ok_test_passed 
+													result_is_ok 
+												
+											Result_evoluation 
+												ok_test_passed 
+													result_is_ok 
+												
+											Result_evoluation 
+												ok_test_passed 
+													result_is_ok 
+												
+											Result_evoluation 
+												ok_test_passed 
+													result_is_ok 
+												
+											Result_evoluation 
+												ok_test_passed 
+													result_is_ok 
+												
+											Checking_test# 59 
+											Checking_test# 59 
+												Checking_test# 51 
+43 
+														Checking_test# 49 
+Runing_process_with_time_and_memory_evaluation 
+												Checking_test# 57 
+												Checking_test# 57 
+													Checking_test# 41 
+														Checking_test# 46 
+															Checking_test# 55 
+																Rederecting_input_and_output_to_pipe 
+																Creating_process_with_name: python3 
+																Runing_process_with_time_and_memory_evaluation 
+																	Taking_next_test 
+																	Checking_test# 38 
+																		Checking_test# 54 
+																			Checking_test# 48 
+																				Checking_test# 39 
+																				Checking_test# 39 
+																					Checking_test# 52 
+																						Checking_test# 45 
+																						Checking_test# 45 
+																							Checking_test# 40 
+																								Checking_test# 53 
+																									Checking_test# 47 
+																										Checking_test# 50 
+																																								Checking_test# h37 
+																																								Checking_test# h37 
+42 
+																													Taking_next_test 
+																													Rederecting_input_and_output_to_pipe 
+																													Creating_process_with_name: python3 
+																													Runing_process_with_time_and_memory_evaluation 
+																														Checking_test# 36 
+																															Checking_test# 56 
+																																Rederecting_input_and_output_to_pipe 
+																																Rederecting_input_and_output_to_pipe 
+																																Taking_next_test 
+																													Rederecting_input_and_output_to_pipe 
+																																Taking_next_test 
+																																Taking_next_test 
+																																Creating_process_with_name: python3 
+																																Rederecting_input_and_output_to_pipe 
+																																Rederecting_input_and_output_to_pipe 
+												Creating_process_with_name: python3 
+																																Creating_process_with_name: python3 
+																																Creating_process_with_name: python3 
+																																Taking_next_test 
+																																	Rederecting_input_and_output_to_pipe 
+Checking_test# 44 
+																																	Creating_process_with_name: python3 
+Checking_test# 44 
+																																	Taking_next_test 
+																						Runing_process_with_time_and_memory_evaluation 
+																						Runing_process_with_time_and_memory_evaluation 
+																																		Rederecting_input_and_output_to_pipe 
+																																		Creating_process_with_name: python3 
+																																		Taking_next_test 
+																																		Runing_process_with_time_and_memory_evaluation 
+																																			Rederecting_input_and_output_to_pipe 
+																																			Creating_process_with_name: python3 
+																																			Runing_process_with_time_and_memory_evaluation 
+																																				Taking_next_test 
+																																					Rederecting_input_and_output_to_pipe 
+58 
+																																					Taking_next_test 
+																																					Rederecting_input_and_output_to_pipe 
+																																					Taking_next_test 
+																																					Rederecting_input_and_output_to_pipe 
+																																					Taking_next_test 
+																																					Taking_next_test 
+																																					Runing_process_with_time_and_memory_evaluation 
+																																						Rederecting_input_and_output_to_pipe 
+																																						status: 0 
+																																						WIFEXITED: 1 
+ 0 	
+																																										WEXITSTATUS: 0 
+																																						WIFEXITED: 1 
+																																						WIFSIGNALED: 0 
+																																						WEXITSTATUS: 0 
+																																						WTERMSIG: 0 
+																																						WIFSIGNALED: 0 
+																																						WIFSTOPPED: 0 
+																																						WTERMSIG: 0 
+																																																																				WIFSTOPPED: 0 
+																																						memory_usage: 0 
+																																					time_usage: 44305 
+																																					memory_usage: 0 
+																																						R	
+																																						R	
+																								Rederecting_input_and_output_to_pipe 
+																																				Taking_next_test 
+																																				Rederecting_input_and_output_to_pipe 
+																																				Runing_process_with_time_and_memory_evaluation 
+																																					Runing_process_with_time_and_memory_evaluation 
+																																						Taking_next_test 
+																																						Rederecting_input_and_output_to_pipe 
+																																						Taking_next_test 
+																																						Rederecting_input_and_output_to_pipe 
+																																						Taking_next_test 
+																																						Rederecting_input_and_output_to_pipe 
+																																						Taking_next_test 
+																																						Rederecting_input_and_output_to_pipe 
+																																						Taking_next_test 
+																																						Rederecting_input_and_output_to_pipe 
+																																						Taking_next_test 
+																																						Rederecting_input_and_output_to_pipe 
+																																						Taking_next_test 
+																																						Rederecting_input_and_output_to_pipe 
+																																						Taking_next_test 
+																																						Rederecting_input_and_output_to_pipe 
+																																						Taking_next_test 
+																																						Rederecting_input_and_output_to_pipe 
+																																						Taking_next_test 
+																																						Rederecting_input_and_output_to_pipe 
+																																						Taking_next_test 
+																																						Rederecting_input_and_output_to_pipe 
+																																						Taking_next_test 
+																																						Rederecting_input_and_output_to_pipe 
+																																						status: 0 
+																																						WIFEXITED: 1 
+																																						WEXITSTATUS: 0 
+																																						WIFSIGNALED: 0 
+																																						WTERMSIG: 0 
+																																						WIFSTOPPED: 0 
+																																						time_usage: 39993 
+																																						memory_usage: 0 
+																																					Rederecting_input_and_output_to_pipe 
+																																					status: 0 
+																																					WIFEXITED: 1 
+																																					WEXITSTATUS: 0 
+																																					WIFSIGNALED: 0 
+																																					WTERMSIG: 0 
+																																					WIFSTOPPED: 0 
+																																					time_usage: 59848 
+																																					memory_usage: 0 
+																																				Rederecting_input_and_output_to_pipe 
+																																				status: 0 
+																																				WIFEXITED: 1 
+																																				WEXITSTATUS: 0 
+																																				WIFSIGNALED: 0 
+																																				WTERMSIG: 0 
+																																				WIFSTOPPED: 0 
+																																				time_usage: 45178 
+																																				memory_usage: 0 
+																																			Rederecting_input_and_output_to_pipe 
+																																			status: 0 
+																																			WIFEXITED: 1 
+																																			WEXITSTATUS: 0 
+																																			WIFSIGNALED: 0 
+																																			WTERMSIG: 0 
+																																			WIFSTOPPED: 0 
+																																			time_usage: 36150 
+																																			memory_usage: 0 
+																																		Rederecting_input_and_output_to_pipe 
+																																		status: 0 
+																																		WIFEXITED: 1 
+																																		WEXITSTATUS: 0 
+																																		WIFSIGNALED: 0 
+																																		WTERMSIG: 0 
+																																		WIFSTOPPED: 0 
+																																		time_usage: 30742 
+																																		memory_usage: 0 
+																																	Rederecting_input_and_output_to_pipe 
+																																	status: 0 
+																																	WIFEXITED: 1 
+																																	WEXITSTATUS: 0 
+																																	WIFSIGNALED: 0 
+																																	WTERMSIG: 0 
+																																	WIFSTOPPED: 0 
+																																	time_usage: 24988 
+																																	memory_usage: 0 
+																																Rederecting_input_and_output_to_pipe 
+																																status: 0 
+																																WIFEXITED: 1 
+																																WEXITSTATUS: 0 
+																																WIFSIGNALED: 0 
+																																WTERMSIG: 0 
+																																WIFSTOPPED: 0 
+																																time_usage: 26902 
+																																memory_usage: 0 
+																															Rederecting_input_and_output_to_pipe 
+																															status: 0 
+																															WIFEXITED: 1 
+																															WEXITSTATUS: 0 
+																															WIFSIGNALED: 0 
+																															WTERMSIG: 0 
+																															WIFSTOPPED: 0 
+																															time_usage: 36746 
+																															memory_usage: 0 
+																														Rederecting_input_and_output_to_pipe 
+																														status: 0 
+																														WIFEXITED: 1 
+																														WEXITSTATUS: 0 
+																														WIFSIGNALED: 0 
+																														WTERMSIG: 0 
+																														WIFSTOPPED: 0 
+																														time_usage: 27267 
+																														memory_usage: 0 
+																													Rederecting_input_and_output_to_pipe 
+																													status: 0 
+																													WIFEXITED: 1 
+																													WEXITSTATUS: 0 
+																													WIFSIGNALED: 0 
+																													WTERMSIG: 0 
+																													WIFSTOPPED: 0 
+																													time_usage: 27752 
+																													memory_usage: 0 
+																												Rederecting_input_and_output_to_pipe 
+																												status: 0 
+																												WIFEXITED: 1 
+																												WEXITSTATUS: 0 
+																												WIFSIGNALED: 0 
+																												WTERMSIG: 0 
+																												WIFSTOPPED: 0 
+																												time_usage: 20164 
+																												memory_usage: 0 
+																											Rederecting_input_and_output_to_pipe 
+																																												_						CCreating_process_with_name	   reating_process_with_name:python3epython3/    
+																																												_						CCreating_process_with_name	   reating_process_with_name:python3epython3/    
+																																												_						CCreating_process_with_name	   reating_process_with_name:python3epython3/    
+																																												_						CCreating_process_with_name	   reating_process_with_name:python3epython3/    
+																																												_						CCreating_process_with_name	   reating_process_with_name:python3epython3/    
+																											Creating_process_with_name: python3 
+																											Creating_process_with_name: python3 
+																								Creating_process_with_name: python3 
+																								Creating_process_with_name: python3 
+3 
+			s_with_name	   reating_process_with_name:python3epython3/    
+																								Creating_process_with_name: python3 
+3 
+			s_with_name	   reating_process_with_name:python3epython3/    
+																								Creating_process_with_name: python3 
+3 
+			s_with_name	   reating_process_with_name:python3epython3/    
+																											Creating_process_with_name: python3 
+																											Creating_process_with_name: python3 
+																											Creating_process_with_name: /home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+																											Test: 52 63 
+																												Output: 63
+ 
+																												Answer: 63
+ 
+																											
+																										Runing_simple_process 
+																										Creating_process_with_name: /home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+																											reating_process_with_name: 																								python3 
+Test: 79 11 
+																											Output: 79
+ ess_with_name: 																								python3 
+																											Output: 79
+ 
+																											Answer: 79
+ 
+																										
+																									Runing_simple_process 
+																									Runing_simple_process 
+name: 																								python3 
+Test: 79 11 
+ctory/checker/checker-8.exe 
+
+																									Runing_process_with_time_and_memory_evaluation 
+																										Runing_process_with_time_and_memory_evaluation 
+																																																						Test: 27 47 
+																												Output: 47
+ 
+																												Answer: 47
+ 
+																											
+																										Runing_simple_process 
+Test: 10 13 
+																												Output: 13
+ 
+																												Answer: 13
+ 
+																											
+																										Runing_simple_process 
+																										Runing_process_with_time_and_memory_evaluation 
+																											Runing_process_with_time_and_memory_evaluation 
+																												Runing_process_with_time_and_memory_evaluation 
+																													Runing_process_with_time_and_memory_evaluation 
+																														Runing_process_with_time_and_memory_evaluation 
+																															Runing_process_with_time_and_memory_evaluation 
+																																Runing_process_with_time_and_memory_evaluation 
+																																	Result_evoluation 
+																																		ok_test_passed 
+																																			result_is_ok 
+																																		
+																																	Test: 39 18 
+																																		Output: 39
+ 
+																																		Answer: 39
+ 
+																																	
+																																Runing_simple_process 
+																																Result_evoluation 
+																																	ok_test_passed 
+																																		result_is_ok 
+																																	
+																																Result_evoluation 
+																																	ok_test_passed 
+																																		result_is_ok 
+																																	
+																																										s				
+											Result_evoluation 
+Test: 65 24 
+																																										s				
+											Result_evoluation 
+Test: 65 24 
+																																	ok_test_passe																																	ok_test_passed 
+																																		Answer: 65
+ 
+																																	result_is_ok 
+																																
+																															
+																					 
+																														Checking_test# 53 
+																															Taking_next_test 
+																															Rederecting_input_and_output_to_pipe 
+																															status: 	n 																									
+																																			WIFEXITED: 																								
+			Checking_test# 39 
+																																WIFEXITED: 1 
+																																							 	
+U																																							 	
+U																							Taking_next_test 
+																																WIFSIGNALED: 0 
+																																WTERMSIG: 0 
+																																WIFSTOPPED: 0 
+																																time_usage: 18830 
+																																memory_usage: 0 
+																																memory_usage: 0 
+																															Rederecting_input_and_output_to_pipe 
+																															Rederecting_input_and_output_to_pipe 
+																															status: 0 
+																															WIFEXITED: 1 
+																															WEXITSTATUS: 0 
+																															WIFSIGNALED: 0 
+																															WTERMSIG: 0 
+																															WIFSTOPPED: 0 
+																															time_usage: 20036 
+																															memory_usage: 0 
+																														Rederecting_input_and_output_to_pipe 
+																														Checking_test# 46 
+																															Taking_next_test 
+																															Rederecting_input_and_output_to_pipe 
+																															status: -807626845 
+																															WIFEXITED: 0 
+																															WEXITSTATUS: 151 
+																															WIFSIGNALED: 1 
+																															WTERMSIG: 35 
+																															WIFSTOPPED: 0 
+																															time_usage: 2612204343012587086 
+																															memory_usage: 0 
+																														Result_evoluation 
+																															ok_test_passed 
+																																result_is_ok 
+																															
+																														
+																													Result_evoluation 
+																														Result_not_okay 
+																														Today_result_is: tle 
+																														Result_not_okay 
+																															Today_result_is: tle 
+																														
+																													result_is_ok 
+																												
+																											status: 0 
+																											WIFEXITED: 1 
+																											WEXITSTATUS: 0 
+																											WIFSIGNALED: 0 
+																											WTERMSIG: 0 
+																											WIFSTOPPED: 0 
+																											time_usage: 19769 
+																											memory_usage: 0 
+																										Rederecting_input_and_output_to_pipe 
+																										Result_evoluation 
+																										Result_evoluation 
+																											Checking_test# 48 
+																												Taking_next_test 
+																													Rederecting_input_and_output_to_pipe 
+																													Rederecting_inp																													result_is_ok 
+																												
+																											Checking_test# 50 
+																												Taking_next_test 
+																												Rederecting_input_and_output_to_pipe 
+																												Checking_test# 51 
+																													Taking_next_test 
+																													Rederecting_input_and_output_to_pipe 
+																													status: 0 
+																													WIFEXITED: 1 
+																													WEXITSTATUS: 0 
+																													WIFSIGNALED: 0 
+																													WTERMSIG: 0 
+																													WIFSTOPPED: 0 
+																													time_usage: 22351 
+																													memory_usage: 0 
+																												Rederecting_input_and_output_to_pipe 
+																												status: 0 
+																												WIFEXITED: 1 
+																												WEXITSTATUS: 0 
+																												WIFSIGNALED: 0 
+																												WTERMSIG: 0 
+																												WIFSTOPPED: 0 
+																												time_usage: 25577 
+																												memory_usage: 0 
+																											Rederecting_input_and_output_to_pipe 
+																											status: 0 
+																											WIFEXITED: 1 
+																											WEXITSTATUS: 0 
+																											WIFSIGNALED: 0 
+																											WTERMSIG: 0 
+																											WIFSTOPPED: 0 
+																											time_usage: 19691 
+																											memory_usage: 0 
+																										Rederecting_input_and_output_to_pipe 
+																										status: 0 
+																										WIFEXITED: 1 
+																										WEXITSTATUS: 0 
+																										WIFSIGNALED: 0 
+																										WTERMSIG: 0 
+																										WIFSTOPPED: 0 
+																										time_usage: 18480 
+																										memory_usage: 0 
+																									Rederecting_input_and_output_to_pipe 
+																									status: 0 
+																									WIFEXITED: 1 
+																									WEXITSTATUS: 0 
+																									WIFSIGNALED: 0 
+																									WTERMSIG: 0 
+																									WIFSTOPPED: 0 
+																									time_usage: 18204 
+																									memory_usage: 0 
+																								Rederecting_input_and_output_to_pipe 
+																																				i	Creating_process_with_name:	 CCreating_process_with_name:Creating_process_with_name:	 exe 
+
+																			 Creating_process_with_name:/home/pashs/test_system/res  rces/working_directory/checker/checker-8.exe home/pashs/test_system/resop /home/pashs/test_system/resources/working_directory/checker/checker-8.exe/home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+
+
+																																				i	Creating_process_with_name:	 CCreating_process_with_name:Creating_process_with_name:	 exe 
+
+																			 Creating_process_with_name:/home/pashs/test_system/res  rces/working_directory/checker/checker-8.exe home/pashs/test_system/resop /home/pashs/test_system/resources/working_directory/checker/checker-8.exe/home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+
+
+																																				i	Creating_process_with_name:	 CCreating_process_with_name:Creating_process_with_name:	 exe 
+
+																			 Creating_process_with_name:/home/pashs/test_system/res  rces/working_directory/checker/checker-8.exe home/pashs/test_system/resop /home/pashs/test_system/resources/working_directory/checker/checker-8.exe/home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+
+
+																																				i	Creating_process_with_name:	 CCreating_process_with_name:Creating_process_with_name:	 exe 
+
+																			 Creating_process_with_name:/home/pashs/test_system/res  rces/working_directory/checker/checker-8.exe home/pashs/test_system/resop /home/pashs/test_system/resources/working_directory/checker/checker-8.exe/home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+
+
+																								Creating_process_with_name: python3 
+ame:	 CCreating_process_with_name:Creating_process_with_name:	 exe 
+
+																			 Creating_process_with_name:/home/pashs/test_system/res  rces/working_directory/checker/checker-8.exe home/pashs/test_system/resop /home/pashs/test_system/resources/working_directory/checker/checker-8.exe/home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+
+
+																								Creating_process_with_name: python3 
+																								Creating_process_with_name: python3 
+	 exe 
+
+																			 Creating_process_with_name:/home/pashs/test_system/res  rces/working_directory/checker/checker-8.exe home/pashs/test_system/resop /home/pashs/test_system/resources/working_directory/checker/checker-8.exe/home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+
+
+																																											Creating_process_with_name:															Creating_pro  python3/home/pashs/test_system/resources/working_directory/checker/checker-8.exe m
+
+pashs/test_system/res  rces/working_directory/checker/checker-8.exe home/pashs/test_system/resop /home/pashs/test_system/resources/working_directory/checker/checker-8.exe/home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+
+
+																																											Creating_process_w																																											Creating_process_with_name:															Creating_pro  python3/home/pashs/test																								Creating_process_with_name: python3 
+																								Creating_process_with_name: python3 
+ith_name:															Creating_pro  python3/home/pashs/test_system/resources/working_directory/checker/checker-8.exe m
+
+																								Creating_process_with_name: python3 
+ith_name:															Creating_pro  python3/home/pashs/test_system/resources/working_directory/checker/checker-8.exe m
+
+																											Creating_process_with_name:	/home/pashs/test_system/resources/working_directory/checker/checker-8.exem 
+																													Creating_process_with_name:	/home/pashs/test_system/resources/working_directory/checker/checker-8.exem 
+						Creating_process_with_name: python3 
+																								Creating_process_with_name: /home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+																								Creating_process_with_name: python3 
+																										Creating_process_with_name:	t						p	thon3 							
+																																														
+																																									
+		Creating_process_with_name: /home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+																																													Creating_process_with_name: Creating_process_with_name: python3 k
+																																													Creating_process_with_name: Creating_process_with_name: python3 k
+																																													Creating_process_with_name: Creating_process_with_name: python3 k
+ng_directory/checker/checker-8.exe 
+est_system/resources/working_directory/checker/checker-8.exe 
+Test: 85 70 
+																									Output: 85
+ 
+																									Answer: 85
+ 
+																								
+																							Runing_simple_process 
+																							Creating_process_with_name: /home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+																							Creating_process_with_name: /home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+																							Creating_process_with_name: python3 
+																							Creating_process_with_name: python3 
+																							Creating_process_with_name: /home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+																							Creating_process_with_name: /home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+																							Creating_process_with_name: /home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+																							Creating_process_with_name: /home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+																							Creating_process_with_name: /home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+																							Creating_process_with_name: /home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+Runing_process_with_time_and_memory_evaluation 
+	Creating_process_with_name: python3 
+																								Test: 55 8 
+																									Output: 55
+ 
+																									Answer: 55
+ 
+																								
+																							Runing_simple_process 
+																							Test: 80 62 
+																								Output: 80
+ 
+																								Answer: 80
+ 
+																							
+																						Runing_simple_process 
+																						Test: 75 47 
+																							Output: 75
+ 
+																							Answer: 75
+ 
+																						
+																					Runing_simple_process 
+																					Result_evoluation 
+																						ok_test_passed 
+																							result_is_ok 
+																						
+																					Test: 42 27 
+																						Output: 42
+ 
+																						Answer: 42
+ 
+																					
+																				Runing_simple_process 
+																				Checking_test# 48 
+																				Checking_test# 48 
+																					Runing_process_with_time_and_memory_evaluation 
+																						Taking_next_test 
+																						Rederecting_input_and_output_to_pipe 
+																						Creating_process_with_name: python3 
+																						Runing_process_with_time_and_memory_evaluation 
+																							Result_evoluation 
+																								ok_test_passed 
+																										result_is_ok 
+																									
+																								Runing_process_with_time_and_memory_evaluation 
+																								Runing_process_with_time_and_memory_evaluation 
+process_with_time_and_memory_evaluation 
+																									Checking_test# 63 
+																										Taking_next_test 
+																										Taking_next_test 
+																										Test: 97 95 
+																											Output: 97
+ 
+																											Answer: 97
+ 
+																										
+																									Runing_simple_process 
+																										ederecting_input_and_output_to_pipe							
+																													ederecting_input_and_output_to_pipe							
+																Runing_process_with_time_and_memory_evaluation 
+																										Creating_process_with_name: python3 
+																										Result_evoluation 
+																										Result_evoluation 
+																											Test: 69 82 
+																												ok_test_passed 
+																													Output: 82
+ 
+																													result_is_ok 
+																												Answer: 82
+ 
+																											
+																										
+																									Runing_simple_process 
+																																					Runing_process_with_time_and_memory_evaluation Result_evoluation 
+																																					Runing_process_with_time_and_memory_evaluation Result_evoluation 
+																										ok_test_passed 
+																											result_is_ok 
+																										
+																									Test: 16 42 
+																										Output: 42
+ 
+																										Answer: 42
+ 
+																									
+																								Runing_simple_process 
+																								Runing_simple_process 
+																								Result_evoluation 
+																									ok_test_passed 
+																										result_is_ok 
+																									
+																								Runing_process_with_time_and_memory_evaluation 
+																									Runing_process_with_time_and_memory_evaluation 
+																										Test: 48 33 
+																												Output: 48
+ 
+																									Checking_test# 65 
+																												Output: 48
+ 
+																												T	king_next_test 																																				esult_evoluation								
+Answer: 48
+ 
+																												
+					esult_evoluation								
+Answer:																												
+																						 																							 																								 
+																													result_is_ok 
+					 
+																		Rederecting_input_and_output_to_pipe 
+																												result_is_ok 
+																											
+																										Creating_process_with_name: python3 
+																										Checking_test# 52 
+																											Taking_next_test 
+																											Rederecting_input_and_output_to_pipe 
+																											Creating_process_with_name: python3 
+																											Checking_test# 58 
+																																					Taking_next_testRuning_process_with_time_and_memory_evaluation 																																					Taking_next_testRuning_process_with_time_and_memory_evaluation 
+																													Rederecting_input_and_output_to_pipe 
+																													Test: 49 38 
+																														Output: 49
+ 
+																														Answer: 49
+ 
+																													
+																												Runing_simple_process 
+																												Runing_process_with_time_and_memory_evaluation 
+																													Test: 65 11 
+																														Output: 65
+ 
+																														Answer: 65
+ 
+																													
+																												Runing_simple_process 
+																												Test: 63 1 
+																													Output: 63
+ 
+																													Answer: 63
+ 
+																												
+																											Runing_simple_process 
+																											Runing_process_with_time_and_memory_evaluation 
+																												Runing_process_with_time_and_memory_evaluation 
+																													Test: 73 91 
+																														Output: 91
+ 
+																														Answer: 91
+ 
+																													
+																												Runing_simple_process 
+																												Test: 99 16 
+																													Output: 99
+ 
+																													Answer: 99
+ 
+																												
+																											Runing_simple_process 
+																											Test: 30 3 
+																												Output: 30
+ 
+																												Answer: 30
+ 
+																											
+																										Runing_simple_process 
+																										Runing_process_with_time_and_memory_evaluation 
+																											Runing_process_with_time_and_memory_evaluation 
+																												Runing_process_with_time_and_memory_evaluation 
+																													Runing_process_with_time_and_memory_evaluation 
+																														Runing_process_with_time_and_memory_evaluation 
+																															Result_evoluation 
+																																ok_test_passed 
+																																	result_is_ok 
+																																
+																															Result_evoluation 
+																																ok_test_passed 
+																																	result_is_ok 
+																																
+																															Result_evoluation 
+																																ok_test_passed 
+																																	result_is_ok 
+																																
+																															Result_evoluation 
+																																ok_test_passed 
+																																	result_is_ok 
+																																
+																															Result_evoluation 
+																																ok_test_passed 
+																																	result_is_ok 
+																																
+																															Result_evoluation 
+																																ok_test_passed 
+																																	result_is_ok 
+																																
+																															Result_evoluation 
+																																ok_test_passed 
+																																	result_is_ok 
+																																
+																															Result_evoluation 
+																																ok_test_passed 
+																																	result_is_ok 
+																																
+																															Checking_test# 51 
+																																Taking_next_test 
+																																Tests_are_over 
+																																
+																															Result_evoluation 
+																																ok_test_passed 
+																																	result_is_ok 
+																																
+																															Checking_test# 55 
+																																Tests_are_over 
+																																
+																															Result_evoluation 
+																																ok_test_passed 
+																																	result_is_ok 
+																																
+																															Checking_test# 73 
+																															Checking_test# 73 
+																																status: 0 
+																							T											
+																								T											
+										WIFEXITED: 1 
+																																
+																															WEXITSTATUS: 0 
+																															WIFSIGNALED: 0 
+																															WTERMSIG: 0 
+																															WIFSTOPPED: 0 
+																															time_usage: 21328 
+																															memory_usage: 0 
+																														Rederecting_input_and_output_to_pipe 
+																														Checking_test# 74 
+																														Checking_test# 74 
+																															Result_evoluation 
+																																ok_test_passed 
+																																	result_is_ok 
+																																
+																															Tests_are_over 
+																															
+																														Checking_test# 55 
+																															Tests_are_over 
+																															
+																														Checking_test# 56 
+																															Tests_are_over 
+																															
+																														Checking_test# 70 
+																															Tests_are_over 
+																															
+																														status: 0 
+																														WIFEXITED: 1 
+																														WEXITSTATUS: 0 
+																														WIFSIGNALED: 0 
+																														WTERMSIG: 0 
+																														WIFSTOPPED: 0 
+																														time_usage: 21589 
+																														memory_usage: 0 
+																													Rederecting_input_and_output_to_pipe 
+																													Checking_test# 58 
+																														Tests_are_over 
+																														
+																													Result_evoluation 
+																														ok_test_passed 
+																															result_is_ok 
+																														
+																													Result_evoluation 
+																														ok_test_passed 
+																															result_is_ok 
+																														
+																													Result_evoluation 
+																														ok_test_passed 
+																															result_is_ok 
+																														
+																													Result_evoluation 
+																														ok_test_passed 
+																															result_is_ok 
+																														
+																													Result_evoluation 
+																														ok_test_passed 
+																															result_is_ok 
+																														
+																													Checking_test# 86 
+																														Tests_are_over 
+																														
+																													status: 0 
+																													WIFEXITED: 1 
+																													WEXITSTATUS: 0 
+																													WIFSIGNALED: 0 
+																													WTERMSIG: 0 
+																													WIFSTOPPED: 0 
+																													time_usage: 26931 
+																													memory_usage: 0 
+																												Rederecting_input_and_output_to_pipe 
+																												status: 0 
+																												WIFEXITED: 1 
+																												WEXITSTATUS: 0 
+																												WIFSIGNALED: 0 
+																												WTERMSIG: 0 
+																												WIFSTOPPED: 0 
+																												time_usage: 22180 
+																												memory_usage: 0 
+																											Rederecting_input_and_output_to_pipe 
+																											status: 0 
+																											WIFEXITED: 1 
+																											WEXITSTATUS: 0 
+																											WIFSIGNALED: 0 
+																											WTERMSIG: 0 
+																											WIFSTOPPED: 0 
+																											time_usage: 21369 
+																											memory_usage: 369 
+																											status: 0 
+																											memory_usage: 0 
+																										WIFEXITED: 1 
+																										WEXITSTATUS: 0 
+																										WIFSIGNALED: 0 
+																										WIFSIGNALED: 0 
+																							Rederecting_input_and_output_to_pipe 
+																										WTERMSIG: 0 
+																										WIFSTOPPED: 0 
+																										time_usage: 23391 
+																										memory_usage: 0 
+																									Rederecting_input_and_output_to_pipe 
+																									status: 0 
+																									WIFEXITED: 1 
+																									WEXITSTATUS: 0 
+																									WIFSIGNALED: 0 
+																									WTERMSIG: 0 
+																									WIFSTOPPED: 0 
+																									time_usage: 20684 
+																									memory_usage: 0 
+																								Rederecting_input_and_output_to_pipe 
+																								Result_evoluation 
+																									ok_test_passed 
+																										result_is_ok 
+																									
+																								Result_evoluation 
+																									ok_test_passed 
+																										result_is_ok 
+																									
+																								status: 0 
+																								WIFEXITED: 1 
+																								WEXITSTATUS: 0 
+																								WIFSIGNALED: 0 
+																								WTERMSIG: 0 
+																								WIFSTOPPED: 0 
+																								time_usage: 25936 
+																								memory_usage: 0 
+																							Rederecting_input_and_output_to_pipe 
+																							status: 0 
+																							WIFEXITED: 1 
+																							WEXITSTATUS: 0 
+																							WIFSIGNALED: 0 
+																							WTERMSIG: 0 
+																							WIFSTOPPED: 0 
+																							time_usage: 22024 
+																							memory_usage: 0 
+																						Rederecting_input_and_output_to_pipe 
+																						status: 0 
+																						WIFEXITED: 1 
+																						WEXITSTATUS: 0 
+																						WIFSIGNALED: 0 
+																						WTERMSIG: 0 
+																						WIFSTOPPED: 0 
+																						time_usage: 29574 
+																						memory_usage: 0 
+																					Rederecting_input_and_output_to_pipe 
+																					status: 0 
+																					WIFEXITED: 1 
+																					WEXITSTATUS: 0 
+																					WIFSIGNALED: 0 
+																					WTERMSIG: 0 
+																					WIFSTOPPED: 0 
+																					time_usage: 25673 
+																					memory_usage: 0 
+																				Rederecting_input_and_output_to_pipe 
+																				status: 0 
+																				WIFEXITED: 1 
+																				WEXITSTATUS: 0 
+																				WIFSIGNALED: 0 
+																				WTERMSIG: 0 
+																				WIFSTOPPED: 0 
+																				time_usage: 22741 
+																				memory_usage: 0 
+																			Rederecting_input_and_output_to_pipe 
+																			status: 0 
+																			WIFEXITED: 1 
+																			WEXITSTATUS: 0 
+																			WIFSIGNALED: 0 
+																			WTERMSIG: 0 
+																			WIFSTOPPED: 0 
+																			time_usage: 27513 
+																			memory_usage: 0 
+																		Rederecting_input_and_output_to_pipe 
+																		status: 0 
+																		WIFEXITED: 1 
+																		WEXITSTATUS: 0 
+																		WIFSIGNALED: 0 
+																		WTERMSIG: 0 
+																		WIFSTOPPED: 0 
+																		time_usage: 27586 
+																		memory_usage: 0 
+																	Rederecting_input_and_output_to_pipe 
+																		reating_process_with_name: _												python3R			
+																		reating_process_with_name: _												python3R			
+Creating_process_with_name: /home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+																	Creating_process_with_name: /home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+																	Creating_process_with_name: /home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+																	Creating_process_with_name: /home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+																	Creating_process_with_name: /home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+																	Creating_process_with_name: /home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+																	Creating_process_with_name: /home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+																	Creating_process_with_name: /home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+																	Runing_process_with_time_and_memory_evaluation 
+																		Creating_process_with_name: /home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+																		Creating_process_with_name: /home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+																		Creating_process_with_name: /home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+																			r																			/home/pashs/test_system/resources/working_directory/checker/checker-8.exe Creating_process_with_name: 
+/home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+0 
+																			r																			/home/pashs/test_system/resources/working_directory/checker/checker-8.exe Creating_process_with_name: 
+/home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+																		WIFEXITED: 1 
+							/home/pashs/test_system/resources/working_directory/checker/checker-8.exe Creating_process_with_name: 
+/home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+																		WIFEXITED: 1 
+																		WEXITSTATUS: 0 
+																		WIFSIGNALED: 0 
+																		WTERMSIG: 0 
+																		WIFSTOPPED: 0 
+																		time_usage: 25422 
+																		memory_usage: 0 
+																		memory_usage: 0 
+																	Test: 33 33 
+																		Output: 33
+ 
+																			Answer: 					Creating_process_with_name: 						/home/pashs/test_system/resources/workiCreating_process_with_name: 						/home/pashs/test_system/resources/working_directory/checker/checker-8.exe											
+																Runing_simple_process 
+/pashs/test_system/resources/working_directory/checker/checker-8.exe																				Runing_simple_process 
+																Test: 64 78 
+																	Output: 78
+ 
+									 							/home/pashs/test_system/resources/working_directory/checker/checker-8.exeke			hAnswer:
+ 78
+ 
+																
+/home/pashs/test_system/resources/working_directory/checker/checker-8.exeke			hAnswer:
+ 																
+															Runing_simple_process 
+															status: 															Creating_process_with_name: -807626845/home/pashs/test_system/resources/working_directory/checker/checker-8.exe s
+															WIFEXITED: 0 
+									Creating_process_with_name: -807626845/home/pashs/test_system/resources/working_directory/checker/checker-8.exe s
+															WIFEXITED: 0 
+															WEXITSTATUS: 151 
+															WIFSIGNALED: 1 
+															WTERMSIG: 35 
+															WIFSTOPPED: 0 
+
+																	time_usage: 																2612204343012587086 
+																memory_usage: 0 
+												2612204343012587086 
+status: 0 
+																memory_usage:															WIFEXITED: 1 
+														WEXITSTATUS: 0
+ 0 
+														WEXITSTATUS: 0														WEXITSTATUS: 0 
+														
+													WIFSIGNALED: 0 
+													Runing_simple_process 
+													WTERMSIG: 0 
+													WIFSTOPPED: 0 
+													time_usage: 25480 
+													memory_usage: 0 
+												Rederecting_input_and_output_to_pipe 
+
+											Rederecting_input_and_output_to_pipe 
+0				0									C						home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+TTest: 1 48 
+Creating_process_with_name: /home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+Test: 1 48 
+												Output: 48
+ 
+												Answer: 48
+ 
+											
+										Runing_simple_process 
+										Test: 13 46 
+											Output: 46
+ 
+											Answer: 46
+ 
+										
+									Runing_simple_process 
+									Test: 59 69 
+										Output: 69
+ 
+										Answer: 69
+ 
+									
+								Runing_simple_process 
+								Test: 74 13 
+								T					Output:	 		74
+s Test:
+ 										Answer: 74
+ 
+		74
+s Test:
+ 36 97 
+										Answer: 74
+ 
+									Output: 97
+ 
+									
+								Answer: 97
+ 
+							Runing_simple_process 
+							
+						Runing_simple_process 
+						Test: 98 17 
+							Output: 98
+ 
+							Answer: 98
+ 
+						
+					Runing_simple_process 
+					Test: 2 2 
+						Output: 2
+ 
+						Answer: 2
+ 
+					
+				Runing_simple_process 
+				Test: 21 21 
+					Output: 21
+ 
+					Answer: 21
+ 
+				
+			Runing_simple_process 
+			Result_evoluation 
+			Result_evoluation 
+				Test: 10 15 
+					Output: 15
+ 
+					Answer: 15
+ 
+				
+			Runing_simple_process 
+			Result_not_okay 
+			Result_not_okay 
+			Test: 29 27 
+				Output: 29
+ 
+				Answer: 29
+ 
+			
+		Runing_simple_process 
+		Today_result_is: tle 
+		Result_not_okay 
+			Today_result_is: tle 
+		
+	result_is_ok 
+
+Test: 16 71 
+Output: 71
+ 
+Answer: 71
+ 
+
+Runing_simple_process 
+Test: 79 60 
+Output: 79
+ 
+Answer: 79
+ 
+
+Runing_simple_process 
+Result_evoluation 
+Result_evoluation 
+Test: 90 85 
+Output: 90
+ 
+Answer: 90
+ 
+
+Runing_simple_process 
+ok_test_passed 
+result_is_ok 
+
+Result_evoluation 
+ok_test_passed 
+result_is_ok 
+
+status: -807626845 
+WIFEXITED: 0 
+WEXITSTATUS: 151 
+WIFSIGNALED: 1 
+WTERMSIG: 35 
+WIFSTOPPED: 0 
+time_usage: 2612204343012587086 
+memory_usage: 0 
+
+Result_evoluation 
+Result_not_okay 
+Today_result_is: tle 
+Result_not_okay 
+Today_result_is: tle 
+
+result_is_ok 
+
+Result_evoluation 
+ok_test_passed 
+result_is_ok 
+
+Result_evoluation 
+ok_test_passed 
+result_is_ok 
+
+Result_evoluation 
+ok_test_passed 
+result_is_ok 
+
+Result_evoluation 
+ok_test_passed 
+result_is_ok 
+
+Result_evoluation 
+ok_test_passed 
+result_is_ok 
+
+Result_evoluation 
+ok_test_passed 
+result_is_ok 
+
+Result_evoluation 
+ok_test_passed 
+result_is_ok 
+
+Result_evoluation 
+ok_test_passed 
+result_is_ok 
+
+Result_evoluation 
+ok_test_passed 
+result_is_ok 
+
+Result_evoluation 
+ok_test_passed 
+result_is_ok 
+
+Result_evoluation 
+ok_test_passed 
+result_is_ok 
+
+Result_evoluation 
+ok_test_passed 
+result_is_ok 
+
+Result_evoluation 
+ok_test_passed 
+result_is_ok 
+
+Result_evoluation 
+ok_test_passed 
+result_is_ok 
+
+status: 0 
+WIFEXITED: 1 
+WEXITSTATUS: 0 
+WIFSIGNALED: 0 
+WTERMSIG: 0 
+WIFSTOPPED: 0 
+time_usage: 16241 
+memory_usage: 0 
+Rederecting_input_and_output_to_pipe 
+Creating_process_with_name: /home/pashs/test_system/resources/working_directory/checker/checker-8.exe 
+Test: 1 3 
+Output: 3
+ 
+Answer: 3
+ 
+
+Runing_simple_process 
+Result_evoluation 
+ok_test_passed 
+result_is_ok 
+
+Updating_database 
+Updating... 
+Database_updated? 
+Final_result: TL 
+Final_time: 59848 
+Final_memory: 0 
