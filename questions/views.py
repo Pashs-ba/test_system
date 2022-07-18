@@ -17,7 +17,7 @@ def question(request, pk, ret):
     user = request.user
     competition = Competitions.objects.get(pk=ret)
     if request.method == 'POST':
-        if not( competition.start_time<datetime.datetime.now()<competition.end_time or competition.is_unlimited):
+        if not( competition.is_unlimited or competition.start_time<datetime.datetime.now()<competition.end_time ):
             messages.success(request, 'Ваш ответ не был записан из за того что соревноание кончилось')
             return redirect('homepage')
         ans = json.loads(question.question)
