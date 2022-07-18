@@ -25,6 +25,7 @@
         - [Соревнования](#соревнования)
         - [Задачи](#задачи)
         - [Обратная связь](#обратная-связь)
+- [Скриншоты](#скриншоты)
 
 ## Установка
 ### Локальная установка
@@ -214,3 +215,29 @@
 ![](/screenshots/students/list_errors.png)
 Если у вас есть вопросы или вы столкнулись с проблемой на любом этапе соревнований вы можете написать организаторам через специальную форму обратной связи.
 ![](/screenshots/students/err_ans.png)
+
+## Скриншоты
+![](/screenshots/common/alert.png)
+![](/screenshots/common/ans.png)
+![](/screenshots/common/competition.png)
+![](/screenshots/common/comp_create.png)
+![](/screenshots/common/contests.png)
+![](/screenshots/common/create_error.png)
+![](/screenshots/common/error.png)
+![](/screenshots/common/err_ans.png)
+![](/screenshots/common/group.png)
+![](/screenshots/common/list_errors.png)
+![](/screenshots/common/login.png)
+![](/screenshots/common/main.py)
+![](/screenshots/common/main_admin.png)
+![](/screenshots/common/main_page.png)
+![](/screenshots/common/manage.png)
+![](/screenshots/common/mathjax.png)
+![](/screenshots/common/question_page.png)
+![](/screenshots/common/q_create.png)
+![](/screenshots/common/student_copm.png)
+![](/screenshots/common/student_main.png)
+![](/screenshots/common/teachers.png)
+![](/screenshots/common/tests.png)
+![](/screenshots/common/user.png)
+![](/screenshots/common/user_con.png)
