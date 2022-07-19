@@ -28,10 +28,13 @@ class TeacherCompetitionForm(ModelForm):
         self.fields['questions'].queryset = Question.objects.filter(
             teacher = Teachers.objects.get(user=user)
         )
+        self.fields['contests'].queryset = Contests.objects.filter(
+            teacher = Teachers.objects.get(user=user)
+        )
 
     class Meta:
         model = Competitions
-        fields = ['name', 'description', 'is_unlimited', 'start_time', 'end_time','is_visible_result', 'is_simulator', "is_final", 'questions']
+        fields = ['name', 'description', 'is_unlimited', 'start_time', 'end_time','is_visible_result', 'is_simulator', "is_final", 'questions', 'contests']
         widgets = {'start_time': DateTimeInput(attrs={'type': 'datetime-local', 'class': 'time'}, format="%Y-%m-%dT%H:%M"),
                 'end_time': DateTimeInput(attrs={'type': 'datetime-local', 'class': 'time'}, format="%Y-%m-%dT%H:%M"),
                 'is_unlimited': CheckboxInput(attrs={'onchange': 'time_close()', 'id': 'unlim'}),
