@@ -62,6 +62,7 @@ class Contests(models.Model):
     ideal_ans = models.FileField(verbose_name='Идеальное решение', upload_to=upload)
     checker = models.FileField(verbose_name="Чекер", upload_to=upload, null=True)
 
+    teacher = models.ForeignKey(Teachers, null=True, on_delete=models.SET_NULL)
     class Meta:
         verbose_name = 'Contest'
         verbose_name_plural = 'Contests'
