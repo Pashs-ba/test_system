@@ -54,7 +54,7 @@ def create_contest(request):
                    args=(
                        pk,
                        os.path.join(settings.BASE_DIR, f'media/{model.ideal_ans}'))).start()
-            messages.success(request, 'success')
+            messages.success(request, 'Задача создана')
             return redirect('contest_management')
 
     else:
@@ -97,7 +97,7 @@ def contest_page(request, pk):
             form = ContestUpdateForm(request.POST, instance=Contests.objects.get(pk=pk))
             if form.is_valid():
                 form.save()
-                messages.success(request, 'success')
+                messages.success(request, 'Зачача обновлена')
                 return redirect('contest_management')
     else:
         page = request.GET.get('page', 1)
@@ -119,7 +119,7 @@ def delete_test(request, pk):
     if request.method == "POST":
         c_pk = Test.objects.get(pk=pk).contest.pk
         Test.objects.get(pk=pk).delete()
-        messages.success(request, 'Successful delete test')
+        messages.success(request, 'Тест удален')
         return redirect('contest_page', c_pk)
     else:
 

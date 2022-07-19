@@ -65,7 +65,7 @@ def user_generating(request):
             else:
                 Thread(target=create_user,
                         args=(request.POST['num'],)).start()
-            messages.info(request, f'Successful creating {request.POST["num"]} users')
+            messages.info(request, f'Создается  {request.POST["num"]} юзеров, что бы их увидеть пререзагрузите страницу')
             return redirect('user-management')
     else:
         return render(request, 'users/user_generating.html')

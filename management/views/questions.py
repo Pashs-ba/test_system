@@ -28,7 +28,7 @@ def question_create(request):
             if request.user.is_teacher:
                 a.teacher = Teachers.objects.get(user = request.user)
             a.save()
-            messages.success(request, 'success')
+            messages.success(request, 'Вопрос создан')
             return redirect('question_management')
         else:
             return HttpResponse(f"Error with POST {form.errors}")
@@ -46,7 +46,7 @@ def question_change(request, pk):
 
             a.question = form.cleaned_data['question']
             a.save()
-            messages.success(request, 'success')
+            messages.success(request, 'Впорос изменен')
             return redirect('question_management')
         else:
             return HttpResponse(form.errors)
