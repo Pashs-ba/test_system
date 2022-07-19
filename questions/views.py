@@ -24,23 +24,20 @@ def question(request, pk, ret):
         if VariantQuestionGenerator.objects.filter(question=question.pk):
             variant(request, user, question)
         else:
-            if question.type == '0':
-                qans = QuestionAns.objects.get_or_create(user=user,
+            qans = QuestionAns.objects.get_or_create(user=user,
                             question=question)
+            if question.type == '0':
+                
                 qans[0].ans = request.POST['ans']
                 qans[0].result=request.POST['ans']==ans['ans']
                 qans[0].save()
             elif question.type == '1':
                 for i in ans['ans']:
                     if ans['ans'][i][1]:
-                        qans = QuestionAns.objects.get_or_create(user=user,
-                                    question=question)
                         qans[0].result=request.POST['ans'] == i
             elif question.type == '2':
                 for i in ans['ans']:
                     if ans['ans'][i][1] and not request.POST.get(i):
-                        qans = QuestionAns.objects.get_or_create(user=user,
-                                    question=question)
                         qans[0].result=False
                         break
                 else:
