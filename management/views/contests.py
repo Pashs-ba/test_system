@@ -36,12 +36,16 @@ def contest_delete(request):
 
 
 
+
 @admin_only
 def create_contest(request):
     if request.method == "POST":
         form = ContestCreationForm(request.POST, request.FILES)
         if form.is_valid():
             model = form.save()
+            if request.user.is_teacher:
+                model.teacher = Teachers.objects.get(user=request.user)
+                model.save()
             pk = model.pk
             upload_tests(request.FILES.get('tests'), os.path.join(settings.BASE_DIR, f'media/contests/tests/'))
             add_tests(request.FILES.get('tests').name, os.path.join(settings.BASE_DIR, f'media/contests/tests/'), pk)

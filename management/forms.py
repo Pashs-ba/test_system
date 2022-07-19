@@ -47,7 +47,7 @@ class TeacherCompetitionForm(ModelForm):
 class ContestCreationForm(ModelForm):
     class Meta:
         model = Contests
-        fields = '__all__'
+        exclude = ["teacher"]
         widgets = {
             'ideal_ans': FileInput(attrs={'accept': settings.ACCEPTABLE_FORMATS_IDEAL,
                                           'class': 'form-control'}),
@@ -67,7 +67,7 @@ class ContestCreationForm(ModelForm):
 class ContestUpdateForm(ModelForm):
     class Meta:
         model = Contests
-        exclude = ['ideal_ans', 'checker']
+        exclude = ['ideal_ans', 'checker', "teacher"]
         widgets = {
             'description': Textarea(attrs={'onchange': 'render_text()',
                                            'id': 'raw'}),
