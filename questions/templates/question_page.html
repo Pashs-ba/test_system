@@ -4,7 +4,7 @@
 {% block main %}
 {%load comptition_filter%}
 {%if status == "ИДЕТ" or status == "ОТКРЫТО"  or competition.is_final%}
-    <h2 class="display-2 text-center mb-4">{{ question.name }}</h2>
+    <h2 class="display-4 text-center mb-4">{{ question.name }}</h2>
     {%if image%}
     <div class="container d-flex justify-content-center">
         <img src="/media/{{image}}" alt="some wrong" class="mw-100">
