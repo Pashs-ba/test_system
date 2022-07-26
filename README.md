@@ -32,47 +32,48 @@
 ### Локальная установка
 *Я устанавливаю проект используя постгресс, если вы хотите любую другую бд, о том как ее настроить можно почитать в [Документации Django](https://docs.djangoproject.com/en/4.0/ref/databases/)*
 1. Скачайте репозиторий
-2. Установите библиотеки:
+2. зайдите в папку проекта
+3. Установите библиотеки:
     ```bash
     sudo apt update
     sudo apt install python3-pip python3-dev libpq-dev postgresql postgresql-contrib
     ```
-3. Создайте виртульное окружение:
+4. Создайте виртульное окружение:
     ```bash
     python3 -m venv venv
     source venv/bin/activate
     ```
-4. Установите зависимости:
+5. Установите зависимости:
     ```bash
     pip install -r requirements.txt
     ```
-5. Зайдите в консоль базы данных:
+6. Зайдите в консоль базы данных:
     ```bash
     sudo -u postgres psql 
     ```
-6. Создайте базу данных:
+7. Создайте базу данных:
     ```sql
     CREATE DATABASE olympiad;
     ```
-7. Создайте пользователя:
+8. Создайте пользователя:
     ```sql
     CREATE USER olympiad_user WITH PASSWORD 'olympiad';
     ```
-8. Настройте права юзера:
+9. Настройте права юзера:
    ```sql
    ALTER ROLE olimpiad_user SET client_encoding TO 'utf8';
    ALTER ROLE olimpiad_user SET default_transaction_isolation TO 'read committed';
    ALTER ROLE olimpiad_user SET timezone TO 'UTC';
    ```
-9. Предоставьте юзеру доступ в базу данных:
+10. Предоставьте юзеру доступ в базу данных:
     ```sql
     GRANT ALL PRIVILEGES ON DATABASE olympiad TO olympiad_user;
     ```
-10. Выйдите из консоли базы данных:
+11. Выйдите из консоли базы данных:
     ```sql
     \q
     ```
-11. Создайте файл конфигурации с названием `config.toml` и запишите в него следующие данные:
+12. Создайте файл конфигурации с названием `config.toml` и запишите в него следующие данные:
     ```toml
     [common]
     secret_key = "secret"
@@ -82,22 +83,22 @@
     user = "olimpiad_user"
     password = "olimpiad"
     ```
-12. Установите миграции;
+13. Установите миграции;
     ```
     python manage.py makemigrations
     python manage.py migrate
     ```
-13. Создайте суперпользователя:
+14. Создайте суперпользователя:
     ```
     python manage.py createsuperuser
     ```
-14. Запустите проект:
+15. Запустите проект:
     ```
     python manage.py runserver
     ```
 *После этих инструкций у вас запустится минимально рабочий проект.*
 
-*ЧАСТЬ ФИЧЕЙ НЕ БУДЕТ РАБОТАТЬ пока вы не установите Сelery и Redis инструкция по установке находится [вот здесь](https://hashsum.ru/celery-django-redis/)*
+*ЧАСТЬ ФИЧЕЙ НЕ БУДЕТ РАБОТАТЬ пока вы не установите Сelery и Redis, инструкция по установке находится [вот здесь](https://hashsum.ru/celery-django-redis/)*
 
 ### Установка на сервер
 Если вы хотите установить проект на сервер то используйте инструкцию от [DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu-18-04-ru).
