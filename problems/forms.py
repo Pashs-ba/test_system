@@ -17,7 +17,7 @@ class ProblemCreate(forms.ModelForm):
         model = Problems
         fields = ['competition', 'text']
         widgets = {
-            'text': forms.Textarea(attrs={'placeholder': 'Помогите, у меня все сломалось!!!'})
+            'text': forms.Textarea()
         }
 
 class AnswerForm(forms.ModelForm):
@@ -34,7 +34,7 @@ class AnswerForm(forms.ModelForm):
         model = Problems
         fields = ['competition', 'ans', 'for_all', 'error_type']
         widgets = {
-            'ans': forms.Textarea(attrs={'placeholder': 'Ничего не знаю, система стронг, в задаче все написанно!'}),
+            'ans': forms.Textarea(),
             'for_all': forms.CheckboxInput(),
             'error_type': forms.Select(choices=Problems.PROBLEM_TYPE)
         }
@@ -54,7 +54,7 @@ class NotificationForm(forms.ModelForm):
         model = Problems
         fields = ['competition', 'ans', 'error_type']
         widgets = {
-            'ans': forms.Textarea(attrs={'placeholder': 'Системка Стронг'}),
+            'ans': forms.Textarea(),
         }
         labels = {
             'ans': 'Текст оповещения'
